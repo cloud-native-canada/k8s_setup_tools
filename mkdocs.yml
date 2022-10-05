@@ -1,9 +1,10 @@
-site_name: K8s Setup Tools
+site_name: KubeCon NA 2022 Tutorial - K8s Setup Tools
 nav:
   - Home: index.md
 theme:
   # features:
   #   - navigation.tabs
+  favicon: images/kubecon_logo.jpeg
   palette:
     - scheme: slate
       toggle:
