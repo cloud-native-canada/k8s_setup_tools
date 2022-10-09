@@ -14,3 +14,6 @@ Each recipes is a self-contained example. With a full tutorial for how to setup 
 mkdocs serve
 ```
 
+## 2. Markdown and special extensions
+
+Check official Material theme [Markdown](https://squidfunk.github.io/mkdocs-material/reference/)
