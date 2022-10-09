@@ -1,9 +1,26 @@
 site_name: KubeCon NA 2022 Tutorial - K8s Setup Tools
 nav:
   - Home: index.md
+  - Kubectl: kubectl.md
+  - Local Clusters:
+    - colima: local_cluster/colima.md
+    - podman: local_cluster/podman.md
+    - kind: local_cluster/kind.md
+  - Shell Setup: shell_setup.md
+  - kubectl Tooling:
+    - kubectl: kubectl_tooling/kubectl.md
+    - krew: kubectl_tooling/krew.md
+    - kubecolor: kubectl_tooling/kubecolor.md
+    - stern: kubectl_tooling/stern.md
+  - Kubernetes Interface:
+    - K9s: interfaces/k9s.md
+    - Lens: interfaces/lens.md
+  - Development tooling: dev_tooling.md
+  - mkdocs help: mkdocs.md
 theme:
-  # features:
+  features:
   #   - navigation.tabs
+    - content.tabs.link
   favicon: images/kubecon_logo.jpeg
   palette:
     - scheme: slate
@@ -20,8 +37,25 @@ extra:
       link: https://twitter.com/cloudnativeca
 markdown_extensions:
   - admonition
+  - pymdownx.details
   - codehilite:
       guess_lang: false
   - toc:
       permalink: true
   - footnotes
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences 
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      # slugify: !!python/object/apply:pymdownx.slugs.slugify
+      #   kwds:
+      #     case: lower
+      alternate_style: true 
+  - tables
+  - attr_list
+  - md_in_html
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true

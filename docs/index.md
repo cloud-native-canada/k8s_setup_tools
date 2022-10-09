@@ -6,29 +6,28 @@ This site is the companion to the KubeCon 2022 NA talk:
 
 ## agenda
 
-### 1) Kubectl
+- `kubectl`
 
-   Install of the `kubectl` command and basic usage
+    Install of the `kubectl` command and basic usage
 
-### 2) Local clusters
+- `Local clusters`
 
-   Install of the tooling to use `docker` (without docker) and create a local `Kubernetes` cluster
-   
-   We will also install a sample application including a failed deployment to give some meat to the demos
+    Install of the tooling to use `docker` (without docker) and create a local `Kubernetes` cluster
+    We will also install a sample application including a failed deployment to give some meat to the demos
 
-### 3) Shell setup
+- `Shell setup`
 
     We will then setup you shell (focused on ZSH) to ease the work with K8s
 
-### 4) Kubectl Tooling
+- `Kubectl Tooling`
 
-   We will talk about the tooling aroung `kubectl` and the installation of some plugins
+    We will talk about the tooling aroung `kubectl` and the installation of some plugins
 
-### 5) Kubernetes interfaces
+- `Kubernetes interfaces`
 
     We will quickly dive into some usefull interfaces to get an overview of your cluster
 
-### 6) Development helpers
+- `Development tooling`
 
     Finaly we will go through some of the helpers that you can install when you're developing for Kubernetes
     or extensively working with json and yaml files
