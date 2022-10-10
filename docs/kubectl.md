@@ -14,7 +14,7 @@ This is the prefered installation for Linux or when you want full control.
 
 If you want to install a specific version, check the [the list of official releases](https://dl.k8s.io/release/stable.txt.).
 
-=== "Apple Mac"
+=== "Apple Mac OsX"
 
     ```bash title="OsX Install"
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"

@@ -1,5 +1,6 @@
 # Colima
 
+Colima is a full Docker Desktop replacement. It is specific to Max OSX. Just use plain Docker or Containerd on Linux.
 ## Install
 
 ```bash
