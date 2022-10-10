@@ -6,6 +6,8 @@ nav:
     - Colima: local_cluster/colima.md
     - Podman: local_cluster/podman.md
     - Kind: local_cluster/kind.md
+    - MiniKube: local_cluster/minikube.md
+    - K3s: local_cluster/k3s.md
   - Shell Setup: shell_setup.md
   - Kubectl Tooling:
     - Kubectl: kubectl_tooling/kubectl.md

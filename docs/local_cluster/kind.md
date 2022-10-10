@@ -133,3 +133,11 @@ kube-system          kube-proxy-dfczd                             1/1     Runnin
 kube-system          kube-scheduler-demo-control-plane            1/1     Running   0          4m18s
 local-path-storage   local-path-provisioner-6b84c5c67f-csxg6      1/1     Running   0          4m6s
 ```
+
+We can check the current Kubernetes `context` using `kubectl`:
+
+```bash
+k config  get-contexts
+CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+*         kind-demo   kind-demo   kind-demo
+```

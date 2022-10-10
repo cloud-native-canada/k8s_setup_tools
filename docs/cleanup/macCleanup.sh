@@ -2,6 +2,15 @@
 #
 # This is the cleanup script for Apple Mac OS
 
+# Kind
+kind delete cluster demo
+brew uninstall kind
+
+# remove Minikube
+minikube stop
+minikube delete
+rm -f /usr/local/bin/minikube
+
 # remove brew installed files
 brew uninstall kubectl
 
@@ -18,9 +27,7 @@ podman machine rm
 brew uninstall podman
 brew uninstall podman-desktop
 
-# Kind
-# Removing Docker/Podman will destroy your cluster, nothing special to do here
-brew uninstall kind
+
 
 # Remove tooling
 brew uninstall kubecolor/tap/kubecolor
