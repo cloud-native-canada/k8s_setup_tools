@@ -3,20 +3,23 @@ nav:
   - Home: index.md
   - Kubectl: kubectl.md
   - Local Clusters:
-    - colima: local_cluster/colima.md
-    - podman: local_cluster/podman.md
-    - kind: local_cluster/kind.md
+    - Colima: local_cluster/colima.md
+    - Podman: local_cluster/podman.md
+    - Kind: local_cluster/kind.md
+    - MiniKube: local_cluster/minikube.md
+    - K3s: local_cluster/k3s.md
   - Shell Setup: shell_setup.md
-  - kubectl Tooling:
-    - kubectl: kubectl_tooling/kubectl.md
-    - krew: kubectl_tooling/krew.md
-    - kubecolor: kubectl_tooling/kubecolor.md
-    - stern: kubectl_tooling/stern.md
+  - Kubectl Tooling:
+    - Kubectl: kubectl_tooling/kubectl.md
+    - Krew: kubectl_tooling/krew.md
+    - Kubecolor: kubectl_tooling/kubecolor.md
+    - Stern: kubectl_tooling/stern.md
   - Kubernetes Interface:
     - K9s: interfaces/k9s.md
     - Lens: interfaces/lens.md
   - Development tooling: dev_tooling.md
-  - mkdocs help: mkdocs.md
+  - Cleanup: cleanup/cleanup.md
+  - Mkdocs help and examples: mkdocs.md
 theme:
   features:
   #   - navigation.tabs
