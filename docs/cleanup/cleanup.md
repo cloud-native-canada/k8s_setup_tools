@@ -13,3 +13,9 @@ Here's a script you can run to clean up your computer from all the stuff we inst
     ```bash title="linuxCleanup.sg"
     --8<-- "docs/cleanup/linuxCleanup.sh"
     ```
+
+=== "Windows"
+
+    ```bash title="windowsCleanup.sg"
+    --8<-- "docs/cleanup/windowsCleanup.sh"
+    ```
