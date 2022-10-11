@@ -4,10 +4,10 @@ Ok, now you have installed `kubectl` and you have two working local clusters. Yo
 
 You may also wonder *which cluster am I connected to ?* or *what is my default namespace ?*.
 
-You can east this pain by configuring your shell. 
+You can ease this pain by configuring your shell. 
 
 
-## completion
+## Completion
 
 Add those commands to your respecting shell config file. Note you have to restart your shell for it to take effect:
 
@@ -81,7 +81,7 @@ OK This is the basic:
 
 ## ZSH
 
-Mac OSX shell is now `zsh` by default. So we'll focus on ZSH now. ZSH is also widely available in Linux and may somtimes be the default too.
+Mac OSX default shell is now `zsh` so we'll focus on ZSH now on. ZSH is also widely available in Linux and may somtimes be the default too.
 
 !!! note "ZSH deprecation warning"
     To get rid of the deprecation warning in OSX, export this variable in your shell. I recommend adding it to your `.zshrc` file:
