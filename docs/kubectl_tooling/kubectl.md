@@ -1,10 +1,10 @@
 # Kubectl
 
-You may not expect to see Kubectl in the `tooling` section, as it, well, the basic. 
+`kubectl` may not be expected to appear in the `tooling` section as it's, well, the basic tool.
 
-But maybe you're using it wrong ? Or you're not using it to its full potential ? 
+But maybe there's some commands and tricks that are worth mentioning to use it at its full potential ? 
 
-We're not going to dive in too much, but here are some cool usage of `kubectl`.
+So here are some cool usage of `kubectl`:
 
 ```bash
 k create deployment sample_app --image=alpine --dry-run=client -o yaml > sample_yaml.yaml
