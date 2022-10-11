@@ -105,7 +105,7 @@ There are many great themes out there to help developers to become more producti
 On such theme is `PowerLevel10k`. It's easy to install and provides a ton of tooling in your shell. It's available in a git repo that you have to clone in your `.oh-my-zsh`  custom folder.
 
 !!! note "Fonts"
-    If you are using iTerm2 or Termux, p10k configure can install the recommended font for you. Simply answer Yes when asked whether to install Meslo Nerd Font.
+    When using iTerm2 or Termux, p10k configure can install the recommended font automatically. Simply answer Yes when asked whether to install Meslo Nerd Font.
 
     Else, [read the docs](https://github.com/romkatv/powerlevel10k#manual-font-installation) to learn how to install the needed fonts.
 
@@ -125,11 +125,11 @@ On such theme is `PowerLevel10k`. It's easy to install and provides a ton of too
     zsh
     ```
 
-When opening a new ZSH shell for the first time (done by calling `zsh` above), you'll be asked a lot of questions to setup your shell to your convenience.
+When opening a ZSH shell for the first time (done by calling `zsh` above), a menu will appear and ask some questions to setup the shell to your convenience.
 
-You can re-enter this setup phase anytime with the command `p10k configure`
+This setup phase can be restarted anytime with the command `p10k configure`
 
-tricky questions and my usual answers:
+Here are the answers to get a cool but productive shell:
 
 - `prompt style`: I usually use `rainbow` (3)
 - `Character Set`: `Unicode` (1)
@@ -155,7 +155,7 @@ ZSH uses plugins that extend the shortcuts and other behaviours for default apps
 plugins=(brew kubectl git python tmux vault terraform)
 ```
 
-Once you relad you shell, you have a ton of new Aliases. Use `alias` command to list them all. Here are a few:
+Once those plugins are installed and the shell is reloaded, a ton of new Aliases are created. Use `alias` command to list them all. Here are a few:
 
 ```bash
 alias | grep git
