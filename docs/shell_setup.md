@@ -84,7 +84,7 @@ OK This is the basic:
 Mac OSX default shell is now `zsh` so we'll focus on ZSH now on. ZSH is also widely available in Linux and may somtimes be the default too.
 
 !!! note "ZSH deprecation warning"
-    To get rid of the deprecation warning in OSX, export this variable in your shell. I recommend adding it to your `.zshrc` file:
+    To get rid of the deprecation warning in OSX, export this variable in your shell. Add it to your `.zshrc` file for persistance:
 
     ```bash linenums="1" title="~/.zshrc"
     export BASH_SILENCE_DEPRECATION_WARNING=1
@@ -131,13 +131,13 @@ This setup phase can be restarted anytime with the command `p10k configure`
 
 Here are the answers to get a cool but productive shell:
 
-- `prompt style`: I usually use `rainbow` (3)
+- `prompt style`: `rainbow` is generally the best look(3)
 - `Character Set`: `Unicode` (1)
 - `Show current time`: use 24h (2)
 - `Prompt Separators`: Angled (1)
 - `Prompt Heads`: Sharp (1)
 - `Prompt Tails`: Flat (1)
-- `Prompt Height`: I think using only one is better to copy/paster (1)
+- `Prompt Height`: using only one line is better when copy/pasting (1)
 - `Prompt Connection`: (if `Prompt Height` is set to 2): Disconnected (1)
 - `Prompt Frame`: (if `Prompt Height` is set to 2): No Frame (1)
 - `Prompt Spacing`: Compact (1)
