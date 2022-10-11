@@ -91,6 +91,8 @@ Mac OSX default shell is now `zsh` so we'll focus on ZSH now on. ZSH is also wid
     ```
 ### Oh My ZSH !
 
+Oh My Zsh is a delightful, open source, community-driven framework for managing your Zsh configuration. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout... `"Oh My ZSH!"`
+
 #### install
 
 ```bash
@@ -99,12 +101,13 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 #### Theme
 
-The best theme I found is called `PowerLevel10k`. It's easy to install and provide a ton of tooling in your shell. It's available in a git repo that you have to clone in your `.oh-my-zsh` custom folder.
+There are many great themes out there to help developers to become more productive and make the Terminal look cool.
+On such theme is `PowerLevel10k`. It's easy to install and provides a ton of tooling in your shell. It's available in a git repo that you have to clone in your `.oh-my-zsh`  custom folder.
 
 !!! note "Fonts"
     If you are using iTerm2 or Termux, p10k configure can install the recommended font for you. Simply answer Yes when asked whether to install Meslo Nerd Font.
 
-    Else, re [the docs](https://github.com/romkatv/powerlevel10k#manual-font-installation) to learn how to install the needed fonts.
+    Else, [read the docs](https://github.com/romkatv/powerlevel10k#manual-font-installation) to learn how to install the needed fonts.
 
 === "OSX"
 
@@ -170,3 +173,8 @@ kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
 kccc='kubectl config current-context'
 ...
 ```
+
+## Reference
+
+- [Oh My ZSH !](https://ohmyz.sh/)
+- [PowerLevel10k](https://github.com/romkatv/powerlevel10k)
