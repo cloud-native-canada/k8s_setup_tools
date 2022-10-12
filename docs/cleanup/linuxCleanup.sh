@@ -25,3 +25,7 @@ colima stop
 # Remove K3s
 # TODO: delete the cluster and remove VMs files
 /usr/local/bin/k3s-uninstall.sh
+
+# Remove ZSH setup
+rm -f ~/.p10k.zsh
+sed 's/^ZSH_THEME=".*"/ZSH_THEME="robbyrussell"/g' -i ~/.zshrc

@@ -31,3 +31,7 @@ brew uninstall podman-desktop
 
 # Remove tooling
 brew uninstall kubecolor/tap/kubecolor
+
+# Remove ZSH setup
+rm -f ~/.p10k.zsh
+sed -i ' ' -e 's/^ZSH_THEME=".*"/ZSH_THEME="robbyrussell"/g'  ~/.zshrc
