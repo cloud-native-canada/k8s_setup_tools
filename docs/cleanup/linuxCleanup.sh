@@ -28,4 +28,5 @@ colima stop
 
 # Remove ZSH setup
 rm -f ~/.p10k.zsh
-sed 's/^ZSH_THEME=".*"/ZSH_THEME="robbyrussell"/g' -i ~/.zshrc
+mv -f ~/.zshrc ~/.zshrc-demo
+mv -f ~/.zshrc.pre-oh-my-zsh ~/.zshrc
