@@ -15,7 +15,6 @@ Add those commands to your respecting shell config file. Note you have to restar
     ```bash linenums="1" title="~/.zshrc"
     alias k=kubectl
     source <(kubectl completion zsh)
-    complete -F __start_kubectl k
     ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
 
@@ -101,6 +100,8 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 #### Theme
 
+##### PowerLevel10k
+
 There are many great themes out there to help developers to become more productive and make the Terminal look cool.
 On such theme is `PowerLevel10k`. It's easy to install and provides a ton of tooling in your shell. It's available in a git repo that you have to clone in your `.oh-my-zsh`  custom folder.
 
@@ -147,9 +148,13 @@ Here are the answers to get a cool but productive shell:
 - `Instant Prompt Mode`: speed up slow scripts... set to Verbose as recommended (1)
 - `Apply changes to ~/.zshrc`: Damn YES (y)
 
+##### Agnoster
+
+[Agnoster](https://github.com/agnoster/agnoster-zsh-theme) is another cool theme, but less powerful than PowerLevel10k.
+
 #### Plugins
 
-ZSH uses plugins that extend the shortcuts and other behaviours for default apps. Here's the list I usually use:
+ZSH uses plugins that extend the shortcuts and other behaviours for default apps. Here's some that are worth using:
 
 ```yaml
 plugins=(brew kubectl git python tmux vault terraform)
@@ -164,7 +169,13 @@ g=git
 ga='git add'
 gaa='git add --all'
 gam='git am'
+```
 
+##### kubectl plugin
+
+This plugin ads a ton of aliases specific to `kubectl`, usually based on the action to take, like `kgp` for `Kubectl Get Pods`.
+
+``` bash
 alias | grep kubectl
 
 k=kubectl
@@ -172,6 +183,29 @@ kaf='kubectl apply -f'
 kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
 kccc='kubectl config current-context'
 ...
+```
+
+Because the plugin `kubectl` already create the alias `k=kubectl`, we don't need it explicitely in our `.zshrc` file. You can safely remove it.
+Note that the aliases are all calling `kubectl` explicitelly.
+
+##### zsh-autosuggestions plugin
+
+TBD
+
+##### zsh-syntax-highlighting plugin
+
+TBD
+
+#### Dynamic Prompt
+
+Oh My ZSH! now have an eat feature called the dynamic prompt. Instead of having a prompt line which actually takes 3 lines and display your Git repo, Kubernetes Context, AWS or GCP account all the time, the needed information can be displayed only when needed.
+
+In the case of Kubernetes, it means only when using the `kubectl` command, or any associated or similar commands like `k`.
+
+It is possible to add more commands that will trigger the display of the prompt section by editing the `~/.p10k.zsh` file. Search for the variable `POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND` and edit the line.
+
+```bash
+  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern|kubeseal|kubecolor|skaffold'
 ```
 
 ## Reference
