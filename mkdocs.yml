@@ -11,8 +11,9 @@ nav:
   - Shell Setup: shell_setup.md
   - Kubectl Tooling:
     - Kubectl: kubectl_tooling/kubectl.md
-    - Krew: kubectl_tooling/krew.md
     - Kubecolor: kubectl_tooling/kubecolor.md
+    - Krew: kubectl_tooling/krew.md
+    - Kubie: kubectl_tooling/kubie.md
     - Stern: kubectl_tooling/stern.md
   - Kubernetes Interface:
     - K9s: interfaces/k9s.md

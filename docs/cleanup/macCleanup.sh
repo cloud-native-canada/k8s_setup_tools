@@ -2,6 +2,12 @@
 #
 # This is the cleanup script for Apple Mac OS
 
+# Kubectl and tooling
+rm -f /usr/local/bin/kubectl
+rm -f /usr/local/bin/kubecolor
+rm -f /usr/local/bin/kubectl-krew
+rm -f /usr/local/bin/kubie
+
 # Kind
 kind delete cluster demo
 brew uninstall kind

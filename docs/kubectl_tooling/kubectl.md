@@ -13,5 +13,8 @@ k create deployment sample_app --image=alpine --dry-run=client -o yaml > sample_
 Which will result in the following deployment to be saved:
 
 ```yaml title="sample_app.yaml"
+cat > /tmp/toto <<EOF
 --8<-- "docs/yaml/sample_app.yaml"
+EOF
+
 ```
