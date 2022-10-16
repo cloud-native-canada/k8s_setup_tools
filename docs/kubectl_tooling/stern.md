@@ -118,7 +118,9 @@ Stern is really versatile, and here are some command examples, based on the prev
         The real log message is in the `message` field, and is encoded. In the case your logs are already JSON, they will be double-encoded, and not pure JSON.
 
         The latest version of Stern (`1.22.0` or newer) inclused two other `--ouptput` modes: 
-        - extjson
+        - `extjson`
             This is an extended JSON output, used when your logs are already JSON. In this case, they will not be double-encoded.
-        - ppextjson
+        - `ppextjson`
             This is the same as above but keeping the stern colors to identify pods and adding pretty-print indentation so it not necessary to use `jq`
+
+    TODO: use `stern` to dump json logs with `ppextjson`

@@ -18,7 +18,10 @@ nav:
   - Kubernetes Interface:
     - K9s: interfaces/k9s.md
     - Lens: interfaces/lens.md
-  - Development tooling: dev_tooling.md
+    - KubeNav: interfaces/kubenav.md
+  - Development tooling:
+    - VsCode Extensions: dev_tooling/vscode.md
+    - Other apps: dev_tooling/apps.md
   - Cleanup: cleanup/cleanup.md
   - Mkdocs help and examples: mkdocs.md
 theme:

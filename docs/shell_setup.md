@@ -1,15 +1,16 @@
 # Shell Setup
 
-Ok, now you have installed `kubectl` and you have two working local clusters. You will soon realize that you're type `kubectl` (7 letters) quite often. Too often.
+As of now, `kubectl` is installed and can reach two working local clusters. Still, we are required to type the `kubectl` command (7 letters) quite often. Too often.
 
-You may also wonder *which cluster am I connected to ?* or *what is my default namespace ?*.
+We also have no knowledge of *which cluster am I connected to ?* or *what is my default namespace ?*.
 
-You can ease this pain by configuring your shell. 
-
+Let's now configure the `shell` to solve all of those problems.
 
 ## Completion
 
-Add those commands to your respecting shell config file. Note you have to restart your shell for it to take effect:
+`completion` is the term used in UNIX™ shells when it comes to empowering the shell with better knowledge of the commands we use.
+
+Let's add those commands to the shell config file. A restart of the shell is needed for it to take effect:
 
 === "zsh"
     ```bash linenums="1" title="~/.zshrc"
@@ -26,18 +27,19 @@ Add those commands to your respecting shell config file. Note you have to restar
     ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
 
-OK This is the basic:
+This is what is happenning here:
 
 1) instead of typing `kubectl`, just type `k`. It's 6 less characters !
 
 2) add completion to your shell. So you can type `k <tab>` to get help or `k po<tab>` to get completion to `k port-forward`
 
-3) make `k` also use completion
+3) make `k` also use completion (`bash` only)
 
 4) increase the number of open files to 2048. This is needed in some cases when you're dealing with a lot of resources and `kubectl` open many connexions against the cluster.
 
 ## Cloud commands
 
+Most people uses some flavour of Cloud hosted K8s clusters. This section is about the main K8s Cloud Providers.
 ### Gcloud
 
 #### Install
@@ -161,7 +163,10 @@ Add those lines to your shell startup script:
     complete -C '/usr/local/bin/aws_completer' aws
     ```
 
-## ZSH
+### Azure
+
+    TODO
+## ZSH shell
 
 Mac OSX default shell is now `zsh` so we'll focus on ZSH now on. ZSH is also widely available in Linux and may somtimes be the default too.
 
