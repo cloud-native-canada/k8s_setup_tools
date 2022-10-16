@@ -40,6 +40,49 @@ OK This is the basic:
 
 ### Gcloud
 
+#### Install
+
+=== "Apple Mac OSX"
+    ```bash
+    brew install --cask google-cloud-sdk
+    ```
+
+=== "Linux"
+    Refer to [the official doc](https://cloud.google.com/sdk/docs/install?hl=fr#linux).
+
+    ```bash
+    curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-405.0.1-linux-x86_64.tar.gz
+    tar -xf google-cloud-cli-405.0.1-linux-x86.tar.gz
+    ./google-cloud-sdk/install.sh
+    ```
+
+=== "Windows"
+    TODO
+
+#### Setup
+
+You can then init and configure `gcloud`:
+
+```bash
+# Install kubectl if you don't already have it
+# gcloud components install kubectl # Optional
+
+gcloud init
+gcloud auth login
+
+gcloud config set compute/region us-east1
+```
+
+Add your `GKE` clusters to your `kubectl` context (you can always find this command in the `Connect` tab in the Gcloud Web Console):
+
+```bash
+gcloud container clusters get-credentials <cluster> --project <project>
+```
+
+#### Usage
+
+Add those lines to enable completion:
+
 === "Apple Mac OSX ZSH"
     ```bash linenums="1" title="~/.zshrc"
     source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
@@ -68,13 +111,53 @@ OK This is the basic:
 
 ### AWS CLI
 
+#### Install
+
+```bash
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+```
+
+#### Setup
+
+Setup SSO ans default AWS profile. This is not mandatory but is a great helper if you're using SSO:
+
+```bash
+unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+aws configure sso
+aws sso login --profile profile_xxxxxx
+export AWS_PROFILE=profile_xxxxxx
+```
+
+Add your `EKS` clusters to your `kubectl` context:
+
+```bash
+aws eks update-kubeconfig \ 
+    --region us-east-1    \
+    --name <cluster_name> \
+    --alias <friendly_name>
+
+```
+
+#### Completions
+
+Add those lines to your shell startup script:
+
 === "ZSH"
     ```bash linenums="1" title="~/.zshrc"
+    export AWS_DEFAULT_REGION=us-east-1 # update to your preference
+    export AWS_PAGER="" # prevent aws cli to auto-page = display inline
+    export BROWSER=echo # Do not open a browser, let you choose which browser to open
+    # AWS CLI completions
     complete -C '/usr/local/bin/aws_completer' aws
     ```
 
 === "BASH"
     ```bash linenums="1" title="~/.bashrc"
+    export AWS_DEFAULT_REGION=us-east-1 # update to your preference
+    export AWS_PAGER="" # prevent aws cli to auto-page = display inline
+    export BROWSER=echo # Do not open a browser, let you choose which browser to open
+    # AWS CLI completions
     complete -C '/usr/local/bin/aws_completer' aws
     ```
 
