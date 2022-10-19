@@ -1,6 +1,6 @@
 # miniKube
 
-Minikube is local Kubernetes, focusing on making it easy to learn and develop for Kubernetes.
+[Minikube](https://minikube.sigs.k8s.io/docs) is local Kubernetes, focusing on making it easy to learn and develop for Kubernetes.
 
 All you need is Docker (or similarly compatible) container or a Virtual Machine environment
 
@@ -46,7 +46,6 @@ minikube start
 Exemple OsX Cluster:
 
 ```bash
-minikube start
 😄  minikube v1.27.1 on Darwin 12.6
 ✨  Automatically selected the hyperkit driver. Other choices: virtualbox, ssh, podman (experimental), qemu2 (experimental)
 💾  Downloading driver docker-machine-driver-hyperkit:
@@ -73,15 +72,24 @@ minikube start
     ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
 🌟  Enabled addons: storage-provisioner, default-storageclass
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+```
 
+- Cluster info
 
+```bash
 kubectl cluster-info
-
+```
+```bash
 Kubernetes control plane is running at https://192.168.64.2:8443
 CoreDNS is running at https://192.168.64.2:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+```
 
+- Running pods
+
+```bash
 kubectl get po -A
-
+```
+```bash
 NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
 kube-system   coredns-565d847f94-2mx8q           1/1     Running   0          109s
 kube-system   etcd-minikube                      1/1     Running   0          2m2s
@@ -92,10 +100,14 @@ kube-system   kube-scheduler-minikube            1/1     Running   0          2m
 kube-system   storage-provisioner                1/1     Running   0          2m1s
 ```
 
+- All k8s contexts
+
 We can check the current Kubernetes `context` using `kubectl`:
 
 ```bash
 k config  get-contexts
+```
+```bash
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
           kind-demo   kind-demo   kind-demo
 *         minikube    minikube    minikube    default
