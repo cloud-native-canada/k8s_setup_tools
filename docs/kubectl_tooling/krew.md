@@ -1,12 +1,12 @@
-# Krew
+# Extending `kubectl`
 
-`Krew` is a tool that makes it easy to use `kubectl` plugins.
+`kubectl` has now two ways to be extended: `plugins` and `krew`
 
-`kubectl` has two ways to be extended: `plugins` and `krew`
+`Krew` is a tool that makes it easy to use `kubectl` plugins. It's the first tooling that was avaiable and is still widely used.
 
 `Plugins` is the newer way and is simple: create a command in your path with the name `kubectl-<whatever>` and call `kubectl <whatever>` from your shell. `kubectl` will execute your command.
 
-## Plugins
+## Creating and using Plugins
 
 Create a script in `/usr/local/bin/kubectl-foo`:
 
@@ -23,16 +23,16 @@ Make it executable and call it through `kubectl`:
 chmod 755 /usr/local/bin/kubectl-foo
 kubectl foo
 ```
+```bash title="output"
+foo
+```
 
 It's really easy to list plugins:
 
 ```bash
 kubectl plugin list
 ```
-
-Output is like:
-
-```bash  hl_lines="5 5"
+```bash  title="output" hl_lines="5 5"
 The following compatible plugins are available:
 
 /usr/local/bin/kubectl-1.20.0
@@ -44,7 +44,7 @@ The following compatible plugins are available:
 
 ## Krew
 
-`Krew` is an example of such a plugin that act as a plugin manager for kubectl. It pre-dates the plugin addition in kubectl and may seem useless now, but it still has it's role to play.
+`Krew` is an example of such a kubectl plugin that act as a plugin manager for kubectl. It pre-dates the plugin addition in kubectl and may seem useless now, but it still has it's role to play.
 
 ### Install
 
@@ -99,14 +99,18 @@ Please refer to the [official install doc](https://krew.sigs.k8s.io/docs/user-gu
 
 ```bash
 kubectl krew list
-
+```
+```bash title="output"
 PLUGIN  VERSION
 ctx     v0.9.4
 krew    v0.4.1
 ns      v0.9.4
 whoami  v0.0.36
-
+```
+```bash
 kubectl krew search
+```
+```bash title="output"
 NAME                            DESCRIPTION                                         INSTALLED
 access-matrix                   Show an RBAC access matrix for server resources     no
 blame                           Show who edited resource fields.                    no
@@ -130,7 +134,7 @@ Install them with this command:
 kubectl krew install ctx ns stern whoami who-can
 ```
 
-#### ctx
+## manage Kubernetes `context`
 
 `kubectl` is using the notion of `contexts` to define which cluster you know and which one is actuvelly being used. 
 
@@ -141,7 +145,7 @@ All this is defined in the `$HOME/.kube/config` file. This file can get quite la
 ```bash
 kubectl config get-contexts
 ```
-```bash
+```bash title="output"
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo
           minikube    minikube    minikube    default
@@ -156,7 +160,7 @@ While this is not that bad, we can do even better with `ctx`. Also, when using `
 # list all the existing context, current one is in yellow
 k ctx
 ```
-```bash  hl_lines="1 1"
+```bash  title="output" hl_lines="1 1"
 kind-demo
 minikube
 ```
@@ -167,14 +171,21 @@ You can also change context quickly by just appending the name of the target con
 # change the context to minikube using ctx
 k ctx minikube
 ```
-```bash  hl_lines="2 2"
+```bash title="output" hl_lines="2 2"
 kind-demo
 minikube
 ```
 
+Finaly you can delete a context (but don't do it right now):
+
+```bash
+# remove the minikube context
+k ctx -d minikube
+```
+
 ![krew ctx](img/krew-ctx.png)
 
-#### ns
+## manage Kubernetes `namespaces`
 
 Almost the same thing as `ctx`, the `ns` command will switch your default `namespace`:
 
@@ -182,7 +193,7 @@ Almost the same thing as `ctx`, the `ns` command will switch your default `names
 # show namespaces
 k ns
 ```
-```bash  hl_lines="1 1"
+```bash title="output" hl_lines="1 1"
 default
 kube-node-lease
 kube-public
@@ -195,7 +206,7 @@ Switch to `kube-system` namespace:
 k ns kube-system
 k ns
 ```
-```bash  hl_lines="7 7"
+```bash title="output" hl_lines="7 7"
 Context "minikube" modified.
 Active namespace is "kube-system".
 

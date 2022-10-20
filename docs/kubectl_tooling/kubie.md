@@ -4,7 +4,7 @@
 
 This is an alternative to `k ctx` and `k ns` in a way where instead os switching your `context` back and forth and use the same `context` in all your `terminals` (all your `shells`), you pin one `context` per `terminal`.
 
-Under the hood, it automates the use of the KUBECONFIG env variable to allow each shell to be configured differently.
+Under the hood, it automates the use of the `KUBECONFIG` env variable to allow each shell to be configured differently.
 
 !!! note
     The `KUBECONFIG` variable, if set, will tell `kubectl` to use a specific `config` file instead of the default `~/.kube/config` file.

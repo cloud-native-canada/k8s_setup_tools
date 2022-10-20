@@ -61,8 +61,28 @@ cd k8s_setup_tools
 
     Using the `kubectl` plugin for Oh My ZSH! to even shorten the typing
 
-- How to create basic 
+- [How do I use all those `kubectl` shorthands ?](kubectl_tooling/kubectl.md)
 
+    Let's demo some of the `kubectl` command and their associated alias
+
+- [There's too many output from `kubectl` I can't read it](kubectl_tooling/kubecolor.md)
+
+    Here again there's some tooling to help. Let's introduce `kubecolor` !
+
+- [I want to extend `kubectl`](kubectl_tooling/krew.md)
+
+    Kubectl is already a complex command, but what if I want to extend it ? 
+
+- [Switching Cluster Context is a pain](kubectl_tooling/krew.md#manage-kubernetes-context)
+
+    `kubectl` uses a notion of `context` to manage the many servers you can connect to. Switching from one to the other can quickly be a pain. We have some tools for that too !
+
+- [I want multiple context at the same time](kubectl_tooling/kubie.md)
+
+    By default, the current default `context` and `namespace` are global to your shells. 
+    
+    While more dangerous, it is possible to change this behaviour so each shell target a different `context` or `namespace`
+    
 - `Kubernetes interfaces`
 
     We will quickly dive into some usefull interfaces to get an overview of your cluster
