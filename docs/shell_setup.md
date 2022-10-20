@@ -6,7 +6,23 @@ We also have no knowledge of *which cluster am I connected to ?* or *what is my 
 
 Let's now configure the `shell` to solve all of those problems.
 
-## Completion
+## I'm typing too much `kubectl` commands 
+
+First trick is to use `k` as an alias to `kubectl`.
+
+This is 6 less caracteres to type for every command !
+
+=== "zsh"
+    ```bash linenums="1" title="~/.zshrc"
+    alias k=kubectl
+    ```
+
+=== "bash"
+    ```bash linenums="1" title="~/.bashrc"
+    alias k=kubectl
+    ```
+
+## Faster `kubectl` argument typing
 
 `completion` is the term used in UNIX™ shells when it comes to empowering the shell with better knowledge of the commands we use.
 
@@ -14,28 +30,38 @@ Let's add those commands to the shell config file. A restart of the shell is nee
 
 === "zsh"
     ```bash linenums="1" title="~/.zshrc"
-    alias k=kubectl
+    autoload -Uz compinit
+    compinit
     source <(kubectl completion zsh)
+    ```
+
+=== "bash"
+    ```bash linenums="1" title="~/.bashrc"
+    source <(kubectl completion bash)
+    complete -o default -F __start_kubectl k
+    ```
+
+With Completion setup, you can type `kubectl <tab>` or `k <tab>` to get help. `k po<tab>` will get completed to `k port-forward`
+
+`bash` requires another command to make `k` also use completion.
+
+## My `kubectl` commands are failing
+
+Some OS, including MacOsX, comes with a really low value for the number of concurrent Open File Descriptors.
+
+This low limit may break some `kubectl` commands or some other tools using the Kubernetes Go client like `helm`. 
+
+To solve that, increase your File Descriptors to at lease 2048:
+
+=== "zsh"
+    ```bash linenums="1" title="~/.zshrc"
     ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
 
 === "bash"
     ```bash linenums="1" title="~/.bashrc"
-    alias k=kubectl
-    source <(kubectl completion bash)
-    complete -o default -F __start_kubectl k
     ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
-
-This is what is happenning here:
-
-1) instead of typing `kubectl`, just type `k`. It's 6 less characters !
-
-2) add completion to your shell. So you can type `k <tab>` to get help or `k po<tab>` to get completion to `k port-forward`
-
-3) make `k` also use completion (`bash` only)
-
-4) increase the number of open files to 2048. This is needed in some cases when you're dealing with a lot of resources and `kubectl` open many connexions against the cluster.
 
 ## Cloud commands
 

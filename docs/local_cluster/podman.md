@@ -9,6 +9,7 @@ What you get with Podman:
 - Container image management (managing image layers, overlay filesystems, etc)
 - Podman version 3.4+ now support M1 Apple Macs
 - Replaces Docker-for-Desktop and includes a UI
+- no bundled Kubernetes, use kind, minikube, k3s, microk8s...
 
 It can also run and build rootless containers.
 ## Install
@@ -48,6 +49,11 @@ It can also run and build rootless containers.
 
         Please [check the docs](https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md) for specific detailed instructions
 
+=== "Podman Desktop (UI)"
+
+    Download the UI from the [official website](https://iongion.github.io/podman-desktop-companion/).
+
+
 ## Setup
 
 !!! note "Docker replacement"
@@ -63,6 +69,7 @@ mv -f /usr/local/bin/docker /usr/local/bin/docker-orig
 ln -s /usr/local/bin/podman /usr/local/bin/docker
 
 # Tell Docker to connect to Podman
+# This is needed so every app "hardcoded" for Docker will work
 export DOCKER_HOST="unix://$HOME/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
 ```
 
