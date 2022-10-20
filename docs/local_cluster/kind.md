@@ -135,3 +135,7 @@ k config  get-contexts
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo
 ```
+
+## Next
+
+Now that the Kind cluster is created, continue with [Minikube](minikube.md) !

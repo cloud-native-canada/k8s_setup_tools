@@ -58,7 +58,7 @@ k get po -A
 k get svc -A
 ```
 
-## `kubectl` arguments too long
+## `kubectl` arguments are too long
 
 `kubectl port-forward` is one example of a long argument. So is `kubectl get deployment --context=my-cluster`. 
 

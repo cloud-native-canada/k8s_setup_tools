@@ -19,51 +19,49 @@ cd k8s_setup_tools
 
 ## agenda
 
-- `kubectl`
+- [`kubectl`](kubectl.md)
 
     Install of the `kubectl` command and basic usage
 
-- Getting rid of Docker-For-Desktop
+- [Getting rid of Docker-For-Desktop](local_cluster/colima.md)
 
     Docker For Desktop is now a paid software for enterprise users. The [price was bumped again on October 27th 2022](https://www.docker.com/pricing/october-2022-pricing-change-faq) !
 
     Learn how to replace Docker For Desktop once and for all.
 
-- Alternative Docker replacement
+- [Alternative Docker replacement](local_cluster/podman.md)
 
     Install the tooling to use `docker` (without docker).
 
-- Local Kubernetes cluster for development
+- [Local Kubernetes cluster for development](local_cluster/kind.md)
 
     You don't always have a real (remote) Kubernetes cluster, or you have one, but you can't *play* with it.
     Learn how to create a local `Kubernetes` cluster for local development, a cluster that you can
     re-create many times a day to test things.
 
-    We will also install a sample application including a failed deployment to give some meat to the demos
+    Later on a sample application including a failed deployment will be installed to give some meat to the demos
 
-- Install a sample application
+- [Install a sample application](app_deployment.md)
 
     Quickly use `kubectl` command to create some resources.
 
-- I'm typing too much `kubectl`
+- [I'm typing too much `kubectl`](shell_setup.md#im-typing-too-much-kubectl-commands)
 
     Type less by using some `alias` commands
 
-- `kubectl` arguments too long
+- [`kubectl` arguments are too long](shell_setup.md#kubectl-arguments-are-too-long)
 
     Enhance `kubectl` experience by setting up the shell Completion. Stop typing everything and use `tab` key !
 
-- Oh My ZSH! framework
+- [ZSH and Oh My ZSH! framework](shell_setup.md#zsh-shell)
 
     Oh My ZSH! is a sort of framework for your shell that pre-configure and extend your shell with a ton of features. 
 
-- I'm still typing too much `kubectl`
+- [I'm still typing too much `kubectl`](shell_setup.md#im-still-typing-too-much-kubectl)
 
     Using the `kubectl` plugin for Oh My ZSH! to even shorten the typing
 
-- `Kubectl Tooling`
-
-    We will talk about the tooling aroung `kubectl` and the installation of some plugins
+- How to create basic 
 
 - `Kubernetes interfaces`
 
