@@ -49,10 +49,17 @@ cd k8s_setup_tools
 
     Type less by using some `alias` commands
 
-- Faster `kubectl` argument typing
+- `kubectl` arguments too long
 
-    Enhance `kubectl` experience, setup shell Completion to make the command line more friendly
+    Enhance `kubectl` experience by setting up the shell Completion. Stop typing everything and use `tab` key !
 
+- Oh My ZSH! framework
+
+    Oh My ZSH! is a sort of framework for your shell that pre-configure and extend your shell with a ton of features. 
+
+- I'm still typing too much `kubectl`
+
+    Using the `kubectl` plugin for Oh My ZSH! to even shorten the typing
 
 - `Kubectl Tooling`
 
