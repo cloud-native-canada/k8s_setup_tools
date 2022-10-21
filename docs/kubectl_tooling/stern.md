@@ -309,4 +309,4 @@ Stern is really versatile, and here are some command examples, based on the prev
 
 ## Next
 
-Tired of typing ? [Let's use a UI](../interfaces/k9s.md) !
+Cloud Kubernetes is a thing now. Learn how to install and configure it in [next chapter](../cloud_commands.md).

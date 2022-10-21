@@ -128,3 +128,7 @@ Add those lines to your shell startup script:
 ### Azure
 
     TODO
+
+## Next
+
+Tired of typing ? [Let's use a UI](../interfaces/k9s.md) !

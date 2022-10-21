@@ -19,7 +19,7 @@ cd k8s_setup_tools
 
 ## agenda
 
-- [`kubectl`](kubectl.md)
+- [I need `kubectl`](kubectl.md)
 
     Install of the `kubectl` command and basic usage
 
@@ -91,7 +91,7 @@ cd k8s_setup_tools
 
     Remotely accessing `pods` logs is one of the most powerful feature, but be honnest, it's really hard to read. This is what we can do about it.
   
-- [I'm tired of typing commands](interfaces/k9s.md)
+- [How can i observe what’s deployed in my cluster?](interfaces/k9s.md)
 
     We will quickly dive into an interfaces offering an overview of your cluster down to editing the resources. 
 
@@ -105,3 +105,5 @@ cd k8s_setup_tools
     or extensively working with json and yaml files
 
 - [I need for tooling for my advanced usage](dev_tooling/apps.md)
+
+    Here you'll find some cool tools that can ease the pain of working with Kubernetes and Yaml.
