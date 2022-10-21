@@ -34,6 +34,7 @@ Once the `gcloud` command is installed, we have to init and configure it:
 # gcloud components install kubectl # Optional
 
 gcloud init
+gcloud components install gke-gcloud-auth-plugin --quiet
 gcloud auth login
 
 gcloud config set compute/region us-east1

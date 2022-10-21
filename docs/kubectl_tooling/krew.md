@@ -127,6 +127,7 @@ Here are some of the cool Plugins to have:
 - ns: current `Namespace` and quick namespace changes
 - [whoami](https://github.com/rajatjindal/kubectl-whoami): who the cluster thinks you are from your authentication
 - [who-can](https://github.com/aquasecurity/kubectl-who-can): RBAC rules introspection
+- view-secret: directly view secret content without having to decode
 
 Install them with this command:
 
@@ -218,6 +219,55 @@ kube-system
 
 
 ![krew ns](img/krew-ns.png)
+
+## View Secrets
+
+Secrets in Kubernetes are an enhenced version of ConfigMaps: they are base64 encoded !
+
+First, create a secret:
+
+```bash
+k create secret generic my-secret --from-literal=key1=supersecret --from-literal=key2=topsecret -o yaml --dry-run=true
+```
+```yaml title="output"
+apiVersion: v1
+data:
+  key1: c3VwZXJzZWNyZXQ=
+  key2: dG9wc2VjcmV0
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: my-secret
+```
+
+the values are un readable because they are `base64` encoded.
+
+Apply that to the cluster:
+
+```bash
+k create secret generic my-secret \
+  --from-literal=key1=supersecret \
+  --from-literal=key2=topsecret \
+  -o yaml --dry-run=true | k apply -n default -f -
+```
+
+It is possible to read a `secret` value by using a templated output option:
+
+```bash
+kubectl get secret -n default my-secret --output=go-template={{.data.key1}} | base64 --decode
+```
+```bash title="output"
+supersecret
+```
+
+The Krew plugin `view-secret` does all that in one simple call:
+
+```bash
+k view-secret my-secret key1
+```
+```bash title="output"
+supersecret
+```
 
 ## Next
 
