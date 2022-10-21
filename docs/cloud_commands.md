@@ -4,6 +4,8 @@ Most people uses some flavour of Cloud hosted K8s clusters. This section is abou
 
 ## Gcloud
 
+With Google, everything goes throu the `gcloud` command.
+
 ### Install
 
 === "Apple Mac OSX"
@@ -25,7 +27,7 @@ Most people uses some flavour of Cloud hosted K8s clusters. This section is abou
 
 ### Setup
 
-You can then init and configure `gcloud`:
+Once the `gcloud` command is installed, we have to init and configure it:
 
 ```bash
 # Install kubectl if you don't already have it
@@ -35,6 +37,27 @@ gcloud init
 gcloud auth login
 
 gcloud config set compute/region us-east1
+
+gcloud config list
+```
+```bash title="output"
+[compute]
+region = us-central1
+zone = us-central1-a
+[core]
+account = prune@not-your-business.zap
+disable_usage_reporting = False
+project = my-dev-project
+```
+
+List clusters:
+
+```bash
+gcloud container clusters  list
+```
+```bash title="output"
+NAME                         LOCATION       MASTER_VERSION    MASTER_IP       MACHINE_TYPE   NODE_VERSION       NUM_NODES  STATUS
+my-dev-us-central-cluster    us-central1-a  1.24.3-gke.2100   34.70.94.2      e2-standard-2  1.23.8-gke.1900 *  136        RUNNING
 ```
 
 Add your `GKE` clusters to your `kubectl` context (you can always find this command in the `Connect` tab in the Gcloud Web Console):
@@ -43,6 +66,9 @@ Add your `GKE` clusters to your `kubectl` context (you can always find this comm
 gcloud container clusters get-credentials <cluster> --project <project>
 ```
 
+!!! note
+
+    It is not necessary to add the `--project <project>` section if only one project is used and is the default. 
 ### Completion
 
 Add those lines to enable completion:

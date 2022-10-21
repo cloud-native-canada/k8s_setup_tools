@@ -16,9 +16,11 @@ nav:
     - Krew: kubectl_tooling/krew.md
     - Kubie: kubectl_tooling/kubie.md
     - Stern: kubectl_tooling/stern.md
+  - Cloud Kubernetes: cloud_commands.md
   - Kubernetes Interface:
     - K9s: interfaces/k9s.md
     - Lens: interfaces/lens.md
+    - Octant: interfaces/octant.md
     - KubeNav: interfaces/kubenav.md
   - Development tooling:
     - VsCode Extensions: dev_tooling/vscode.md

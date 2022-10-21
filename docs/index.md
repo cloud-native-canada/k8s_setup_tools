@@ -91,6 +91,10 @@ cd k8s_setup_tools
 
     Remotely accessing `pods` logs is one of the most powerful feature, but be honnest, it's really hard to read. This is what we can do about it.
   
+- [I'm using a Cloud Kubernetes, How can I connect to it ?](cloud_commands.md)
+
+    Using Cloud resources is the norm today. Let's see how to configure your laptop to use them.
+
 - [How can i observe what’s deployed in my cluster?](interfaces/k9s.md)
 
     We will quickly dive into an interfaces offering an overview of your cluster down to editing the resources. 
