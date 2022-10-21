@@ -30,4 +30,4 @@ All OS: Download the binary from [Lens Website](https://k8slens.dev/).
 
 ## Next
 
-Need a mobile phone app ? check [next chapter](kubenav.md) !
+Another option ? check [next chapter](octant.md) !
