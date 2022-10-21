@@ -106,3 +106,7 @@ And this is right. We added a ton of stuff in our shell to be faster. Let's revi
     ```bash title="output"
     deployment.apps/simple-deployment scaled
     ```
+
+## Next
+
+Continue to [KubeColor](kubecolor.md)

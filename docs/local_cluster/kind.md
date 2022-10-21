@@ -136,6 +136,15 @@ CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo
 ```
 
+## Reboot
+
+After a reboot, `podman` will be disabled. It is necessary to restart podman and restart your `kind` containers before the cluster is available:
+
+```bash
+podman machine start
+podman start --all
+```
+
 ## Next
 
 Now that the Kind cluster is created, continue with [Minikube](minikube.md) !

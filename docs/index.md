@@ -79,10 +79,14 @@ cd k8s_setup_tools
 
 - [I want multiple context at the same time](kubectl_tooling/kubie.md)
 
-    By default, the current default `context` and `namespace` are global to your shells. 
+    The current default `context` and `namespace` are global to your shells. 
     
     While more dangerous, it is possible to change this behaviour so each shell target a different `context` or `namespace`
     
+- [I have too many `context`](kubectl_tooling/kubie.md#i-dont-know-which-context-im-using)
+
+- [I need to read my logs](kubectl_tooling/stern.md)
+- 
 - `Kubernetes interfaces`
 
     We will quickly dive into some usefull interfaces to get an overview of your cluster

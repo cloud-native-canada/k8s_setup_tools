@@ -219,4 +219,6 @@ kube-system
 
 ![krew ns](img/krew-ns.png)
 
+## Next
 
+Continue to [Multi Context](kubie.md)

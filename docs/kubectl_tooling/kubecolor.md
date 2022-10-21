@@ -78,3 +78,7 @@ k get pods
 ```
 
 ![kubecolor demo](img/kubecolor-demo.png)
+
+## Next
+
+Continue to [Kubectl Extensions](krew.md)
