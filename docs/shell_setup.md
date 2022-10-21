@@ -1,84 +1,131 @@
 # Shell Setup
 
-Ok, now you have installed `kubectl` and you have two working local clusters. You will soon realize that you're type `kubectl` (7 letters) quite often. Too often.
+As of now, `kubectl` is installed and can reach two working local clusters. Still, we are required to type the `kubectl` command (7 letters) quite often. Too often.
 
-You may also wonder *which cluster am I connected to ?* or *what is my default namespace ?*.
+We also have no knowledge of *which cluster am I connected to ?* or *what is my default namespace ?*.
 
-You can ease this pain by configuring your shell. 
+Let's now configure the `shell` to solve all of those problems.
 
+## I'm typing too much `kubectl` commands 
 
-## Completion
+First trick is to use `k` as an alias to `kubectl`.
 
-Add those commands to your respecting shell config file. Note you have to restart your shell for it to take effect:
+This is 6 less caracteres to type for every command !
 
 === "zsh"
     ```bash linenums="1" title="~/.zshrc"
     alias k=kubectl
-    source <(kubectl completion zsh)
-    ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
 
 === "bash"
     ```bash linenums="1" title="~/.bashrc"
     alias k=kubectl
+    ```
+
+Open a new Shell and start using `k` command:
+
+```bash
+k get namespaces
+k get pods -A
+k get services -A
+```
+
+### Bonus
+
+Most Kubernetes resources have a short-name. You can save few keystrokes here again. 
+
+Resources are also defined as `plural` by default (with an `s` at the end, like `services`), 
+but using the `singular` works the same ! It's one less keystroke again:
+
+```bash
+k api-resources
+```
+```bash
+NAME                              SHORTNAMES   APIVERSION                             NAMESPACED   KIND
+pods                              po           v1                                     true         Pod
+deployments                       deploy       apps/v1                                true         Deployment
+ingresses                         ing          networking.k8s.io/v1                   true         Ingress
+services                          svc          v1                                     true         Service
+namespaces                        ns           v1                                     false        Namespace
+...
+```
+
+Let's try it:
+
+```bash
+k get ns
+k get po -A
+k get svc -A
+```
+
+## `kubectl` arguments are too long
+
+`kubectl port-forward` is one example of a long argument. So is `kubectl get deployment --context=my-cluster`. 
+
+`completion` is the term used in UNIX™ shells when it comes to empowering the shell with better knowledge of the commands we use.
+
+With Completion setup, you can type `kubectl <tab>` or `k <tab>` to get help. `k po<tab>` will get completed to `k port-forward`
+
+Let's add those commands to the shell config file. A restart of the shell is needed for it to take effect:
+
+=== "zsh"
+    ```bash linenums="1" title="~/.zshrc"
+    autoload -Uz compinit
+    compinit
+    source <(kubectl completion zsh)
+    ```
+
+=== "bash"
+    ```bash linenums="1" title="~/.bashrc"
     source <(kubectl completion bash)
     complete -o default -F __start_kubectl k
+    ```
+
+
+`bash` requires the use of the `complete` command to make `k` also use completion.
+
+Let's try it, type `k <tab>` then `k port<tab>` then `k get po -n <tab>`:
+
+```bash
+k <tab>
+alpha          -- Commands for features in alpha
+annotate       -- Update the annotations on a resource
+api-resources  -- Print the supported API resources on the server
+api-versions   -- Print the supported API versions on the server, in the form of "group/version"
+apply          -- Apply a configuration to a resource by file name or stdin
+attach         -- Attach to a running container
+auth           -- Inspect authorization
+autoscale      -- Auto-scale a deployment, replica set, stateful set, or replication controller
+certificate    -- Modify certificate resources.
+cluster-info   -- Display cluster information
+...
+
+k port<tab>
+k port-forward
+
+k get po -n <tab>
+default             kube-node-lease     kube-public         kube-system         local-path-storage
+```
+
+## My `kubectl` commands are failing
+
+Some OS, including MacOsX, comes with a really low value for the number of concurrent Open File Descriptors.
+
+This low limit may break some `kubectl` commands or some other tools using the Kubernetes Go client like `helm`. 
+
+To solve that, increase your File Descriptors to at lease 2048:
+
+=== "zsh"
+    ```bash linenums="1" title="~/.zshrc"
     ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
 
-OK This is the basic:
-
-1) instead of typing `kubectl`, just type `k`. It's 6 less characters !
-
-2) add completion to your shell. So you can type `k <tab>` to get help or `k po<tab>` to get completion to `k port-forward`
-
-3) make `k` also use completion
-
-4) increase the number of open files to 2048. This is needed in some cases when you're dealing with a lot of resources and `kubectl` open many connexions against the cluster.
-
-## Cloud commands
-
-### Gcloud
-
-=== "Apple Mac OSX ZSH"
-    ```bash linenums="1" title="~/.zshrc"
-    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-    ```
-
-=== "Apple Mac OSX BASH"
+=== "bash"
     ```bash linenums="1" title="~/.bashrc"
-    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
-    source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+    ulimit -n 2048          # kubectl opens one cnx (file) per resource
     ```
 
-=== "Linux ZSH"
-    ```bash linenums="1" title="~/.zshrc"
-    # path may vary depending on where you installed gcloud command
-    $HOME/kubernetes/google-cloud-sdk/path.zsh.inc
-    $HOME/kubernetes/google-cloud-sdk/completion.zsh.inc
-    ```
-
-=== "Linux BASH"
-    ```bash linenums="1" title="~/.bashrc"
-    # path may vary depending on where you installed gcloud command
-    $HOME/kubernetes/google-cloud-sdk/path.bash.inc
-    $HOME/kubernetes/google-cloud-sdk/completion.bash.inc
-    ```
-
-### AWS CLI
-
-=== "ZSH"
-    ```bash linenums="1" title="~/.zshrc"
-    complete -C '/usr/local/bin/aws_completer' aws
-    ```
-
-=== "BASH"
-    ```bash linenums="1" title="~/.bashrc"
-    complete -C '/usr/local/bin/aws_completer' aws
-    ```
-
-## ZSH
+## ZSH shell
 
 Mac OSX default shell is now `zsh` so we'll focus on ZSH now on. ZSH is also widely available in Linux and may somtimes be the default too.
 
@@ -88,15 +135,27 @@ Mac OSX default shell is now `zsh` so we'll focus on ZSH now on. ZSH is also wid
     ```bash linenums="1" title="~/.zshrc"
     export BASH_SILENCE_DEPRECATION_WARNING=1
     ```
+
 ### Oh My ZSH !
 
-Oh My Zsh is a delightful, open source, community-driven framework for managing your Zsh configuration. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout... `"Oh My ZSH!"`
+A lot of tools exist to configure and enhence any Shell to make it more productive, add colors, change the prompt.
+
+Oh My ZSH! is a delightful, open source, community-driven framework for managing your Zsh configuration. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout... `"Oh My ZSH!"`
+
+There is so much in Oh My ZSH! that nobody use it all. But even if using only 10% of it, that is already a giant benefit for productivity.
+As everything comes bundles in one package with good documentation and community support, it is faster to use it than manage each aspect of the configuration by hand or with different tools.
+
+When you start using Oh My ZSH! you can't go back.
 
 #### Install
 
 ```bash
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+
+!!! note "updates"
+
+    Oh My ZSH! checks for the latest version and will warn if the version is outdated every time a new shell is started
 
 #### Theme
 
@@ -152,12 +211,14 @@ Here are the answers to get a cool but productive shell:
 
 [Agnoster](https://github.com/agnoster/agnoster-zsh-theme) is another cool theme, but less powerful than PowerLevel10k.
 
+Agnoster is a lighter theme, less intrusive by default, but lack some of the cool stuff.
+
 #### Plugins
 
 ZSH uses plugins that extend the shortcuts and other behaviours for default apps. Here's some that are worth using:
 
 ```yaml
-plugins=(brew kubectl git python tmux vault terraform)
+plugins=(brew git python tmux vault terraform)
 ```
 
 Once those plugins are installed and the shell is reloaded, a ton of new Aliases are created. Use `alias` command to list them all. Here are a few:
@@ -171,13 +232,26 @@ gaa='git add --all'
 gam='git am'
 ```
 
-##### kubectl plugin
+## I'm still typing too much `kubectl`
 
-This plugin ads a ton of aliases specific to `kubectl`, usually based on the action to take, like `kgp` for `Kubectl Get Pods`.
+When working with Kubernetes, some commands are regularily used, like `k get po`. Even if it is faster to type than `kubectl get pods`, it's still 8 characters long (including spaces).
+
+Oh My ZSH! includes a plugin for `kubectl` that ads a ton of aliases specific to `kubectl`
+
+Those alias are usually based on the first letters of each components of the command to execute, like `kgp` for `Kubectl Get Pods`.
+
+Simply add `kubectl` to the list of plugins in `.zshrc` file:
+
+```yaml
+plugins=(brew git python tmux vault terraform kubectl)
+```
+
+Check that all the new aliases are created after starting a new shell:
 
 ``` bash
 alias | grep kubectl
-
+```
+```bash
 k=kubectl
 kaf='kubectl apply -f'
 kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
@@ -185,20 +259,30 @@ kccc='kubectl config current-context'
 ...
 ```
 
-Because the plugin `kubectl` already create the alias `k=kubectl`, we don't need it explicitely in our `.zshrc` file. You can safely remove it.
+Because the plugin `kubectl` already create the alias `k=kubectl`, we don't need it explicitely in our `.zshrc` file. 
+
+Oh My ZSH! also initialize the completion system, so you can also remove it. Comment those lines in the `.zshrc` file:
+
+```bash
+# k=kubectl
+# autoload -Uz compinit
+# compinit
+
+```
+
 Note that the aliases are all calling `kubectl` explicitelly.
 
-##### zsh-autosuggestions plugin
+## zsh-autosuggestions plugin
 
 TBD
 
-##### zsh-syntax-highlighting plugin
+## zsh-syntax-highlighting plugin
 
 TBD
 
-#### Dynamic Prompt
+## Dynamic Prompt
 
-Oh My ZSH! now have an eat feature called the dynamic prompt. Instead of having a prompt line which actually takes 3 lines and display your Git repo, Kubernetes Context, AWS or GCP account all the time, the needed information can be displayed only when needed.
+Oh My ZSH! now includes a neat feature called the `dynamic prompt`. Instead of having a prompt line which actually takes 3 lines and display your Git repo, Kubernetes Context, AWS or GCP account all the time, the needed information can be displayed only when needed.
 
 In the case of Kubernetes, it means only when using the `kubectl` command, or any associated or similar commands like `k`.
 

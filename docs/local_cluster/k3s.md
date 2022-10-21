@@ -9,7 +9,7 @@ Lightweight. Easy to install, half the memory, all in a binary of less than 100 
 
 [https://k3s.io/](https://k3s.io/)
 
-# Install
+## Install
 
 !!! warning
     This is only for Linux. On OSX, use Colima or Kind.
@@ -24,3 +24,7 @@ sudo k3s kubectl get node
 
 
 ```
+
+## Next
+
+Now that the cluster is running, let's [install some apps](../app_deployment.md) !

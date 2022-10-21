@@ -39,41 +39,21 @@ kind get clusters
 
 ## Usage
 
-It's better to create a config file and create a cluster from it:
+It's better to create a config file and create a cluster from it. 
+
+Here's the config yaml file:
 
 ```yaml linenums="1" title="kind.yaml"
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-kubeadmConfigPatches:
- - |
-   apiVersion: kubeadm.k8s.io/v1beta2
-   kind: ClusterConfiguration
-   metadata:
- 	name: config
-   apiServer:
- 	extraArgs:
-   	"service-account-issuer": "kubernetes.default.svc"
-   	"service-account-signing-key-file": "/etc/kubernetes/pki/sa.key"
-networking:
- # the default CNI will not be installed if you enable it, usefull to install Cilium !
- disableDefaultCNI: false
-nodes:
-- role: control-plane
-  image: kindest/node:v1.24.4@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98
-- role: worker
-  image: kindest/node:v1.24.4@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98
-  extraPortMappings:
-  - containerPort: 80
-	hostPort: 3080
-	listenAddress: "0.0.0.0"
-  - containerPort: 443
-	hostPort: 3443
-	listenAddress: "0.0.0.0"
+--8<-- "docs/local_cluster/kind.yaml"
 ```
 
 Then create the cluster
 
 ```bash
+cat > kind.yaml << EOF
+--8<-- "docs/local_cluster/kind.yaml"
+EOF
+
 kind create cluster --name=demo --config kind.yaml -v9 --retain
 ```
 
@@ -96,30 +76,40 @@ You can check that everything is working. Each K8s node is actually a running `c
 
 ```bash
 podman ps -a
+```
+```bash
 CONTAINER ID  IMAGE                                                                                           COMMAND     CREATED        STATUS            PORTS                                        NAMES
 6993dbdbf82b  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  127.0.0.1:55210->6443/tcp                    demo-control-plane
 dd461d2b9d4a  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  0.0.0.0:3080->80/tcp, 0.0.0.0:3443->443/tcp  demo-worker
-
-docker ps -a
-CONTAINER ID  IMAGE                                                                                           COMMAND     CREATED        STATUS            PORTS                                        NAMES
-6993dbdbf82b  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              4 minutes ago  Up 4 minutes ago  127.0.0.1:55210->6443/tcp                    demo-control-plane
-dd461d2b9d4a  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              4 minutes ago  Up 4 minutes ago  0.0.0.0:3080->80/tcp, 0.0.0.0:3443->443/tcp  demo-worker
 ```
 
 We can validate the state of the cluster too:
 
+- k8s context
+
 ```bash
 k config current-context
-
+```
+```bash
 kind-demo
+```
 
+- K8s cluster info
+
+```bash
 kubectl cluster-info
-
+```
+```bash
 Kubernetes control plane is running at https://127.0.0.1:56141
 CoreDNS is running at https://127.0.0.1:56141/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+```
 
+- Running pods
 
+```bash
 kubectl get pods -A
+```
+```bash
 NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE
 kube-system          coredns-6d4b75cb6d-lqcs6                     1/1     Running   0          4m6s
 kube-system          coredns-6d4b75cb6d-xgbxk                     1/1     Running   0          4m6s
@@ -134,10 +124,27 @@ kube-system          kube-scheduler-demo-control-plane            1/1     Runnin
 local-path-storage   local-path-provisioner-6b84c5c67f-csxg6      1/1     Running   0          4m6s
 ```
 
-We can check the current Kubernetes `context` using `kubectl`:
+- All contexts
+
+We can list all Kubernetes `context` using `kubectl`:
 
 ```bash
 k config  get-contexts
+```
+```bash
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo
 ```
+
+## Reboot
+
+After a reboot, `podman` will be disabled. It is necessary to restart podman and restart your `kind` containers before the cluster is available:
+
+```bash
+podman machine start
+podman start --all
+```
+
+## Next
+
+Now that the Kind cluster is created, continue with [Minikube](minikube.md) !

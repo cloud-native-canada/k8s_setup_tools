@@ -1,6 +1,15 @@
 # Podman
 
-`podman` is a full replacement of Docker and Docker Desktop
+`podman` is a full replacement of Docker and Docker-For-Desktop. It's the container Swiss-Army knife from RedHat.
+
+What you get with Podman:
+
+- Multiple image format support, including the OCI and Docker image formats
+- Full management of container lifecycle, Docker CLI replacement
+- Container image management (managing image layers, overlay filesystems, etc)
+- Podman version 3.4+ now support M1 Apple Macs
+- Replaces Docker-for-Desktop and includes a UI
+- no bundled Kubernetes, use kind, minikube, k3s, microk8s...
 
 It can also run and build rootless containers.
 ## Install
@@ -40,6 +49,11 @@ It can also run and build rootless containers.
 
         Please [check the docs](https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md) for specific detailed instructions
 
+=== "Podman Desktop (UI)"
+
+    Download the UI from the [official website](https://iongion.github.io/podman-desktop-companion/).
+
+
 ## Setup
 
 !!! note "Docker replacement"
@@ -55,6 +69,7 @@ mv -f /usr/local/bin/docker /usr/local/bin/docker-orig
 ln -s /usr/local/bin/podman /usr/local/bin/docker
 
 # Tell Docker to connect to Podman
+# This is needed so every app "hardcoded" for Docker will work
 export DOCKER_HOST="unix://$HOME/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
 ```
 
@@ -86,3 +101,7 @@ You can also convert a yaml file back to bunch of containers run in Podman:
 ```bash
 podman play kube /mnt/mysharedfolder/my-running-app.yaml
 ```
+
+## Next
+
+Create a local Kubernetes cluster in [next chapter](kind.md) !

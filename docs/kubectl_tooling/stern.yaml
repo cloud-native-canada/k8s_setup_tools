@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: multi-deployment
+  name: multi-deployment
+  namespace: default
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: multi-deployment
+  template:
+    metadata:
+      labels:
+        app: multi-deployment
+    spec:
+      containers:
+      - image: alpine:latest
+        imagePullPolicy: Always
+        name: first
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo "starting first container";
+            tail -f /dev/null
+      - image: alpine:latest
+        imagePullPolicy: Always
+        name: second
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo "starting second container";
+            tail -f /dev/null

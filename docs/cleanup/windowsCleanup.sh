@@ -1,3 +1,3 @@
 #!/bin/sh
 #
-# This is the cleanup script for Linux
+# This is the cleanup script for Windows

@@ -12,8 +12,11 @@ minikube stop
 minikube delete
 rm -f /usr/local/bin/minikube
 
-# remove kubectl
+# remove kubectl and tools
 rm -f /usr/local/bin/kubectl
+rm -f /usr/local/bin/kubecolor
+rm -f /usr/local/bin/kubectl-krew
+rm -f /usr/local/bin/kubie
 
 # stop Colima and remove it
 colima kubernetes delete

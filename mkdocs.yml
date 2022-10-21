@@ -8,16 +8,23 @@ nav:
     - Kind: local_cluster/kind.md
     - MiniKube: local_cluster/minikube.md
     - K3s: local_cluster/k3s.md
+  - Application Deployment: app_deployment.md
   - Shell Setup: shell_setup.md
   - Kubectl Tooling:
     - Kubectl: kubectl_tooling/kubectl.md
-    - Krew: kubectl_tooling/krew.md
     - Kubecolor: kubectl_tooling/kubecolor.md
+    - Krew: kubectl_tooling/krew.md
+    - Kubie: kubectl_tooling/kubie.md
     - Stern: kubectl_tooling/stern.md
+  - Cloud Kubernetes: cloud_commands.md
   - Kubernetes Interface:
     - K9s: interfaces/k9s.md
     - Lens: interfaces/lens.md
-  - Development tooling: dev_tooling.md
+    - Octant: interfaces/octant.md
+    - KubeNav: interfaces/kubenav.md
+  - Development tooling:
+    - VsCode Extensions: dev_tooling/vscode.md
+    - Other apps: dev_tooling/apps.md
   - Cleanup: cleanup/cleanup.md
   - Mkdocs help and examples: mkdocs.md
 theme:
