@@ -306,3 +306,7 @@ Stern is really versatile, and here are some command examples, based on the prev
       "message": {"level":"warn","message":"something is not quite right","container":"first"}
     }
     ```
+
+## Next
+
+Tired of typing ? [Let's use a UI](../interfaces/k9s.md) !

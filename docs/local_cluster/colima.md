@@ -77,3 +77,7 @@ For the rest of the presentation we're not going to use Colima. You can stop it:
 colima kubernetes delete # stop k8s and delete the associated files
 colima stop
 ```
+
+## Next
+
+Learn how to [replace Docker-For-Desktop](podman.md) by a free opensource solution.

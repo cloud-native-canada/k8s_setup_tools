@@ -101,3 +101,7 @@ You can also convert a yaml file back to bunch of containers run in Podman:
 ```bash
 podman play kube /mnt/mysharedfolder/my-running-app.yaml
 ```
+
+## Next
+
+Create a local Kubernetes cluster in [next chapter](kind.md) !

@@ -55,3 +55,7 @@ As `k9s` is a terminal console application, there's no mouse support or buttons 
 - Describe of a Pods
 
     ![k9s describe pod](img/k9s-describe.png)
+
+## Next
+
+Leave the shell and use a 100% UI application in [next chapter](lens.md) !

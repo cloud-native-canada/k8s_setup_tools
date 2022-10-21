@@ -25,3 +25,7 @@ This is totally a productivity tool that every developper needs.
 (Thank you [@melmaliacone](https://github.com/melmaliacone) for sharing this)
 
 ![vscode rainbow-indent](img/vscode-rainbow-indent.png)
+
+## Next
+
+Learn about other cool apps in the [next chapter](apps.md).

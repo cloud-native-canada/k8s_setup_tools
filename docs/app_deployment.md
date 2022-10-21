@@ -210,3 +210,7 @@ simple-deployment-57d9ccc7f8-bqnxs   0/1     Completed   3 (32s ago)   49s
 simple-deployment-57d9ccc7f8-zpzwr   0/1     Completed   3 (30s ago)   49s
 simple-pod                           1/1     Running     0             67s
 ```
+
+## Next
+
+Now we have something to play with, [let's start playing](../docs/kubectl_tooling/kubectl.md) !

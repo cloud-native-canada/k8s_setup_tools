@@ -185,3 +185,7 @@ EOF
 !!! warning
 
     The above commands are not fail-proof, and executing `dasel put` multiple times may generate invalid yaml.
+
+## Next
+
+This is the end of the tutorial. If you want, use [the Cleanup script](../cleanup/cleanup.md) to remove most of what you installed.

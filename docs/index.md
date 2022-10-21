@@ -85,13 +85,23 @@ cd k8s_setup_tools
     
 - [I have too many `context`](kubectl_tooling/kubie.md#i-dont-know-which-context-im-using)
 
+    With great power comes great responsibility. Let's see how we can ensure we're sending command to the right cluster.
+
 - [I need to read my logs](kubectl_tooling/stern.md)
-- 
-- `Kubernetes interfaces`
 
-    We will quickly dive into some usefull interfaces to get an overview of your cluster
+    Remotely accessing `pods` logs is one of the most powerful feature, but be honnest, it's really hard to read. This is what we can do about it.
+  
+- [I'm tired of typing commands](interfaces/k9s.md)
 
-- `Development tooling`
+    We will quickly dive into an interfaces offering an overview of your cluster down to editing the resources. 
+
+- [I just want to clic, no shell](interfaces/lens.md)
+
+    Full UI to K8s, no more shell, just clic.
+
+- [Working with YAML is so hard](dev_tooling/vscode.md)
 
     Finaly we will go through some of the helpers that you can install when you're developing for Kubernetes
     or extensively working with json and yaml files
+
+- [I need for tooling for my advanced usage](dev_tooling/apps.md)

@@ -27,3 +27,7 @@ All OS: Download the binary from [Lens Website](https://k8slens.dev/).
 - Lens Workload view
 
     ![Lens Workloads](img/Lens-workload.png)
+
+## Next
+
+Need a mobile phone app ? check [next chapter](kubenav.md) !
