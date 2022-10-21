@@ -213,4 +213,4 @@ simple-pod                           1/1     Running     0             67s
 
 ## Next
 
-Now we have something to play with, [let's start playing](../docs/kubectl_tooling/kubectl.md) !
+Now we have something to play with, [let's start playing](kubectl_tooling/kubectl.md) !
