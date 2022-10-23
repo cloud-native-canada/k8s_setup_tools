@@ -37,8 +37,20 @@ Here is the code to create a basic project:
 ```bash
 mkdir myProject
 cd myProject
-mkdir -p base overlay/dev overlay/stg overlay/prd
-k 
+mkdir -p base overlays/dev overlays/stg overlays/prd
+
+k create deployment \
+  --image=alpine:latest \
+  --replicas=2 \
+  -o yaml \
+  --dry-run=client \
+  simple-deployment > base/simple-deployment.yaml
+
+k create service clusterip simple-service \
+  --tcp=5678:8080 \
+  -o yaml \
+  --dry-run=client > base/simple-service.yaml
+
 ```
 
 Now add a `kustomization` file:
@@ -51,8 +63,90 @@ metadata:
   name: myproject
 
 resources:
-- deployment.yaml
-- service.yaml
+- simple-deployment.yaml
+- simple-service.yaml
 EOF
+```
 
+It is easy to generate the final result using the kustomize` command:
+
+```bash
+kustomize build base
+```
+```yaml title="output"
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: simple-service
+  name: simple-service
+spec:
+  ports:
+  - name: 5678-8080
+    port: 5678
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: simple-service
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: simple-deployment
+  name: simple-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: simple-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: simple-deployment
+    spec:
+      containers:
+      - image: alpine:latest
+        name: alpine
+        resources: {}
+status: {}
+```
+
+As seen previously, the deployment and services are actually not fully working. Yes, they can be deployed, but some parameteres needs to be set to be a working app.
+
+## Add an `overlay` for the `dev` environment
+
+Overlays are variation on the original yaml that you apply "on top" of the base. Configuration of also done in a `kustomization.yaml` file.
+
+Deploy the app in the DEV namespace :
+
+```bash
+cat <<EOF >overlays/dev/kustomization.yaml
+resources:
+- ./../../base
+
+namespace: dev
+namePrefix: dev-
+EOF
+```
+
+## add an overlay for staging
+
+Deploy the app in the STG namespace :
+
+```bash
+cat <<EOF >overlays/dev/kustomization.yaml
+resources:
+- ./../../base
+
+namespace: stg
+namePrefix: stg-
+EOF
 ```

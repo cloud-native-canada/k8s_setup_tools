@@ -17,6 +17,9 @@ nav:
     - Kubie: kubectl_tooling/kubie.md
     - Stern: kubectl_tooling/stern.md
   - Cloud Kubernetes: cloud_commands.md
+  - Deployment templating: 
+      - kustomize: kustomize/kustomize.md
+      - helm: helm/helm.md
   - Kubernetes Interface:
     - K9s: interfaces/k9s.md
     - Lens: interfaces/lens.md
