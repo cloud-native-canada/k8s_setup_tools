@@ -129,11 +129,21 @@ local-path-storage   local-path-provisioner-6b84c5c67f-csxg6      1/1     Runnin
 We can list all Kubernetes `context` using `kubectl`:
 
 ```bash
-k config  get-contexts
+kubectl config  get-contexts
 ```
 ```bash
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo
+```
+
+## Create a second cluster
+
+```bash
+cat > kind.yaml << EOF
+--8<-- "docs/local_cluster/kind2.yaml"
+EOF
+
+kind create cluster --name=demo2 --config kind2.yaml -v9 --retain
 ```
 
 ## Reboot

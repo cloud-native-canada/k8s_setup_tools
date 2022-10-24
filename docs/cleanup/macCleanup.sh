@@ -4,9 +4,9 @@
 
 # Kubectl and tooling
 rm -f /usr/local/bin/kubectl
-rm -f /usr/local/bin/kubecolor
 rm -f /usr/local/bin/kubectl-krew
 rm -f /usr/local/bin/kubie
+rm -f /usr/local/bin/stern
 
 # Kind
 kind delete cluster demo
@@ -32,8 +32,6 @@ podman machine stop
 podman machine rm
 brew uninstall podman
 brew uninstall podman-desktop
-
-
 
 # Remove tooling
 brew uninstall kubecolor/tap/kubecolor
