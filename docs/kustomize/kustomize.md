@@ -37,7 +37,7 @@ Here is the code to create a basic project:
 ```bash
 mkdir myProject
 cd myProject
-mkdir -p base overlays/dev overlays/stg overlays/prd
+mkdir -p base overlays/dev overlays/stg
 
 k create deployment \
   --image=alpine:latest \
@@ -72,6 +72,7 @@ It is easy to generate the final result using the kustomize` command:
 
 ```bash
 kustomize build base
+# Same as kubectl kustomize base
 ```
 ```yaml title="output"
 apiVersion: v1
@@ -137,16 +138,40 @@ namePrefix: dev-
 EOF
 ```
 
-## add an overlay for staging
-
-Deploy the app in the STG namespace :
+Now the project is deployed in the right environment, but the `service` is not targetting the right deployment labels. We can fix that by overriding the labels with a `commonLabels` keyword :
 
 ```bash
 cat <<EOF >overlays/dev/kustomization.yaml
 resources:
 - ./../../base
 
+namespace: dev
+namePrefix: dev-
+
+commonLabels:
+  app: simple-deployment
+  owner: prune
+  version: v1
+EOF
+```
+
+
+## add an overlay for staging
+
+Deploy the app in the STG namespace :
+
+```bash
+cat <<EOF >overlays/stg/kustomization.yaml
+resources:
+- ./../../base
+
 namespace: stg
 namePrefix: stg-
+
+commonLabels:
+  app: simple-deployment
+  owner: prune
+  version: v1
+  environment: stg
 EOF
 ```

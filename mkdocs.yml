@@ -9,7 +9,7 @@ nav:
       - Colima: local_cluster/options/colima.md
       - MiniKube: local_cluster/options/minikube.md
       - K3s: local_cluster/options/k3s.md
-  - Application Deployment: app_deployment.md
+  - Deploying applications with kubectl: app_deployment.md
   - Shell Setup: shell_setup.md
   - Kubectl Tooling:
     - Kubectl: kubectl_tooling/kubectl.md
@@ -18,7 +18,7 @@ nav:
     - Kubie: kubectl_tooling/kubie.md
     - Stern: kubectl_tooling/stern.md
   - Cloud Kubernetes: cloud_commands.md
-  - Deployment templating: 
+  - Advanced Deployment: 
       - kustomize: kustomize/kustomize.md
       - helm: helm/helm.md
   - Kubernetes Interface:
