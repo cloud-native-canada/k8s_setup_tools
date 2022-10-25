@@ -1,5 +1,9 @@
 # Podman
 
+!!! important
+    If you already have Docker-Desktop or Docker Engine (Linux) installed and running, skip this step for the demo and go directly to [Kind chapter](kind.md)
+
+
 `podman` is a full replacement of Docker and Docker-For-Desktop. It's the container Swiss-Army knife from RedHat.
 
 What you get with Podman:

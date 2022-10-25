@@ -27,4 +27,4 @@ sudo k3s kubectl get node
 
 ## Next
 
-Now that the cluster is running, let's [install some apps](../app_deployment.md) !
+Now that the cluster is running, let's [install some apps](../../app_deployment.md) !

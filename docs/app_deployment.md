@@ -247,7 +247,18 @@ EOF
 kubectl apply -f app-deployment.yaml
 ```
 
-Some spotter a problem already: the password is hardcoded. We'll get to it later.
+Some spotted a problem already: the password is hardcoded. We'll get to it later.
+
+Check the application is running:
+
+```bash
+kubectl get pods -n default
+```
+```bash title="output"
+NAME                              READY   STATUS    RESTARTS   AGE
+gowebapp-5994456fcb-ctt4x         1/1     Running   0          31m
+gowebapp-mysql-684db8fdcd-nwfn4   1/1     Running   0          34m
+```
 ## Next
 
 Now we have something to play with, [let's start playing](kubectl_tooling/kubectl.md) !

@@ -53,7 +53,8 @@ Then create the cluster
 cat > kind-dev.yaml << EOF
 --8<-- "docs/local_cluster/kind-dev.yaml"
 EOF
-
+```
+```bash
 kind create cluster --name=dev --config kind-dev.yaml -v9 --retain
 ```
 
@@ -142,7 +143,8 @@ CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 cat > kind-stg.yaml << EOF
 --8<-- "docs/local_cluster/kind-stg.yaml"
 EOF
-
+```
+```bash
 kind create cluster --name=stg --config kind-stg.yaml -v9 --retain
 ```
 
