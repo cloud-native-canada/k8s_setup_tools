@@ -88,7 +88,7 @@ We can validate the state of the cluster too:
 - k8s context
 
 ```bash
-k config current-context
+kubectl config current-context
 ```
 ```bash
 kind-demo

@@ -149,10 +149,10 @@ kubectl config get-contexts
 ```bash title="output"
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo
-          minikube    minikube    minikube    default
+          kind-demo2  kind-demo2  kind-demo2  default
 
-# use your GKE cluster minikube
-kubectl config use-context minikube
+# use your GKE cluster kind-demo2
+kubectl config use-context kind-demo2
 ```
 
 While this is not that bad, we can do even better with `ctx`. Also, when using `kubecolor`, the current context is highlighted:
@@ -163,25 +163,25 @@ k ctx
 ```
 ```bash  title="output" hl_lines="1 1"
 kind-demo
-minikube
+kind-demo2
 ```
 
 You can also change context quickly by just appending the name of the target context to the same command:
 
 ```bash
-# change the context to minikube using ctx
-k ctx minikube
+# change the context to kind-demo2 using ctx
+k ctx kind-demo2
 ```
 ```bash title="output" hl_lines="2 2"
 kind-demo
-minikube
+kind-demo2
 ```
 
 Finaly you can delete a context (but don't do it right now):
 
 ```bash
-# remove the minikube context
-k ctx -d minikube
+# remove the kind-demo2 context
+k ctx -d kind-demo2
 ```
 
 ![krew ctx](img/krew-ctx.png)
@@ -208,7 +208,7 @@ k ns kube-system
 k ns
 ```
 ```bash title="output" hl_lines="7 7"
-Context "minikube" modified.
+Context "kind-demo2" modified.
 Active namespace is "kube-system".
 
 default

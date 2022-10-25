@@ -177,13 +177,13 @@ kubectl config  get-contexts
 ```bash title="output"
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-demo   kind-demo   kind-demo   default
-          minikube    minikube    minikube    default
+          kind-demo2  kind-demo2  kind-demo2  default
 ```
 ```bash
-kubectl config  set-context minikube
+kubectl config  set-context kind-demo2
 ```
 ```bash title="output"
-Context "minikube" modified.
+Context "kind-demo2" modified.
 ```
 ```bash
 kubectl config  get-contexts
@@ -191,10 +191,10 @@ kubectl config  get-contexts
 ```bash title="output"
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
           kind-demo   kind-demo   kind-demo   default
-*         minikube    minikube    minikube    default
+*         kind-demo2  kind-demo2  kind-demo2  default
 ```
 
-Now we can apply the same resources to the `minikube` cluster:
+Now we can apply the same resources to the `kind-demo2` cluster:
 
 ```bash
 kubectl apply -f simple-pod.yaml
