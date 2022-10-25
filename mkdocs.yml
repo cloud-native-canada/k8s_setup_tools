@@ -14,11 +14,11 @@ nav:
   - Kubectl Tooling:
     - Kubectl: kubectl_tooling/kubectl.md
     - Kubecolor: kubectl_tooling/kubecolor.md
+    - Stern: kubectl_tooling/stern.md
     - Krew: kubectl_tooling/krew.md
     - Kubie: kubectl_tooling/kubie.md
-    - Stern: kubectl_tooling/stern.md
   - Cloud Kubernetes: cloud_commands.md
-  - Advanced Deployment: 
+  - Advanced Manifests Creation: 
       - kustomize: kustomize/kustomize.md
       - helm: helm/helm.md
   - Kubernetes Interface:

@@ -135,6 +135,274 @@ Install them with this command:
 kubectl krew install ctx ns stern whoami who-can
 ```
 
+## Generating the application manifest
+
+The GoWebApp application was previously deployed with a hardcoded password for Mysql. This is not optimal and not recommended. It was done like this because it's a DEMO, and not real production cluster.
+
+!!! note
+    Usually all application's deployment files (the YAML) should be managed in a versioned repository and should never be modified directly on the cluster.
+
+    For this DEMO, still, we are going to use the currently deployed application and modify it.
+
+Now that the application is running and everything is fine, it is a good idea to store the resulting yaml in our own repo.
+
+First dump the `gowebapp` deployment into a file. By using the `--output yaml` (`-o yaml`) option, `kubectl` will dump the full file, including some fields internal to the current deployment that are not needed:
+
+```bash
+k get deploy gowebapp --output yaml
+```
+```yaml title="output"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"run":"gowebapp"},"name":"gowebapp","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"run":"gowebapp"}},"template":{"metadata":{"labels":{"run":"gowebapp"}},"spec":{"containers":[{"env":[{"name":"DB_PASSWORD","value":"rootpasswd"}],"image":"ghcr.io/cloud-native-canada/k8s_setup_tools:app","livenessProbe":{"httpGet":{"path":"/register","port":9000},"initialDelaySeconds":15,"timeoutSeconds":5},"name":"gowebapp","ports":[{"containerPort":9000}],"readinessProbe":{"httpGet":{"path":"/register","port":9000},"initialDelaySeconds":25,"timeoutSeconds":5},"resources":{"limits":{"cpu":"50m","memory":"100Mi"},"requests":{"cpu":"20m","memory":"10Mi"}}}]}}}}
+  creationTimestamp: "2022-10-25T16:32:28Z"
+  generation: 1
+  labels:
+    run: gowebapp
+  name: gowebapp
+  namespace: default
+  resourceVersion: "2662"
+  uid: c0085020-845c-468e-a95e-9bb2e908dc2b
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      run: gowebapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: gowebapp
+    spec:
+      containers:
+      - env:
+        - name: DB_PASSWORD
+          value: rootpasswd
+        image: ghcr.io/cloud-native-canada/k8s_setup_tools:app
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /register
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: gowebapp
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /register
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 25
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 50m
+            memory: 100Mi
+          requests:
+            cpu: 20m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-10-25T16:33:09Z"
+    lastUpdateTime: "2022-10-25T16:33:09Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-10-25T16:32:28Z"
+    lastUpdateTime: "2022-10-25T16:33:09Z"
+    message: ReplicaSet "gowebapp-5994456fcb" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+```
+
+Here, the `status` section is useless, as it relates to the current deployment. So are the `UID` or `creationTimestamp` fields. It is not recommended to store these values in your GitOps repo.
+
+Krew has a little plugin to trim off the un-needed parts of exported resources: [Neat](https://github.com/itaysk/kubectl-neat).
+
+To use Neat, just add the `neat` keyword between `kubectl` and the `get` command:
+
+```bash
+k neat get deploy gowebapp --output yaml
+```
+```yaml title="output"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    run: gowebapp
+  name: gowebapp
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      run: gowebapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: gowebapp
+    spec:
+      containers:
+      - env:
+        - name: DB_PASSWORD
+          value: rootpasswd
+        image: ghcr.io/cloud-native-canada/k8s_setup_tools:app
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /register
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: gowebapp
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /register
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 25
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 50m
+            memory: 100Mi
+          requests:
+            cpu: 20m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+```
+
+So, dump all the resources of the application in files:
+
+```bash
+k neat get deploy gowebapp --output yaml > neat-app-deployment.yaml
+```
+
+## manage Kubernetes `namespaces`
+
+Kubernetes has the notion of `namespaces` to organize the resources and manage access control (RBACs). 
+
+When a cluster is first created, some `namespaces` are created by default:
+
+```bash
+kubectl get namespaces
+```
+```bash title="output" hl_lines="1 1"
+default
+kube-node-lease
+kube-public
+kube-system
+```
+
+The `default` namespace is, well, the default. `kube-system` namespace is a really specific namesapce hosting all the mandatory cluster resources. 
+
+The Krew `ns` plugin is used to switch context and set it as the new default. This change is actually persisted in the `~/.kube/config` file.
+
+As `kubectl get namespaces`, the `k ns` command will dump the existing `namespaces` from the cluster.
+
+Switch to `kube-system` namespace:
+
+```bash
+k ns kube-system
+```
+```bash title="output" hl_lines="7 7"
+Context "kind-dev" modified.
+Active namespace is "kube-system".
+```
+
+![krew ns](img/krew-ns.png)
+
+### Deploy aplication in a new `namespace`
+
+Before we deploy a new application, remove the application from the `default` namespace:
+
+```bash
+k delete deployment -n default gowebapp
+k delete deployment -n default gowebapp-mysql
+```
+
+Now create a new namespace:
+
+```bash
+k create namespace gowebapp
+```
+
+Then switch to this new namespace:
+
+```bash
+k ns gowebapp
+```
+
+Now install the GoWebApp application into this new namespace:
+
+```bash
+k apply -f app-deployment.yaml
+k apply -f mysql-deployment.yaml
+k apply -f app-service.yaml
+k apply -f mysql-service.yaml
+k apply -f mysql-secret.yaml
+```
+
 ## manage Kubernetes `context`
 
 `kubectl` is using the notion of `contexts` to define which cluster you know and which one is actuvelly being used. 
@@ -148,77 +416,43 @@ kubectl config get-contexts
 ```
 ```bash title="output"
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
-*         kind-demo   kind-demo   kind-demo
-          kind-demo2  kind-demo2  kind-demo2  default
-
-# use your GKE cluster kind-demo2
-kubectl config use-context kind-demo2
+*         kind-dev    kind-dev    kind-dev    default
+          kind-stg    kind-stg    kind-stg
 ```
 
-While this is not that bad, we can do even better with `ctx`. Also, when using `kubecolor`, the current context is highlighted:
+Switch context to the `stg` cluster:
 
 ```bash
-# list all the existing context, current one is in yellow
+kubectl config use-context kind-stg
+```
+
+While this is not that long to type, we can do better with `ctx` plugin. Also, when using `kubecolor`, the current context will be highlighted:
+
+```bash
 k ctx
 ```
 ```bash  title="output" hl_lines="1 1"
-kind-demo
-kind-demo2
+kind-dev
+kind-stg
 ```
 
 You can also change context quickly by just appending the name of the target context to the same command:
 
 ```bash
-# change the context to kind-demo2 using ctx
-k ctx kind-demo2
+k ctx kind-stg
 ```
 ```bash title="output" hl_lines="2 2"
-kind-demo
-kind-demo2
+kind-dev
+kind-stg
 ```
 
 Finaly you can delete a context (but don't do it right now):
 
 ```bash
-# remove the kind-demo2 context
-k ctx -d kind-demo2
+k ctx -d kind-stg
 ```
 
 ![krew ctx](img/krew-ctx.png)
-
-## manage Kubernetes `namespaces`
-
-Almost the same thing as `ctx`, the `ns` command will switch your default `namespace`:
-
-```bash
-# show namespaces
-k ns
-```
-```bash title="output" hl_lines="1 1"
-default
-kube-node-lease
-kube-public
-kube-system
-```
-
-Switch to `kube-system` namespace:
-
-```bash
-k ns kube-system
-k ns
-```
-```bash title="output" hl_lines="7 7"
-Context "kind-demo2" modified.
-Active namespace is "kube-system".
-
-default
-kube-node-lease
-kube-public
-kube-system
-```
-
-
-![krew ns](img/krew-ns.png)
 
 ## View Secrets
 

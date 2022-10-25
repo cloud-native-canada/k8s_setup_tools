@@ -6,7 +6,16 @@ This site is the companion to the KubeCon 2022 NA talk:
 
 Follow this website to run the demos on your own laptop.
 
-to get access to some larger `yaml` files, you can clone the repo using `git`:
+## Setup
+This tutorial is running some commands that creates local files that are needed throughout the demos.
+We recommend you open a shell and `cd` into this folder:
+
+```bash
+mkdir -p ~/demo/base
+cd ~/demo/base
+```
+
+to get access to some larger `yaml` files, you can also clone the repo using `git`. This is not needed though.
 
 ```bash 
 git clone git@github.com:cloud-native-canada/k8s_setup_tools.git
@@ -17,7 +26,7 @@ git clone git@github.com:cloud-native-canada/k8s_setup_tools.git
 cd k8s_setup_tools
 ```
 
-## agenda
+## Agenda
 
 - [I need `kubectl`](kubectl.md)
 

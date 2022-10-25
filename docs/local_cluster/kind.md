@@ -32,14 +32,21 @@
 
 ## Setup
 
+Use the Kind command `create cluster` to start a new cluster.
+
 ```bash
 kind create cluster --help
+```
+
+You can list existing clusters too:
+
+```bash
 kind get clusters
 ```
 
 ## Usage
 
-It's better to create a config file and create a cluster from it. 
+It's better to create a config file and create a cluster from it so you can re-use it or iterate some changes. 
 
 Here's the config yaml file:
 
@@ -47,7 +54,11 @@ Here's the config yaml file:
 --8<-- "docs/local_cluster/kind-dev.yaml"
 ```
 
-Then create the cluster
+!!! warning
+    If you haven't done it already, create a new folder to store all the files we're creating.
+    Refer to [the introduction](../index.md#setup) if you need help.
+
+Then create the cluster from this file:
 
 ```bash
 cat > kind-dev.yaml << EOF
