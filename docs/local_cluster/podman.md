@@ -1,5 +1,9 @@
 # Podman
 
+!!! important
+    If you already have Docker-Desktop or Docker Engine (Linux) installed and running, skip this step for the demo and go directly to [Kind chapter](kind.md)
+
+
 `podman` is a full replacement of Docker and Docker-For-Desktop. It's the container Swiss-Army knife from RedHat.
 
 What you get with Podman:
@@ -59,9 +63,25 @@ It can also run and build rootless containers.
 !!! note "Docker replacement"
     Usually you will symlink `podman` to `docker` because using an alias is not working when some apps or scripts try to call the hard-coded `docker` commandline.
 
+!!! note
+
+    Machine is 1 CPU, 2Gb of memory, 100Gb of disk
+    Change it using options:
+
+    - `--cpus=2`: change CPUs dedicated to Podman
+    - `--memory=4096`: change memory (in Mb)
+    - `--disk-size=200`: change disk size (in Gb)
+    - `--now`: start now without needing the `start` command
+
 ```bash
-podman machine init
-podman machine start
+podman machine init \
+--cpus=2 \
+--memory=4096 \
+--disk-size=200 \
+--now
+
+# podman machine start # Not required because of --now option
+
 podman info
 
 # Make Docker command call Podman, Podman is command-line compatible with Docker
@@ -87,8 +107,30 @@ podman search httpd
 You can run an image with the same command as with `docker`:
 
 ```bash
-podman run -d alpine:latest sleep 10
+podman run -d alpine:latest sleep 20
 ```
+
+Then, list the running containers multiple times:
+
+```bash
+podman ps -a
+```
+```bash title="output"
+CONTAINER ID  IMAGE                             COMMAND     CREATED      STATUS                 PORTS     NAMES
+c4b74e45f004  docker.io/library/alpine:latest   sleep 20    2 hours ago  Up 2 hours ago                   loving_wu
+```
+
+You can also use the `docker` command, as it's executing `podman` in the background, and `podman` support all the same arguments:
+
+```bash
+docker ps -a
+```
+```bash title="output"
+CONTAINER ID  IMAGE                             COMMAND     CREATED      STATUS                 PORTS     NAMES
+c4b74e45f004  docker.io/library/alpine:latest   sleep 20    2 hours ago  Exited (0) 2 hours ago
+```
+
+## Tips and Tricks
 
 You can also use Podman to convert a running docker image into a Kubernetes yaml using:
 
@@ -101,6 +143,7 @@ You can also convert a yaml file back to bunch of containers run in Podman:
 ```bash
 podman play kube /mnt/mysharedfolder/my-running-app.yaml
 ```
+
 
 ## Next
 

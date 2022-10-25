@@ -58,7 +58,7 @@ Edit your `.zshrc` and add:
 
 === "BASH"
     ```bash
-    alias k=kubecolor
+    alias kubectl=kubecolor
     export KUBECOLOR_OBJ_FRESH=12h # highlight resources newer than 12h
     ```
 
@@ -66,6 +66,12 @@ Edit your `.zshrc` and add:
 
 ![prompt and completion](img/kubecolor-prompt.png)
 
+!!! note
+
+    We alias kubectl to call kubecolor. This is needed to keep all the other short `kubectl` aliases to work.
+    In theory, `kubecolor` does not add colours when the output is not a terminal (when you pipe the command into another command). 
+
+    If you see this behaviour failing, please open an issue and force `kubecolor` to output plain text with `--plain` 
 ### Demo
 
 ```bash

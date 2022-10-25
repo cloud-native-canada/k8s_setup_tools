@@ -63,7 +63,7 @@ The cool feature is that you can execute a command in some (or all) of the conte
 
 ## Multi-Context Demo
 
-Before we start using `kubie`, we have two contexts, one for the `kind-demo` and one for the `minikube` cluster. Let's switch to the `kind-demo` context:
+Before we start using `kubie`, we have two contexts, one for the `kind-demo` and one for the `kind-demo2` cluster. Let's switch to the `kind-demo` context:
 
 ```bash
 k ctx kind-demo
@@ -71,18 +71,18 @@ k ctx
 ```
 ```bash title="output" hl_lines="1 1"
 kind-demo
-minikube
+kind-demo2
 ```
 
-Open a second shell/terminal, and run the same command but switch to the `minikube` context:
+Open a second shell/terminal, and run the same command but switch to the `kind-demo2` context:
 
 ```bash
-k ctx minikube
+k ctx kind-demo2
 k ctx
 ```
 ```bash title="output" hl_lines="2 2"
 kind-demo
-minikube
+kind-demo2
 ```
 
 Go back in the previous shell, and check which context you're in:
@@ -92,27 +92,27 @@ k ctx
 ```
 ```bash title="output" hl_lines="2 2"
 kind-demo
-minikube
+kind-demo2
 ```
 
-The default context is still set to `minikube`. This is because at this moment the `context` is global and set in the `~/.kube.config` file. We can check that using grep:
+The default context is still set to `kind-demo2`. This is because at this moment the `context` is global and set in the `~/.kube.config` file. We can check that using grep:
 
 ```bash
 cat  ~/.kube/config | grep current-context
 ```
 ```bash title="output"
-current-context: minikube
+current-context: kind-demo2
 ```
 
-In the first shell, use `kubie` to switch to the `minikube` context:
+In the first shell, use `kubie` to switch to the `kind-demo2` context:
 
 ```bash
-kubie ctx minikube
+kubie ctx kind-demo2
 
 k ctx
 ```
 ```bash title="output"
-minikube
+kind-demo2
 ```
 
 Now only one `context` is displayed. This is because `kubie` re-configured your context and statically pinned one cluster.
@@ -131,28 +131,28 @@ If we look into this file, it's a new file similar to the `~/.kube/config` file 
 ```yaml
 ---
 clusters:
-  - name: minikube
+  - name: kind-demo2
     cluster:
-      certificate-authority: /Users/prune/.minikube/ca.crt
+      certificate-authority: /Users/prune/.kind-demo2/ca.crt
       extensions:
         - extension:
             last-update: "Thu, 20 Oct 2022 18:17:15 EDT"
-            provider: minikube.sigs.k8s.io
+            provider: kind.sigs.k8s.io
             version: v1.27.1
           name: cluster_info
       server: "https://192.168.64.2:8443"
 users:
-  - name: minikube
+  - name: kind-demo2
     user:
-      client-certificate: /Users/prune/.minikube/profiles/minikube/client.crt
-      client-key: /Users/prune/.minikube/profiles/minikube/client.key
+      client-certificate: /Users/prune/.kind-demo2/profiles/kind-demo2/client.crt
+      client-key: /Users/prune/.kind-demo2/profiles/kind-demo2/client.key
 contexts:
-  - name: minikube
+  - name: kind-demo2
     context:
-      cluster: minikube
+      cluster: kind-demo2
       namespace: ~
-      user: minikube
-current-context: minikube
+      user: kind-demo2
+current-context: kind-demo2
 apiVersion: v1
 kind: Config
 ```

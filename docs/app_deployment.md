@@ -9,6 +9,14 @@
 
 ## Create a Pod
 
+Before starting, ensure the `kind-dev` is the current cluster:
+
+```bash
+kubectl config use-context kind-dev
+```
+
+Then run the deployment command:
+
 ```yaml title="simple_pod"
 kubectl run \
   --image=alpine:latest \
@@ -39,7 +47,7 @@ Name:             simple-pod
 Namespace:        default
 Priority:         0
 Service Account:  default
-Node:             demo-worker/10.89.0.3
+Node:             dev-worker/10.89.0.3
 Start Time:       Thu, 20 Oct 2022 17:16:19 -0400
 Labels:           run=simple-pod
 Annotations:      <none>
@@ -85,7 +93,7 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
 Events:
   Type    Reason     Age    From               Message
   ----    ------     ----   ----               -------
-  Normal  Scheduled  6m10s  default-scheduler  Successfully assigned default/simple-pod to demo-worker
+  Normal  Scheduled  6m10s  default-scheduler  Successfully assigned default/simple-pod to dev-worker
   Normal  Pulling    6m9s   kubelet            Pulling image "alpine:latest"
   Normal  Pulled     6m8s   kubelet            Successfully pulled image "alpine:latest" in 422.571559ms
   Normal  Created    6m8s   kubelet            Created container simple-pod
@@ -93,6 +101,48 @@ Events:
 ```
 
 ## Create a Deployment
+
+`kubectl` can be used to create sample resources, like we just did with `pods`. Usually you can't deploy the generated resource directly to a cluster. It is needed to update the resource to configure some aspects that can't be configures in the CLI.
+
+For example, generate a basic deployment:
+```bash
+kubectl create deployment \
+  --image=alpine:latest \
+  --replicas=2 \
+  -o yaml \
+  --dry-run=client \
+  simple-deployment 
+```
+```yaml title="output"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: simple-deployment
+  name: simple-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: simple-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: simple-deployment
+    spec:
+      containers:
+      - image: alpine:latest
+        name: alpine
+        resources: {}
+status: {}
+```
+
+Here the container is missing a real command to execute, like the `tail -f /dev/null` that we added in the `pod`.
+
+Now deploy this manifest:
 
 ```bash
 kubectl create deployment \
@@ -159,58 +209,56 @@ simple-service   ClusterIP   10.96.94.15   <none>        5678/TCP   4s
 
 The `kubernetes` service is a default service pointing to the Kubernetes API of the cluster.
 
-Ok now we have some stuff in the `kind` cluster. Let's add the same things in the `minikube `cluster.
+Ok now we have some stuff in the `kind` cluster. 
 
-## Switch context
+## Deploy a real application
 
-The `kubectl config` commands to list and switch conext:
+Now deploy a real application, composed of a Mysql database, a web application and associated services:
+
+```bash title="mysql secret"
+cat > mysql-secret.yaml << EOF
+--8<-- "docs/yaml/mysql-secret.yaml"
+EOF
+
+kubectl apply -f mysql-secret.yaml
+```
+
+```bash title="mysql database"
+cat > mysql-deployment.yaml << EOF
+--8<-- "docs/yaml/mysql-deployment.yaml"
+EOF
+
+kubectl apply -f mysql-deployment.yaml
+```
+
+```bash title="mysql service"
+cat > mysql-service.yaml << EOF
+--8<-- "docs/yaml/mysql-service.yaml"
+EOF
+
+kubectl apply -f mysql-service.yaml
+```
 
 ```bash
-kubectl config  current-context
+cat > app-deployment.yaml << EOF
+--8<-- "docs/yaml/app-deployment.yaml"
+EOF
+
+kubectl apply -f app-deployment.yaml
+```
+
+Some spotted a problem already: the password is hardcoded. We'll get to it later.
+
+Check the application is running:
+
+```bash
+kubectl get pods -n default
 ```
 ```bash title="output"
-kind-demo
+NAME                              READY   STATUS    RESTARTS   AGE
+gowebapp-5994456fcb-ctt4x         1/1     Running   0          31m
+gowebapp-mysql-684db8fdcd-nwfn4   1/1     Running   0          34m
 ```
-```bash
-kubectl config  get-contexts
-```
-```bash title="output"
-CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
-*         kind-demo   kind-demo   kind-demo   default
-          minikube    minikube    minikube    default
-```
-```bash
-kubectl config  set-context minikube
-```
-```bash title="output"
-Context "minikube" modified.
-```
-```bash
-kubectl config  get-contexts
-```
-```bash title="output"
-CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
-          kind-demo   kind-demo   kind-demo   default
-*         minikube    minikube    minikube    default
-```
-
-Now we can apply the same resources to the `minikube` cluster:
-
-```bash
-kubectl apply -f simple-pod.yaml
-kubectl apply -f simple-deployment.yaml
-kubectl apply -f simple-service.yaml
-```
-```bash
-kubectl get pods
-```
-```bash title="output"
-NAME                                 READY   STATUS      RESTARTS      AGE
-simple-deployment-57d9ccc7f8-bqnxs   0/1     Completed   3 (32s ago)   49s
-simple-deployment-57d9ccc7f8-zpzwr   0/1     Completed   3 (30s ago)   49s
-simple-pod                           1/1     Running     0             67s
-```
-
 ## Next
 
 Now we have something to play with, [let's start playing](kubectl_tooling/kubectl.md) !
