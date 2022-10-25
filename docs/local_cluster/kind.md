@@ -43,25 +43,25 @@ It's better to create a config file and create a cluster from it.
 
 Here's the config yaml file:
 
-```yaml linenums="1" title="kind.yaml"
---8<-- "docs/local_cluster/kind.yaml"
+```yaml linenums="1" title="kind-dev.yaml"
+--8<-- "docs/local_cluster/kind-dev.yaml"
 ```
 
 Then create the cluster
 
 ```bash
-cat > kind.yaml << EOF
---8<-- "docs/local_cluster/kind.yaml"
+cat > kind-dev.yaml << EOF
+--8<-- "docs/local_cluster/kind-dev.yaml"
 EOF
 
-kind create cluster --name=demo --config kind.yaml -v9 --retain
+kind create cluster --name=dev --config kind-dev.yaml -v9 --retain
 ```
 
 Here's the regular logs when starting a Kind cluster:
 
 ```bash
 enabling experimental podman provider
-Creating cluster "demo" ...
+Creating cluster "dev" ...
  ✓ Ensuring node image (kindest/node:v1.24.4) 🖼
  ✓ Preparing nodes 📦 📦
  ✓ Writing configuration 📜
@@ -69,7 +69,7 @@ Creating cluster "demo" ...
  ✓ Installing CNI 🔌
  ✓ Installing StorageClass 💾
  ✓ Joining worker nodes 🚜
-Set kubectl context to "kind-demo"
+Set kubectl context to "kind-dev"
 ```
 
 You can check that everything is working. Each K8s node is actually a running `container`:
@@ -79,8 +79,8 @@ podman ps -a
 ```
 ```bash
 CONTAINER ID  IMAGE                                                                                           COMMAND     CREATED        STATUS            PORTS                                        NAMES
-6993dbdbf82b  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  127.0.0.1:55210->6443/tcp                    demo-control-plane
-dd461d2b9d4a  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  0.0.0.0:3080->80/tcp, 0.0.0.0:3443->443/tcp  demo-worker
+6993dbdbf82b  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  127.0.0.1:55210->6443/tcp                    dev-control-plane
+dd461d2b9d4a  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  0.0.0.0:3080->80/tcp, 0.0.0.0:3443->443/tcp  dev-worker
 ```
 
 We can validate the state of the cluster too:
@@ -91,7 +91,7 @@ We can validate the state of the cluster too:
 kubectl config current-context
 ```
 ```bash
-kind-demo
+kind-dev
 ```
 
 - K8s cluster info
@@ -113,14 +113,14 @@ kubectl get pods -A
 NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE
 kube-system          coredns-6d4b75cb6d-lqcs6                     1/1     Running   0          4m6s
 kube-system          coredns-6d4b75cb6d-xgbxk                     1/1     Running   0          4m6s
-kube-system          etcd-demo-control-plane                      1/1     Running   0          4m18s
+kube-system          etcd-dev-control-plane                       1/1     Running   0          4m18s
 kube-system          kindnet-tjfzj                                1/1     Running   0          4m6s
 kube-system          kindnet-vc66d                                1/1     Running   0          4m1s
-kube-system          kube-apiserver-demo-control-plane            1/1     Running   0          4m18s
-kube-system          kube-controller-manager-demo-control-plane   1/1     Running   0          4m18s
+kube-system          kube-apiserver-dev-control-plane             1/1     Running   0          4m18s
+kube-system          kube-controller-manager-dev-control-plane    1/1     Running   0          4m18s
 kube-system          kube-proxy-5kp6d                             1/1     Running   0          4m6s
 kube-system          kube-proxy-dfczd                             1/1     Running   0          4m1s
-kube-system          kube-scheduler-demo-control-plane            1/1     Running   0          4m18s
+kube-system          kube-scheduler-dev-control-plane             1/1     Running   0          4m18s
 local-path-storage   local-path-provisioner-6b84c5c67f-csxg6      1/1     Running   0          4m6s
 ```
 
@@ -133,17 +133,17 @@ kubectl config  get-contexts
 ```
 ```bash
 CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
-*         kind-demo   kind-demo   kind-demo
+*         kind-dev    kind-dev    kind-dev
 ```
 
 ## Create a second cluster
 
 ```bash
-cat > kind.yaml << EOF
---8<-- "docs/local_cluster/kind2.yaml"
+cat > kind-stg.yaml << EOF
+--8<-- "docs/local_cluster/kind-stg.yaml"
 EOF
 
-kind create cluster --name=demo2 --config kind2.yaml -v9 --retain
+kind create cluster --name=stg --config kind-stg.yaml -v9 --retain
 ```
 
 ## Reboot
@@ -157,4 +157,6 @@ podman start --all
 
 ## Next
 
-Now that the Kind cluster is created, continue with [Minikube](minikube.md) !
+Now that the Kind cluster is created, continue by [deploying some applications](../app_deployment.md).
+
+Explore other K8s cluster options with [Minikube](options/minikube.md) !

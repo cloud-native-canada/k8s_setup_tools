@@ -83,6 +83,9 @@ WARNING: version difference between client (1.22) and server (1.20) exceeds the 
 !!! note
     as returned here, it's usually recommended to use a `kubectl` version + or - one version away from the `server` version.
 
+## Next
+
+Read [next chapter](local_cluster/podman.md) to lean about local Kubernetes clusters
 ## Ref
 
 - [gcloud](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl?hl=fr#apt)
