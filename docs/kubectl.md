@@ -58,14 +58,6 @@ If you already have `gcloud` command installed, you can install `kubectl`:
 gcloud components install kubectl
 ```
 
-## Validate kubectl install
-
-`cluster-info` command tells which cluster you're connecting to:
-
-```bash
-kubectl cluster-info
-```
-
 ## Check Kubectl version
 
 the `version` command tells which `client` and `server` versions you're using. 
@@ -73,6 +65,14 @@ the `version` command tells which `client` and `server` versions you're using.
 ```bash 
 kubectl version
 ```
+```bash
+Client Version: version.Info{Major:"1", Minor:"25", GitVersion:"v1.25.3", GitCommit:"434bfd82814af038ad94d62ebe59b133fcb50506", GitTreeState:"clean", BuildDate:"2022-10-12T10:47:25Z", GoVersion:"go1.19.2", Compiler:"gc", Platform:"darwin/amd64"}
+Kustomize Version: v4.5.7
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+```
+
+If no cluster is configured, then an error will be displayed for the `Server Version`. Else, the output will give infos of the current cluster:
+
 ```bash
 Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.2"}
 Server Version: version.Info{Major:"1", Minor:"20+", GitVersion:"v1.20.9-gke.1001"}

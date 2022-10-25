@@ -103,8 +103,30 @@ podman search httpd
 You can run an image with the same command as with `docker`:
 
 ```bash
-podman run -d alpine:latest sleep 10
+podman run -d alpine:latest sleep 20
 ```
+
+Then, list the running containers multiple times:
+
+```bash
+podman ps -a
+```
+```bash title="output"
+CONTAINER ID  IMAGE                             COMMAND     CREATED      STATUS                 PORTS     NAMES
+c4b74e45f004  docker.io/library/alpine:latest   sleep 20    2 hours ago  Up 2 hours ago                   loving_wu
+```
+
+You can also use the `docker` command, as it's executing `podman` in the background, and `podman` support all the same arguments:
+
+```bash
+docker ps -a
+```
+```bash title="output"
+CONTAINER ID  IMAGE                             COMMAND     CREATED      STATUS                 PORTS     NAMES
+c4b74e45f004  docker.io/library/alpine:latest   sleep 20    2 hours ago  Exited (0) 2 hours ago
+```
+
+## Tips and Tricks
 
 You can also use Podman to convert a running docker image into a Kubernetes yaml using:
 
@@ -117,6 +139,7 @@ You can also convert a yaml file back to bunch of containers run in Podman:
 ```bash
 podman play kube /mnt/mysharedfolder/my-running-app.yaml
 ```
+
 
 ## Next
 

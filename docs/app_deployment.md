@@ -239,7 +239,6 @@ EOF
 kubectl apply -f mysql-service.yaml
 ```
 
-
 ```bash
 cat > app-deployment.yaml << EOF
 --8<-- "docs/yaml/app-deployment.yaml"
