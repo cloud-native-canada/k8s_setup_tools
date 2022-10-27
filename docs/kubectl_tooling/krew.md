@@ -1,46 +1,15 @@
 # Extending `kubectl`
 
-`kubectl` has now two ways to be extended: `plugins` and `krew`
+Couple years ago K8s community introduced abn easy way to extend kubectl via `plugins`.
 
-`Krew` is a tool that makes it easy to use `kubectl` plugins. It's the first tooling that was avaiable and is still widely used.
+`Krew` is the plugin manager for `kubectl` command-line tool and it's  maintained by the Kubernetes SIG CLI community.
 
-`Plugins` is the newer way and is simple: create a command in your path with the name `kubectl-<whatever>` and call `kubectl <whatever>` from your shell. `kubectl` will execute your command.
+Krew helps you:
 
-## Creating and using Plugins
-
-Create a script in `/usr/local/bin/kubectl-foo`:
-
-```bash title="/usr/local/bin/kubectl-foo"
-cat > /usr/local/bin/kubectl-foo << EOF
-#!/bin/bash
-echo foo
-EOF
-```
-
-Make it executable and call it through `kubectl`:
-
-```bash
-chmod 755 /usr/local/bin/kubectl-foo
-kubectl foo
-```
-```bash title="output"
-foo
-```
-
-It's really easy to list plugins:
-
-```bash
-kubectl plugin list
-```
-```bash  title="output" hl_lines="5 5"
-The following compatible plugins are available:
-
-/usr/local/bin/kubectl-1.20.0
-/usr/local/bin/kubectl-krew
-/usr/local/bin/kubectl-foo
-/usr/local/bin/kubectl-v1.21.13
-```
-
+- discover kubectl plugins,
+- install them on your machine,
+- and keep the installed plugins up-to-date.
+There are 207 kubectl plugins currently distributed on Krew.
 
 ## Krew
 
