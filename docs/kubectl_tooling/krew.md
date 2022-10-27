@@ -1,46 +1,17 @@
 # Extending `kubectl`
 
-`kubectl` has now two ways to be extended: `plugins` and `krew`
+Couple years ago K8s community introduced an easy way to extend kubectl via `plugins`.
 
-`Krew` is a tool that makes it easy to use `kubectl` plugins. It's the first tooling that was avaiable and is still widely used.
+Plugins are in fact "applications" (executable files) named `kubectl-<plugin_name>`, that are executed when you call `kubectl plugin_name`.
 
-`Plugins` is the newer way and is simple: create a command in your path with the name `kubectl-<whatever>` and call `kubectl <whatever>` from your shell. `kubectl` will execute your command.
+`Krew` is the plugin manager for `kubectl` command-line tool and it's  maintained by the Kubernetes SIG CLI community.
 
-## Creating and using Plugins
+Krew helps you:
 
-Create a script in `/usr/local/bin/kubectl-foo`:
-
-```bash title="/usr/local/bin/kubectl-foo"
-cat > /usr/local/bin/kubectl-foo << EOF
-#!/bin/bash
-echo foo
-EOF
-```
-
-Make it executable and call it through `kubectl`:
-
-```bash
-chmod 755 /usr/local/bin/kubectl-foo
-kubectl foo
-```
-```bash title="output"
-foo
-```
-
-It's really easy to list plugins:
-
-```bash
-kubectl plugin list
-```
-```bash  title="output" hl_lines="5 5"
-The following compatible plugins are available:
-
-/usr/local/bin/kubectl-1.20.0
-/usr/local/bin/kubectl-krew
-/usr/local/bin/kubectl-foo
-/usr/local/bin/kubectl-v1.21.13
-```
-
+- discover kubectl plugins,
+- install them on your machine,
+- and keep the installed plugins up-to-date.
+There are 207 kubectl plugins currently distributed on Krew.
 
 ## Krew
 
@@ -97,6 +68,10 @@ Please refer to the [official install doc](https://krew.sigs.k8s.io/docs/user-gu
     
 ### Usage
 
+```
+kubectl krew update
+``` 
+
 ```bash
 kubectl krew list
 ```
@@ -119,9 +94,9 @@ ctx                             Switch between contexts in your kubeconfig      
 ...
 ```
 
-### Krew must-have Plugins
+### Krew Plugins
 
-Here are some of the cool Plugins to have:
+Install plugins that will be used in the tutorial:
 
 - ctx: current cluster `Context` and quick context changes
 - ns: current `Namespace` and quick namespace changes
@@ -132,7 +107,7 @@ Here are some of the cool Plugins to have:
 Install them with this command:
 
 ```bash
-kubectl krew install ctx ns stern whoami who-can
+kubectl krew install neat ctx ns whoami who-can view-secret
 ```
 
 ## Generating the application manifest
@@ -151,6 +126,7 @@ First dump the `gowebapp` deployment into a file. By using the `--output yaml` (
 ```bash
 k get deploy gowebapp --output yaml
 ```
+
 ```yaml title="output"
 apiVersion: apps/v1
 kind: Deployment
@@ -332,10 +308,10 @@ spec:
       terminationGracePeriodSeconds: 30
 ```
 
-So, dump all the resources of the application in files:
+When needed, you can then save the file for backup or later use:
 
 ```bash
-k neat get deploy gowebapp --output yaml > neat-app-deployment.yaml
+# k neat get deploy gowebapp --output yaml > neat-app-deployment.yaml
 ```
 
 ## manage Kubernetes `namespaces`
@@ -374,11 +350,32 @@ Active namespace is "kube-system".
 
 ### Deploy aplication in a new `namespace`
 
+- k8s context
+
+```bash
+kubectl config current-context
+```
+```bash
+kind-dev
+```
+
+- All contexts
+
+We can list all Kubernetes `context` using `kubectl`:
+
+```bash
+kubectl config  get-contexts
+```
+```bash
+CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+*         kind-dev    kind-dev    kind-dev
+```
+
+
 Before we deploy a new application, remove the application from the `default` namespace:
 
 ```bash
-k delete deployment -n default gowebapp
-k delete deployment -n default gowebapp-mysql
+k delete -f ~/demo/base
 ```
 
 Now create a new namespace:
@@ -404,6 +401,31 @@ k apply -f mysql-secret.yaml
 ```
 
 ## manage Kubernetes `context`
+
+
+
+- k8s context
+
+```bash
+kubectl config current-context
+```
+```bash
+kind-dev
+```
+
+- All contexts
+
+We can list all Kubernetes `context` using `kubectl`:
+
+```bash
+kubectl config  get-contexts
+```
+```bash
+CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+*         kind-dev    kind-dev    kind-dev
+```
+
+
 
 `kubectl` is using the notion of `contexts` to define which cluster you know and which one is actuvelly being used. 
 

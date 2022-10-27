@@ -1,4 +1,8 @@
-# Colima
+# Colima as Docker Desktop replacement for MAC OS
+
+!!! important
+    This step is not executed as part of the tutorial it's only a reciepes how to replace Docker for Desktop
+
 
 Colima is a full Docker-Desktop replacement. It is specific to Mac OSX. Just use plain Docker or Containerd on Linux.
 
@@ -77,7 +81,3 @@ For the rest of the presentation we're not going to use Colima. You can stop it:
 colima kubernetes delete # stop k8s and delete the associated files
 colima stop
 ```
-
-## Next
-
-Learn how to [replace Docker-For-Desktop](podman.md) by a free opensource solution.

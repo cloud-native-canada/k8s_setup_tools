@@ -1,19 +1,155 @@
 # Application Deployment
 
+## Understanding the KUBECONFIG
+
+### Locating kubeconfig 
+
+`Kubectl` has configuration file, which is used to tell to `Kubectl` where you kubernetes cluster is.
+
+Default location of the `kubeconfig` file is in `~/.kube/config`
+
+Everytime we spin up a kubernetes cluster, `kind` will go ahead an update `kubeconfig` file locally.
+
+You will see similiar behaviour when you going to be using `Minikube` clusters.
+
+!!! note
+    For cloud provides you may need to run additional commands to fetch the `kubeconfig` file locally.
+
+
+Let's examine our `~/.kube/config` file, after we've created 2 `kind` clusters.
+
+
+```
+code ~/.kube/config
+```
+
+```
+kind: Config
+apiVersion: v1
+clusters:
+ - list of clusters (addresses \ endpoints)
+current-context: kind-stg
+contexts:
+ - list of contexts ( which user and cluster to use when running commands)
+users:
+ - list of users (thing that identifies us when accessing a cluster [certificate]) 
+```
+
+!!! result
+    We can see that kubeconfig file is very simple and it has:
+
+    - list of clusters
+    - list of contexts
+    - list of users (simply a way to authenticate with a cluster)
+    - Current context
+
+!!! note
+    kubernetes by default uses certificate authentication. Other auth plugins exist (gke, aks, eks)
+
+### Using kubectl config commands
+Altertnatively, you can use command to interact with `kubeconfig` which is `kubectl config`.
+
+Here is ther commands that are telling `kubectl` which context to use:
+
+```
+kubectl config current-context
+kubectl config get-contexts
+kubectl config use-context kind-dev
+```
+
+### Using different config files
+
+You can also tell your `kubectl` to use different config files.
+This is useful to keep your production config separate from your development ones
+
+Set the `$KUBECONFIG` environment variable to a path:
+
+=== "Apple Mac OsX"
+
+    ```#mac
+    export KUBECONFIG=~/.kube/config
+    ```
+
+=== "Linux"
+
+    ```linux
+    export KUBECONFIG=~/.kube/config
+    ```
+
+=== "Windows"
+
+    ```win
+    $ENV:KUBECONFIG="C:\Users\aimve\.kube\config"
+    ```
+
+Export seperate configs using `kind`. This is possible with cloud based clusters as well:
+
+```
+kind --name dev export kubeconfig --kubeconfig ~/.kube/dev-config
+kind --name stg export kubeconfig --kubeconfig ~/.kube/stg-config
+```
+
+Switch to `stg` only cofig:
+
+
+```
+export KUBECONFIG=~/.kube/stg-config
+kubectl get nodes
+```
+
+Reset back to shared KUBECONFIG file:
+
+```
+export KUBECONFIG=~/.kube/config
+kubectl get nodes
+
+```
+
+## Deploying application
+
+### Create k8s resources with command line
+
+Let's create a couple of resources:
+
+```
+kubectl run webserver --image=nginx --port=80
+```
+
+```
+kubectl get deploy
+kubectl get pods
+```
+
+```
+kubectl create service clusterip webserver --tcp 80:80
+```
+
+```
+kubectl get service
+```
+
+Let's access the service http://localhost/
+
+
+```
+kubectl port-forward svc/webserver 9090
+```
+
+Cleanup:
+
+```
+kubectl delete pod webserver
+kubectl delete svc webserver
+```
+
+### Create a `pod` declaratively with YAML
+
 `kubectl` can be used to generate YAML manifests and help you build your own:
 
 - `kubectl create <resource>` to create a resource (`kubectl run` for pods)
 - `-–output yaml` (`-o yaml`) to dump the yaml
 - `-–dry-run=client` to simulate the resource and not create it in the cluster
 - `kubectl explain <resource>` to get more informations on a resource type
-
-## Create a Pod
-
-Before starting, ensure the `kind-dev` is the current cluster:
-
-```bash
-kubectl config use-context kind-dev
-```
 
 Then run the deployment command:
 
@@ -100,7 +236,7 @@ Events:
   Normal  Started    6m8s   kubelet            Started container simple-pod
 ```
 
-## Create a Deployment
+### Create a `deployment` declaratively with YAML
 
 `kubectl` can be used to create sample resources, like we just did with `pods`. Usually you can't deploy the generated resource directly to a cluster. It is needed to update the resource to configure some aspects that can't be configures in the CLI.
 
@@ -181,7 +317,7 @@ Oops, something is not quite right with our deployment.
 
 Please, don't try to debug right now. Let's move on.
 
-## Create a Service
+### Create a `service` declaratively with YAML
 
 Services are the entry-point to your pods. they "load-balance" the requests between all the associated pods.
 
@@ -213,7 +349,15 @@ Ok now we have some stuff in the `kind` cluster.
 
 ## Deploy a real application
 
+The most common and recommended way to create resources in Kubernetes is with the `kubectl apply` command.
+This command takes in declarative `YAML` files.
+
+
 Now deploy a real application, composed of a Mysql database, a web application and associated services:
+
+```
+cd ~/demo/base
+```
 
 ```bash title="mysql secret"
 cat > mysql-secret.yaml << EOF

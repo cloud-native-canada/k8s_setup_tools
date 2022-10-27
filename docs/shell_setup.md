@@ -243,7 +243,7 @@ Those alias are usually based on the first letters of each components of the com
 Simply add `kubectl` to the list of plugins in `.zshrc` file:
 
 ```yaml
-plugins=(brew git python tmux vault terraform kubectl)
+plugins=(brew git python terraform kubectl zsh-autosuggestions)
 ```
 
 Check that all the new aliases are created after starting a new shell:
@@ -274,11 +274,6 @@ Note that the aliases are all calling `kubectl` explicitelly.
 
 ## zsh-autosuggestions plugin
 
-TBD
-
-## zsh-syntax-highlighting plugin
-
-TBD
 
 ## Dynamic Prompt
 
