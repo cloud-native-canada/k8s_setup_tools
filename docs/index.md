@@ -6,6 +6,8 @@ This site is the companion to the KubeCon 2022 NA talk:
 
 Follow this website to run the demos on your own laptop.
 
+Also check [the slide deck that was used during the presentation](K8sUserSetup.pdf).
+
 ## Setup
 This tutorial is running some commands that creates local files that are needed throughout the demos.
 We recommend you open a shell and `cd` into this folder:
@@ -32,7 +34,7 @@ cd k8s_setup_tools
 
     Install of the `kubectl` command and basic usage
 
-- [Getting rid of Docker-For-Desktop](local_cluster/colima.md)
+- [Getting rid of Docker-For-Desktop](local_cluster/options/colima.md)
 
     Docker For Desktop is now a paid software for enterprise users. The [price was bumped again on October 27th 2022](https://www.docker.com/pricing/october-2022-pricing-change-faq) !
 
