@@ -41,7 +41,7 @@ prometheus-community	https://prometheus-community.github.io/helm-charts
 To deploy a chart, the repository needs to be added (if not using a local chart):
 
 ```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 ```
 
@@ -51,40 +51,43 @@ Then we can check the `values` that can be tuned in the chart:
 helm show values bitnami/mysql
 ```
 ```bash title="output"
-global:
-  imageRegistry: ""
-  ## E.g.
-  ## imagePullSecrets:
-  ##   - myRegistryKeySecretName
+server:
+  ## Prometheus server container name
   ##
-  imagePullSecrets: []
-  storageClass: ""
+  enabled: true
 
-## @section Common parameters
-...
-image:
-  registry: docker.io
-  repository: bitnami/mysql
-  tag: 8.0.31-debian-11-r0
-...
-## @section MySQL Primary parameters
-
-primary:
-  ## @param primary.name Name of the primary database (eg primary, master, leader, ...)
+  ## Use a ClusterRole (and ClusterRoleBinding)
+  ## - If set to false - we define a RoleBinding in the defined namespaces ONLY
   ##
-  name: primary
-  ...
-  resources:
-    ## Example:
-    ## limits:
-    ##    cpu: 250m
-    ##    memory: 256Mi
-    limits: {}
-    ## Examples:
-    ## requests:
-    ##    cpu: 250m
-    ##    memory: 256Mi
-    requests: {}
+  ## NB: because we need a Role with nonResourceURL's ("/metrics") - you must get someone with Cluster-admin privileges to define this role for you, before running with this setting enabled.
+  ##     This makes prometheus work - for users who do not have ClusterAdmin privs, but wants prometheus to operate on their own namespaces, instead of clusterwide.
+  ##
+  ## You MUST also set namespaces to the ones you have access to and want monitored by Prometheus.
+  ##
+  # useExistingClusterRoleName: nameofclusterrole
+
+  ## namespaces to monitor (instead of monitoring all - clusterwide). Needed if you want to run without Cluster-admin privileges.
+  # namespaces:
+  #   - yournamespace
+
+  name: server
+
+  # sidecarContainers - add more containers to prometheus server
+  # Key/Value where Key is the sidecar `- name: <Key>`
+  # Example:
+  #   sidecarContainers:
+  #      webserver:
+  #        image: nginx
+  sidecarContainers: {}
+
+  ## Prometheus server container image
+  ##
+  image:
+    repository: quay.io/prometheus/prometheus
+    tag: v2.39.1
+    pullPolicy: IfNotPresent
+
+  ## prometheus server priorityClassName
 ...
 ```
 
@@ -94,40 +97,36 @@ This is too much for our cluster, so let's bring that down.
 Using `helm template` it is possible to generate the final `yaml` before applying it:
 
 ```bash
-helm template my-mysql bitnami/mysql -n my-application \
-  --set primary.resources.requests.memory="256Mi" \
-  --set primary.resources.limits.memory="256Mi" \
-  --set primary.resources.requests.cpu="100m" \
-  --set primary.resources.limits.cpu="250m" \
+helm template prometheus prometheus-community/prometheus \
+  -n monitoring \
+  --set alertmanager.enabled=false \
+  --set persistentVolume.enabled=false \
+  --set nodeExporter.enabled=true \
   --create-namespace
 ```
 
 Then it is possible to deploy the chart using:
 
 ```bash
-helm install my-mysql bitnami/mysql -n my-application \
-  --set primary.resources.requests.memory="256Mi" \
-  --set primary.resources.limits.memory="256Mi" \
-  --set primary.resources.requests.cpu="100m" \
-  --set primary.resources.limits.cpu="250m" \
+helm install prometheus prometheus-community/prometheus \
+  -n monitoring \
+  --set alertmanager.enabled=false \
+  --set persistentVolume.enabled=false \
+  --set nodeExporter.enabled=true \
   --create-namespace
 ```
 
 Check the pod is running:
 
 ```bash
-kubectl get pods -n my-application
+kubectl get pods -n monitoring
 ```
 ```bash title="output"
-NAME         READY   STATUS    RESTARTS   AGE
-my-mysql-0   1/1     Running   0          3m31s
-```
-
-Grab the `mysql` root and user password:
-
-```bash
-export MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace "my-application" my-mysql -o jsonpath="{.data.mysql-root-password}" | base64 -d)
-export MYSQL_PASSWORD=$(kubectl get secret --namespace "my-application" my-mysql -o jsonpath="{.data.mysql-password}" | base64 -d)
+NAME                                             READY   STATUS    RESTARTS   AGE
+prometheus-kube-state-metrics-774f8c7564-t5k9s   1/1     Running   0          110s
+prometheus-node-exporter-slv85                   1/1     Running   0          110s
+prometheus-pushgateway-5957cfcf57-xwczj          1/1     Running   0          110s
+prometheus-server-6bd54674cc-x4lm6               1/2     Running   0          110s
 ```
 
 ### Updating a release
@@ -143,49 +142,63 @@ helm plugin install https://github.com/databus23/helm-diff
 Check the upgrade differences:
 
 ```bash
-helm diff upgrade my-mysql bitnami/mysql -n my-application \
-  --set primary.resources.requests.memory="256Mi" \
-  --set primary.resources.limits.memory="256Mi" \
-  --set primary.resources.requests.cpu="200" \
-  --set primary.resources.limits.cpu="250m" \
-  --set auth.rootPassword=$MYSQL_ROOT_PASSWORD \
-  --set auth.password=$MYSQL_PASSWORD
+helm diff upgrade prometheus prometheus-community/prometheus \
+  -n monitoring \
+  --set alertmanager.enabled=false \
+  --set persistentVolume.enabled=false \
+  --set nodeExporter.enabled=true \
+  --set server.resources.limits.memory="256Mi" \
+  --set server.resources.limits.cpu="300m" 
 ```
 ```bash title="output" hl_lines="22 23"
-my-application, my-mysql, StatefulSet (apps) has changed:
-  # Source: mysql/templates/primary/statefulset.yaml
+monitoring, prometheus-server, Deployment (apps) has changed:
+ # Source: prometheus/templates/server/deploy.yaml
   apiVersion: apps/v1
-  kind: StatefulSet
+  kind: Deployment
   metadata:
-    name: my-mysql
-    namespace: "my-application"
-    labels:
-      app.kubernetes.io/name: mysql
-      helm.sh/chart: mysql-9.4.1
-      app.kubernetes.io/instance: my-mysql
-      app.kubernetes.io/managed-by: Helm
-      app.kubernetes.io/component: primary
+    name: prometheus-server
+    namespace: monitoring
   spec:
-    replicas: 1
 ...
+    replicas: 1
+    template:
+      spec:
+        enableServiceLinks: true
+        serviceAccountName: prometheus-server
+        containers:
+          - name: prometheus-server-configmap-reload
+...
+
+          - name: prometheus-server
+            image: "quay.io/prometheus/prometheus:v2.39.1"
+            imagePullPolicy: "IfNotPresent"
+            args:
+              - --storage.tsdb.retention.time=15d
+              - --config.file=/etc/config/prometheus.yml
+              - --storage.tsdb.path=/data
+              - --web.console.libraries=/etc/prometheus/console_libraries
+              - --web.console.templates=/etc/prometheus/consoles
+              - --web.enable-lifecycle
+            ports:
+              - containerPort: 9090
             resources:
-              limits:
-                cpu: 250m
-                memory: 256Mi
-              requests:
--               cpu: 100m
-+               cpu: 200
-                memory: 256Mi
+-             {}
++             limits:
++               cpu: 300m
++               memory: 256Mi
+...
 ```
 
 Re-deploy with changing some parameters:
 
 ```bash
-helm upgrade my-mysql bitnami/mysql -n my-application \
-  --set primary.resources.requests.memory="256Mi" \
-  --set primary.resources.limits.memory="256Mi" \
-  --set primary.resources.requests.cpu="200m" \
-  --set primary.resources.limits.cpu="250m"
+helm upgrade prometheus prometheus-community/prometheus \
+  -n monitoring \
+  --set alertmanager.enabled=false \
+  --set persistentVolume.enabled=false \
+  --set nodeExporter.enabled=true \
+  --set server.resources.limits.memory="256Mi" \
+  --set server.resources.limits.cpu="300m" 
 ```
 
 ### Validate which version is deployed
@@ -194,22 +207,22 @@ When helm deploy a Chart it keeps a trace in a `secret`. The `helm` CLI includes
 
 List the deployed charts:
 ```bash
-helm list -n my-application
+helm list -n monitoring
 ```
 ```bash title="output"
-NAME    	NAMESPACE     	REVISION	UPDATED                             	STATUS  	CHART      	APP VERSION
-my-mysql	my-application	2       	2022-10-24 13:25:24.849222 -0400 EDT	deployed	mysql-9.4.1	8.0.31
+NAME    	  NAMESPACE     	REVISION	 UPDATED                    STATUS  	CHART      	        APP VERSION
+prometheus	monitoring	2   2022-10-27 12:00:24.649426 -0400 EDT	deployed	prometheus-15.16.1	2.39.1
 ```
 
 It is possible to check history revisions:
 
 ```bash
-helm history my-mysql -n my-application
+helm history prometheus -n monitoring
 ```
 ```bash title="output"
-REVISION	UPDATED                 	STATUS    	CHART      	APP VERSION	DESCRIPTION
-1       	Mon Oct 24 13:18:45 2022	superseded	mysql-9.4.1	8.0.31     	Install complete
-2       	Mon Oct 24 13:25:24 2022	deployed  	mysql-9.4.1	8.0.31     	Upgrade complete
+REVISION	UPDATED                 	STATUS    	CHART             	APP VERSION	DESCRIPTION
+1       	Thu Oct 27 11:51:19 2022	superseded	prometheus-15.16.1	2.39.1     	Install complete
+2       	Thu Oct 27 12:00:24 2022	deployed  	prometheus-15.16.1	2.39.1     	Upgrade complete
 ```
 
 ### View deployment values and yaml
@@ -217,36 +230,38 @@ REVISION	UPDATED                 	STATUS    	CHART      	APP VERSION	DESCRIPTION
 Helm includes commands to see what was used for each revision:
 
 ```bash
-helm get values  my-mysql -n my-application
+helm get values prometheus -n monitoring
 ```
 ```bash title="output"
 USER-SUPPLIED VALUES:
-primary:
+alertmanager:
+  enabled: false
+nodeExporter:
+  enabled: true
+persistentVolume:
+  enabled: false
+server:
   resources:
     limits:
-      cpu: 250m
-      memory: 256Mi
-    requests:
-      cpu: 200m
+      cpu: 300m
       memory: 256Mi
 ```
 
 Or the generated manifest:
 
 ```bash
-helm get manifest  my-mysql -n my-application
+helm get manifest prometheus -n monitoring
 ```
 
 The data inside the revision Helm `secret` is double encoded and gzipped:
 
 ```bash
-kubectl -n my-application get secret
+kubectl -n monitoring get secret
 ```
 ```bash title="output"
-NAME                             TYPE                 DATA   AGE
-my-mysql                         Opaque               2      14m
-sh.helm.release.v1.my-mysql.v1   helm.sh/release.v1   1      14m
-sh.helm.release.v1.my-mysql.v2   helm.sh/release.v1   1      7m22s
+NAME                               TYPE                 DATA   AGE
+sh.helm.release.v1.prometheus.v1   helm.sh/release.v1   1      22m
+sh.helm.release.v1.prometheus.v2   helm.sh/release.v1   1      13m
 ```
 
 If you really like to dump the content for youself:
@@ -256,6 +271,8 @@ If you really like to dump the content for youself:
     The Secret's data also store some sensible values (secrets) 
 
 ```bash
-kubectl get secret -n my-application sh.helm.release.v1.my-mysql.v2 \
+kubectl get secret -n monitoring sh.helm.release.v1.prometheus.v2 \
   --output=go-template={{.data.release}}  | base64 --decode | base64 --decode | gunzip
 ```
+
+Check out the [Lens UI](../interfaces/lens.md), which now has a plugin to dig into Helm releases !
