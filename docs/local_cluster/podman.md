@@ -139,6 +139,30 @@ You can also convert a yaml file back to bunch of containers run in Podman:
 podman play kube /mnt/mysharedfolder/my-running-app.yaml
 ```
 
+!!! warning
+
+    Sometimes some pods way complaine with `failed to create fsnotify watcher: too many open files`.
+
+    This is due to the tuning of the `machine` default values that are too low. Edit the machine:
+
+    ```bash 
+    podman machine ssh
+    sudo -s
+    ```
+
+    then add those 2 lines in `/etc/sysctl.conf`:
+
+    ```
+    fs.inotify.max_user_instances = 10240
+    fs.inotify.max_user_watches = 122880
+    ```
+
+    And execute:
+
+    ```bash
+    sysctl -w fs.inotify.max_user_instances=10240
+    sysctl -w fs.inotify.max_user_watches=122880
+    ```
 
 ## Next
 

@@ -35,14 +35,14 @@ to directly edit the resource. Such case is changing the `replicas` value of a d
 Let's edit our `simple-deployment` and scale it to 3:
 
 ```bash
-kubectl edit deployment simple-deployment
+kubectl edit deployment gowebapp
 ```
 
-Then go to the line with `  replicas: 2` and change it to `  replicas: 3`.
+Then go to the line with `  replicas: 1` and change it to `  replicas: 2`.
 
 By default, `kubectl` is using `vi` as an editor. This can be changed by setting a value to the `KUBE_EDITOR` env variable. You can add it to your `.zshrc` or `.bashrc` to make it permanent.
 
-If you're using `vi`, highlight the number `2`, type `r` then `3` then `:wq`
+If you're using `vi`, highlight the number `1`, type `r` then `2` then `:wq`
 
 If you made a mistake, just exit without saving using `:q!`
 
@@ -72,15 +72,13 @@ If you prefer to change the editor, set the `KUBE_EDITOR` variable:
 Of course, there is a `kubectl` command to change the number of `replicas`: 
 
 ```bash
-kubectl scale --replicas=3 deployment/simple-deployment
+kubectl scale --replicas=2 deployment/gowebapp
 kubectl get pods
 ```
 ```bash title="output"
 NAME                                 READY   STATUS             RESTARTS       AGE
-simple-deployment-57d9ccc7f8-2m97j   0/1     CrashLoopBackOff   7 (73s ago)    12m
-simple-deployment-57d9ccc7f8-bm8jp   0/1     CrashLoopBackOff   5 (119s ago)   4m48s
-simple-deployment-57d9ccc7f8-bqnxs   0/1     CrashLoopBackOff   9 (5m ago)     26m
-simple-pod                           1/1     Running            0              26m
+gowebapp-57d9ccc7f8-2m97j            0/1     CrashLoopBackOff   7 (73s ago)    12m
+gowebapp-57d9ccc7f8-bm8jp            0/1     CrashLoopBackOff   5 (119s ago)   4m48s
 ```
 
 ## I'm still bored to use `kubectl`
