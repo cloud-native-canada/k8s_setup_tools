@@ -105,41 +105,66 @@ kubectl get nodes
 
 ```
 
-## Deploying application
+
+## Working with Kubernetes resources
+
+Now that we have cluster access, next we can read resources from the cluster
+with the `kubectl get` command.
+
+### Namespaces
+
+Kubernetes has the notion of `namespaces` to organize the resources and manage access control (RBACs). 
+
+When a cluster is first created, some `namespaces` are created by default:
+
+```bash
+kubectl get namespaces
+```
+```bash title="output" hl_lines="1 1"
+default
+kube-node-lease
+kube-public
+kube-system
+```
+
+The `default` namespace is, well, the default. `kube-system` namespace is a really specific namesapce hosting all the mandatory cluster resources. 
+
+Let's create namespace `kubecon` with the `kubectl create` command:
+
+We can create a namespace with the `kubectl create` command:
+
+```
+kubectl create ns kubecon
+```
+
+```
+kubectl get pods -n kubecon
+```
+
+
 
 ### Create k8s resources with command line
 
-Let's create a couple of resources:
+Let's create 
 
 ```
-kubectl run webserver --image=nginx --port=80
-```
-
-```
-kubectl get deploy
-kubectl get pods
+kubectl -n kubecon run webserver --image=nginx --port=80
 ```
 
 ```
-kubectl create service clusterip webserver --tcp 80:80
+kubectl get pods 
 ```
 
 ```
-kubectl get service
+kubectl get pods -n kubecon
 ```
 
-Let's access the service http://localhost/
-
-
 ```
-kubectl port-forward svc/webserver 9090
+kubectl -n kubecon create service clusterip webserver --tcp 80:80
 ```
 
-Cleanup:
-
 ```
-kubectl delete pod webserver
-kubectl delete svc webserver
+kubectl get service  -n kubecon
 ```
 
 ### Create a `pod` declaratively with YAML

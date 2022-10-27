@@ -316,21 +316,18 @@ When needed, you can then save the file for backup or later use:
 
 ## manage Kubernetes `namespaces`
 
-Kubernetes has the notion of `namespaces` to organize the resources and manage access control (RBACs). 
+### Before
 
-When a cluster is first created, some `namespaces` are created by default:
-
-```bash
-kubectl get namespaces
 ```
-```bash title="output" hl_lines="1 1"
-default
-kube-node-lease
-kube-public
-kube-system
+kubectl get pods -n kube-system
 ```
 
-The `default` namespace is, well, the default. `kube-system` namespace is a really specific namesapce hosting all the mandatory cluster resources. 
+```
+kubectl get pods -n kubecon
+```
+
+
+### After
 
 The Krew `ns` plugin is used to switch context and set it as the new default. This change is actually persisted in the `~/.kube/config` file.
 
@@ -348,7 +345,8 @@ Active namespace is "kube-system".
 
 ![krew ns](img/krew-ns.png)
 
-### Deploy aplication in a new `namespace`
+
+Let's Deploy aplication in a new `namespace`
 
 - k8s context
 
@@ -393,15 +391,12 @@ k ns gowebapp
 Now install the GoWebApp application into this new namespace:
 
 ```bash
-k apply -f app-deployment.yaml
-k apply -f mysql-deployment.yaml
-k apply -f app-service.yaml
-k apply -f mysql-service.yaml
-k apply -f mysql-secret.yaml
+k apply -f ~/demo/base
 ```
 
 ## manage Kubernetes `context`
 
+### Before
 
 
 - k8s context
@@ -425,7 +420,7 @@ CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 *         kind-dev    kind-dev    kind-dev
 ```
 
-
+### After
 
 `kubectl` is using the notion of `contexts` to define which cluster you know and which one is actuvelly being used. 
 
