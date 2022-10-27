@@ -10,4 +10,4 @@ spec:
     targetPort: 9000
   selector:
     run: gowebapp
-  type: LoadBalancer
+  type: ClusterIP

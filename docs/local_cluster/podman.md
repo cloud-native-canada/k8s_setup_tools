@@ -69,14 +69,24 @@ podman machine init \
 --now
 
 # podman machine start # Not required because of --now option
+```
 
+Check Podman is running:
+
+```bash
 podman info
+```
 
-# Make Docker command call Podman, Podman is command-line compatible with Docker
+Make Docker command call Podman, Podman is command-line compatible with Docker:
+
+```bash
 mv -f /usr/local/bin/docker /usr/local/bin/docker-orig
 ln -s /usr/local/bin/podman /usr/local/bin/docker
+```
 
-# Tell Docker to connect to Podman
+Point the default Docker socket to the Podman socket. This is needed as some apps use a hardcoded path to Docker:
+
+```bash
 # This is needed so every app "hardcoded" for Docker will work
 export DOCKER_HOST="unix://$HOME/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
 ```

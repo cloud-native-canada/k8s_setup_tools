@@ -101,11 +101,10 @@ dd461d2b9d4a  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4
 
 - See cluster up and running:
 
-```
+```bash
 kubectl get nodes
 ```
-
-```
+```bash title="output"
 NAME                STATUS   ROLES           AGE   VERSION
 dev-control-plane   Ready    control-plane   11h   v1.24.4
 dev-worker          Ready    <none>          11h   v1.24.4

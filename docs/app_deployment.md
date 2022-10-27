@@ -37,9 +37,10 @@ users:
 
 !!! result
     We can see that kubeconfig file is very simple and it has:
+
     - list of clusters
     - list of contexts
-    - list of users (simply a way to authinticate with a cluster)
+    - list of users (simply a way to authenticate with a cluster)
     - Current context
 
 !!! note

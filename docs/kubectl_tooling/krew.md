@@ -1,6 +1,8 @@
 # Extending `kubectl`
 
-Couple years ago K8s community introduced abn easy way to extend kubectl via `plugins`.
+Couple years ago K8s community introduced an easy way to extend kubectl via `plugins`.
+
+Plugins are in fact "applications" (executable files) named `kubectl-<plugin_name>`, that are executed when you call `kubectl plugin_name`.
 
 `Krew` is the plugin manager for `kubectl` command-line tool and it's  maintained by the Kubernetes SIG CLI community.
 
@@ -306,10 +308,10 @@ spec:
       terminationGracePeriodSeconds: 30
 ```
 
-So, dump all the resources of the application in files:
+When needed, you can then save the file for backup or later use:
 
 ```bash
-k neat get deploy gowebapp --output yaml > neat-app-deployment.yaml
+# k neat get deploy gowebapp --output yaml > neat-app-deployment.yaml
 ```
 
 ## manage Kubernetes `namespaces`
@@ -373,8 +375,7 @@ CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
 Before we deploy a new application, remove the application from the `default` namespace:
 
 ```bash
-k delete deployment -n default gowebapp
-k delete deployment -n default gowebapp-mysql
+k delete -f ~/demo/base
 ```
 
 Now create a new namespace:
