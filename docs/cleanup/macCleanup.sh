@@ -9,7 +9,8 @@ rm -f /usr/local/bin/kubie
 rm -f /usr/local/bin/stern
 
 # Kind
-kind delete cluster demo
+kind delete cluster --name dev
+kind delete cluster --name stg
 brew uninstall kind
 
 # remove Minikube

@@ -97,6 +97,10 @@ Please refer to the [official install doc](https://krew.sigs.k8s.io/docs/user-gu
     
 ### Usage
 
+```
+kubectl krew update
+``` 
+
 ```bash
 kubectl krew list
 ```
@@ -119,9 +123,9 @@ ctx                             Switch between contexts in your kubeconfig      
 ...
 ```
 
-### Krew must-have Plugins
+### Krew Plugins
 
-Here are some of the cool Plugins to have:
+Install plugins that will be used in the tutorial:
 
 - ctx: current cluster `Context` and quick context changes
 - ns: current `Namespace` and quick namespace changes
@@ -132,7 +136,7 @@ Here are some of the cool Plugins to have:
 Install them with this command:
 
 ```bash
-kubectl krew install ctx ns stern whoami who-can
+kubectl krew install neat ctx ns whoami who-can view-secret
 ```
 
 ## Generating the application manifest
@@ -151,6 +155,7 @@ First dump the `gowebapp` deployment into a file. By using the `--output yaml` (
 ```bash
 k get deploy gowebapp --output yaml
 ```
+
 ```yaml title="output"
 apiVersion: apps/v1
 kind: Deployment
@@ -374,6 +379,28 @@ Active namespace is "kube-system".
 
 ### Deploy aplication in a new `namespace`
 
+- k8s context
+
+```bash
+kubectl config current-context
+```
+```bash
+kind-dev
+```
+
+- All contexts
+
+We can list all Kubernetes `context` using `kubectl`:
+
+```bash
+kubectl config  get-contexts
+```
+```bash
+CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+*         kind-dev    kind-dev    kind-dev
+```
+
+
 Before we deploy a new application, remove the application from the `default` namespace:
 
 ```bash
@@ -404,6 +431,31 @@ k apply -f mysql-secret.yaml
 ```
 
 ## manage Kubernetes `context`
+
+
+
+- k8s context
+
+```bash
+kubectl config current-context
+```
+```bash
+kind-dev
+```
+
+- All contexts
+
+We can list all Kubernetes `context` using `kubectl`:
+
+```bash
+kubectl config  get-contexts
+```
+```bash
+CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
+*         kind-dev    kind-dev    kind-dev
+```
+
+
 
 `kubectl` is using the notion of `contexts` to define which cluster you know and which one is actuvelly being used. 
 

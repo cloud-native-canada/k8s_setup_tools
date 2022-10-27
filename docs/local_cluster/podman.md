@@ -1,7 +1,7 @@
 # Podman
 
 !!! important
-    If you already have Docker-Desktop or Docker Engine (Linux) installed and running, skip this step for the demo and go directly to [Kind chapter](kind.md)
+    If you already have Docker-Desktop or Docker Engine (Linux) installed and running, skip this step for the demo and go directly to [Deploying applications with kubectl](../app_deployment.md)
 
 
 `podman` is a full replacement of Docker and Docker-For-Desktop. It's the container Swiss-Army knife from RedHat.
@@ -22,7 +22,6 @@ It can also run and build rootless containers.
 
     ```bash title="OsX Install"
     brew install podman
-    brew install podman-desktop
     ```
 
 === "Linux Alpine"
@@ -53,25 +52,14 @@ It can also run and build rootless containers.
 
         Please [check the docs](https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md) for specific detailed instructions
 
-=== "Podman Desktop (UI)"
 
-    Download the UI from the [official website](https://iongion.github.io/podman-desktop-companion/).
-
+Optionally, Download Podman Desktop (UI) from the [official website](https://iongion.github.io/podman-desktop-companion/)
 
 ## Setup
+    
+By default `Podman` set up a VM Machine of 1 CPU, 2Gb of memory, 100Gb of disk.
 
-!!! note "Docker replacement"
-    Usually you will symlink `podman` to `docker` because using an alias is not working when some apps or scripts try to call the hard-coded `docker` commandline.
-
-!!! note
-
-    Machine is 1 CPU, 2Gb of memory, 100Gb of disk
-    Change it using options:
-
-    - `--cpus=2`: change CPUs dedicated to Podman
-    - `--memory=4096`: change memory (in Mb)
-    - `--disk-size=200`: change disk size (in Gb)
-    - `--now`: start now without needing the `start` command
+In order to support demo needs create Podman VM with following parameters:
 
 ```bash
 podman machine init \
@@ -94,9 +82,6 @@ export DOCKER_HOST="unix://$HOME/.local/share/containers/podman/machine/podman-m
 ```
 
 ## Usage
-
-Podman is a cool alternative to Docker. It is highly maintained and updated and also offer building Containers without any daemon
-Podman does not provide a K8s cluster, you have to use another solution (Kind !)
 
 You can use podman to search for well-known images: 
 
@@ -147,4 +132,8 @@ podman play kube /mnt/mysharedfolder/my-running-app.yaml
 
 ## Next
 
-Create a local Kubernetes cluster in [next chapter](kind.md) !
+Podman is a cool alternative to Docker Engine and Docker CLI. 
+
+However, Podman does not provide a K8s cluster.
+
+Create a local `Kind` Kubernetes cluster in [next chapter](kind.md) !

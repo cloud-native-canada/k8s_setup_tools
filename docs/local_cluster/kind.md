@@ -1,11 +1,17 @@
 # Kind
 
-- Local K8s cluster
-- Official Kubernetes tool to create lightweight K8s clusters
-- Support ingress / LB (with some tuning)
-- Work with Docker and Podman (and rootless with some more sweat)
+!!! important
+    If you already have Docker-Desktop (Mac, Windows) or Docker Engine (Linux) installed and running, skip this step for the demo and go directly to [Deploying applications with kubectl](../app_deployment.md)
 
-[https://kind.sigs.k8s.io/](https://kind.sigs.k8s.io/)
+Kind is an amazing tool for running test clusters locally as it runs in a container which makes it lightweight and easy to run throw-away clusters for testing purposes.
+
+
+- It can be used to deploy Local K8s cluster or for CI
+- Support ingress / LB (with some tuning)
+- Support deployment of multiple clusters / versions
+- Supports deployment of single or multi node clusters
+
+For more information, check out [https://kind.sigs.k8s.io/](https://kind.sigs.k8s.io/).
 
 ## Install
 
@@ -30,23 +36,21 @@
     # TODO
     ```
 
-## Setup
+## Usage
 
-Use the Kind command `create cluster` to start a new cluster.
+To create a K8s cluster with `Kind` use the command:
 
 ```bash
 kind create cluster --help
 ```
 
-You can list existing clusters too:
+## Create a first kind cluster `dev`
 
-```bash
-kind get clusters
-```
+In this guide we will run 2 clusters side by side `dev` and `stg`.
 
-## Usage
 
-It's better to create a config file and create a cluster from it so you can re-use it or iterate some changes. 
+In order to have consitency over `kind` cluster configuration, create cluster by specifing a config file.
+and settings such `k8s version` and etc,
 
 Here's the config yaml file:
 
@@ -54,11 +58,11 @@ Here's the config yaml file:
 --8<-- "docs/local_cluster/kind-dev.yaml"
 ```
 
-!!! warning
-    If you haven't done it already, create a new folder to store all the files we're creating.
-    Refer to [the introduction](../index.md#setup) if you need help.
-
 Then create the cluster from this file:
+
+```bash
+cd ~/demo/
+```
 
 ```bash
 cat > kind-dev.yaml << EOF
@@ -87,7 +91,7 @@ Set kubectl context to "kind-dev"
 You can check that everything is working. Each K8s node is actually a running `container`:
 
 ```bash
-podman ps -a
+podman ps
 ```
 ```bash
 CONTAINER ID  IMAGE                                                                                           COMMAND     CREATED        STATUS            PORTS                                        NAMES
@@ -95,28 +99,33 @@ CONTAINER ID  IMAGE                                                             
 dd461d2b9d4a  docker.io/kindest/node@sha256:adfaebada924a26c2c9308edd53c6e33b3d4e453782c0063dc0028bdebaddf98              3 minutes ago  Up 3 minutes ago  0.0.0.0:3080->80/tcp, 0.0.0.0:3443->443/tcp  dev-worker
 ```
 
-We can validate the state of the cluster too:
+- See cluster up and running:
 
-- k8s context
-
-```bash
-kubectl config current-context
 ```
-```bash
-kind-dev
+kubectl get nodes
 ```
 
-- K8s cluster info
+```
+NAME                STATUS   ROLES           AGE   VERSION
+dev-control-plane   Ready    control-plane   11h   v1.24.4
+dev-worker          Ready    <none>          11h   v1.24.4
+```
+
+!!! note
+    You can see that our cluster has `control-plane` node and `worker` node.
+
+- Verify k8s cluster status:
 
 ```bash
 kubectl cluster-info
 ```
+
 ```bash
 Kubernetes control plane is running at https://127.0.0.1:56141
 CoreDNS is running at https://127.0.0.1:56141/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 ```
 
-- Running pods
+- Check system Pods are up and running: 
 
 ```bash
 kubectl get pods -A
@@ -136,19 +145,7 @@ kube-system          kube-scheduler-dev-control-plane             1/1     Runnin
 local-path-storage   local-path-provisioner-6b84c5c67f-csxg6      1/1     Running   0          4m6s
 ```
 
-- All contexts
-
-We can list all Kubernetes `context` using `kubectl`:
-
-```bash
-kubectl config  get-contexts
-```
-```bash
-CURRENT   NAME        CLUSTER     AUTHINFO    NAMESPACE
-*         kind-dev    kind-dev    kind-dev
-```
-
-## Create a second cluster
+## Create a second kind cluster stg
 
 ```bash
 cat > kind-stg.yaml << EOF
@@ -159,17 +156,29 @@ EOF
 kind create cluster --name=stg --config kind-stg.yaml -v9 --retain
 ```
 
-## Reboot
+- List clusters with `kind get`:
 
-After a reboot, `podman` will be disabled. It is necessary to restart podman and restart your `kind` containers before the cluster is available:
-
-```bash
-podman machine start
-podman start --all
 ```
+kind get clusters
+```
+**Output:**
+```
+dev
+stg
+```
+
+!!! result
+    Two K8s clusters `dev` and `stg` has been created
+
+
+!!! note
+    After a reboot, `podman` will be disabled. To recover podman and `kind` containers re-run following steps:
+    
+    ```bash
+    podman machine start
+    podman start --all
+    ```
 
 ## Next
 
-Now that the Kind cluster is created, continue by [deploying some applications](../app_deployment.md).
-
-Explore other K8s cluster options with [Minikube](options/minikube.md) !
+Now that the `Kind` clusters are created, continue by [deploying some applications](../app_deployment.md).
