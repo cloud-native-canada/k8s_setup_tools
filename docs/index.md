@@ -8,6 +8,8 @@ Follow this website to run the demos on your own laptop.
 
 Also check [the slide deck that was used during the presentation](K8sUserSetup.pdf).
 
+You can also watch the [KubeCon Na 2022 talk on Youtube](https://youtu.be/TKYAEjNg4Hw).
+
 ## Setup
 This tutorial is running some commands that creates local files that are needed throughout the demos.
 We recommend you open a shell and `cd` into this folder:
