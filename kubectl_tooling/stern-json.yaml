@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: multi-deployment
+  name: multi-deployment
+  namespace: default
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: multi-deployment
+  template:
+    metadata:
+      labels:
+        app: multi-deployment
+    spec:
+      containers:
+      - image: alpine:latest
+        imagePullPolicy: Always
+        name: first
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo '{"level":"info","message":"starting","container":"first"}';
+            sleep 5;
+            echo '{"level":"warn","message":"something is not quite right","container":"first"}';
+            tail -f /dev/null
+      - image: alpine:latest
+        imagePullPolicy: Always
+        name: second
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo '{"level":"info","message":"starting","container":"second"}';
+            sleep 2;
+            echo '{"level":"warn","message":"Redrum. Redrum. REDRUM!","container":"second"}';
+            tail -f /dev/null

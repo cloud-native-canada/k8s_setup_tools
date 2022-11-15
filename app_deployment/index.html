@@ -1,0 +1,1533 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../images/kubecon_logo.jpeg">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Deploying applications with kubectl - KubeCon NA 2022 Tutorial - K8s Setup Tools</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#application-deployment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="KubeCon NA 2022 Tutorial - K8s Setup Tools" class="md-header__button md-logo" aria-label="KubeCon NA 2022 Tutorial - K8s Setup Tools" data-md-component="logo">
+      
+  <img src="../images/kubecon_logo.jpeg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KubeCon NA 2022 Tutorial - K8s Setup Tools
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deploying applications with kubectl
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="KubeCon NA 2022 Tutorial - K8s Setup Tools" class="md-nav__button md-logo" aria-label="KubeCon NA 2022 Tutorial - K8s Setup Tools" data-md-component="logo">
+      
+  <img src="../images/kubecon_logo.jpeg" alt="logo">
+
+    </a>
+    KubeCon NA 2022 Tutorial - K8s Setup Tools
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl/" class="md-nav__link">
+        Kubectl
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Local Clusters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Local Clusters" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Local Clusters
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_cluster/podman/" class="md-nav__link">
+        Podman
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_cluster/kind/" class="md-nav__link">
+        Kind
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Other Options
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Other Options" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Other Options
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_cluster/options/rancher/" class="md-nav__link">
+        Rancher Desktop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_cluster/options/colima/" class="md-nav__link">
+        Colima
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_cluster/options/minikube/" class="md-nav__link">
+        MiniKube
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Deploying applications with kubectl
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Deploying applications with kubectl
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-kubeconfig" class="md-nav__link">
+    Understanding the KUBECONFIG
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the KUBECONFIG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#locating-kubeconfig" class="md-nav__link">
+    Locating kubeconfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-kubectl-config-commands" class="md-nav__link">
+    Using kubectl config commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-different-config-files" class="md-nav__link">
+    Using different config files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-kubernetes-resources" class="md-nav__link">
+    Working with Kubernetes resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with Kubernetes resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespaces" class="md-nav__link">
+    Namespaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-k8s-resources-with-command-line" class="md-nav__link">
+    Create k8s resources with command line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pod-declaratively-with-yaml" class="md-nav__link">
+    Create a pod declaratively with YAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-deployment-declaratively-with-yaml" class="md-nav__link">
+    Create a deployment declaratively with YAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-service-declaratively-with-yaml" class="md-nav__link">
+    Create a service declaratively with YAML
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-a-real-application" class="md-nav__link">
+    Deploy a real application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    Next
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell_setup/" class="md-nav__link">
+        Shell Setup
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Kubectl Tooling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubectl Tooling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Kubectl Tooling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl_tooling/kubectl/" class="md-nav__link">
+        Kubectl
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl_tooling/kubecolor/" class="md-nav__link">
+        Kubecolor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl_tooling/stern/" class="md-nav__link">
+        Stern
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl_tooling/krew/" class="md-nav__link">
+        Kubectl Plugins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl_tooling/kubie/" class="md-nav__link">
+        Kubie
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud_commands/" class="md-nav__link">
+        Cloud Kubernetes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Advanced Manifests Creation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Advanced Manifests Creation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Advanced Manifests Creation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kustomize/kustomize/" class="md-nav__link">
+        kustomize
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../helm/helm/" class="md-nav__link">
+        helm
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Kubernetes Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kubernetes Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Kubernetes Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interfaces/k9s/" class="md-nav__link">
+        K9s
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interfaces/lens/" class="md-nav__link">
+        Lens
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interfaces/octant/" class="md-nav__link">
+        Octant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interfaces/kubenav/" class="md-nav__link">
+        KubeNav
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          Development tooling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development tooling" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Development tooling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev_tooling/vscode/" class="md-nav__link">
+        VsCode Extensions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev_tooling/apps/" class="md-nav__link">
+        Other apps
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cleanup/cleanup/" class="md-nav__link">
+        Cleanup
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mkdocs/" class="md-nav__link">
+        Mkdocs help and examples
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-kubeconfig" class="md-nav__link">
+    Understanding the KUBECONFIG
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the KUBECONFIG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#locating-kubeconfig" class="md-nav__link">
+    Locating kubeconfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-kubectl-config-commands" class="md-nav__link">
+    Using kubectl config commands
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-different-config-files" class="md-nav__link">
+    Using different config files
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-kubernetes-resources" class="md-nav__link">
+    Working with Kubernetes resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with Kubernetes resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespaces" class="md-nav__link">
+    Namespaces
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-k8s-resources-with-command-line" class="md-nav__link">
+    Create k8s resources with command line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-pod-declaratively-with-yaml" class="md-nav__link">
+    Create a pod declaratively with YAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-deployment-declaratively-with-yaml" class="md-nav__link">
+    Create a deployment declaratively with YAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-service-declaratively-with-yaml" class="md-nav__link">
+    Create a service declaratively with YAML
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-a-real-application" class="md-nav__link">
+    Deploy a real application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next" class="md-nav__link">
+    Next
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="application-deployment">Application Deployment<a class="headerlink" href="#application-deployment" title="Permanent link">&para;</a></h1>
+<h2 id="understanding-the-kubeconfig">Understanding the KUBECONFIG<a class="headerlink" href="#understanding-the-kubeconfig" title="Permanent link">&para;</a></h2>
+<h3 id="locating-kubeconfig">Locating kubeconfig<a class="headerlink" href="#locating-kubeconfig" title="Permanent link">&para;</a></h3>
+<p><code>Kubectl</code> has configuration file, which is used to tell to <code>Kubectl</code> where you kubernetes cluster is.</p>
+<p>Default location of the <code>kubeconfig</code> file is in <code>~/.kube/config</code></p>
+<p>Everytime we spin up a kubernetes cluster, <code>kind</code> will go ahead an update <code>kubeconfig</code> file locally.</p>
+<p>You will see similiar behaviour when you going to be using <code>Minikube</code> clusters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For cloud provides you may need to run additional commands to fetch the <code>kubeconfig</code> file locally.</p>
+</div>
+<p>Let's examine our <code>~/.kube/config</code> file, after we've created 2 <code>kind</code> clusters.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>code ~/.kube/config
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kind: Config
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>apiVersion: v1
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>clusters:
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> - list of clusters (addresses \ endpoints)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>current-context: kind-stg
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>contexts:
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a> - list of contexts ( which user and cluster to use when running commands)
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>users:
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a> - list of users (thing that identifies us when accessing a cluster [certificate]) 
+</code></pre></div>
+<div class="admonition result">
+<p class="admonition-title">Result</p>
+<p>We can see that kubeconfig file is very simple and it has:</p>
+<ul>
+<li>list of clusters</li>
+<li>list of contexts</li>
+<li>list of users (simply a way to authenticate with a cluster)</li>
+<li>Current context</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>kubernetes by default uses certificate authentication. Other auth plugins exist (gke, aks, eks)</p>
+</div>
+<h3 id="using-kubectl-config-commands">Using kubectl config commands<a class="headerlink" href="#using-kubectl-config-commands" title="Permanent link">&para;</a></h3>
+<p>Altertnatively, you can use command to interact with <code>kubeconfig</code> which is <code>kubectl config</code>.</p>
+<p>Here is ther commands that are telling <code>kubectl</code> which context to use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl config current-context
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>kubectl config get-contexts
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>kubectl config use-context kind-dev
+</code></pre></div>
+<h3 id="using-different-config-files">Using different config files<a class="headerlink" href="#using-different-config-files" title="Permanent link">&para;</a></h3>
+<p>You can also tell your <code>kubectl</code> to use different config files.
+This is useful to keep your production config separate from your development ones</p>
+<p>Set the <code>$KUBECONFIG</code> environment variable to a path:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Apple Mac OsX</label><label for="__tabbed_1_2">Linux</label><label for="__tabbed_1_3">Windows</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>export KUBECONFIG=~/.kube/config
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>export KUBECONFIG=~/.kube/config
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ENV:KUBECONFIG=&quot;C:\Users\aimve\.kube\config&quot;
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Export seperate configs using <code>kind</code>. This is possible with cloud based clusters as well:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kind --name dev export kubeconfig --kubeconfig ~/.kube/dev-config
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>kind --name stg export kubeconfig --kubeconfig ~/.kube/stg-config
+</code></pre></div>
+<p>Switch to <code>stg</code> only cofig:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>export KUBECONFIG=~/.kube/stg-config
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>kubectl get nodes
+</code></pre></div>
+<p>Reset back to shared KUBECONFIG file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>export KUBECONFIG=~/.kube/config
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>kubectl get nodes
+</code></pre></div>
+<h2 id="working-with-kubernetes-resources">Working with Kubernetes resources<a class="headerlink" href="#working-with-kubernetes-resources" title="Permanent link">&para;</a></h2>
+<p>Now that we have cluster access, next we can read resources from the cluster
+with the <code>kubectl get</code> command.</p>
+<h3 id="namespaces">Namespaces<a class="headerlink" href="#namespaces" title="Permanent link">&para;</a></h3>
+<p>Kubernetes has the notion of <code>namespaces</code> to organize the resources and manage access control (RBACs). </p>
+<p>When a cluster is first created, some <code>namespaces</code> are created by default:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl get namespaces
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="hll">default
+</span><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>kube-node-lease
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>kube-public
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>kube-system
+</code></pre></div></p>
+<p>The <code>default</code> namespace is, well, the default. <code>kube-system</code> namespace is a really specific namesapce hosting all the mandatory cluster resources. </p>
+<p>Let's create namespace <code>kubecon</code> with the <code>kubectl create</code> command:</p>
+<p>We can create a namespace with the <code>kubectl create</code> command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl create ns kubecon
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl get pods -n kubecon
+</code></pre></div>
+<h3 id="create-k8s-resources-with-command-line">Create k8s resources with command line<a class="headerlink" href="#create-k8s-resources-with-command-line" title="Permanent link">&para;</a></h3>
+<p>Let's create </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubectl -n kubecon run webserver --image=nginx --port=80
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>kubectl get pods 
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>kubectl get pods -n kubecon
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>kubectl -n kubecon create service clusterip webserver --tcp 80:80
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>kubectl get service  -n kubecon
+</code></pre></div>
+<h3 id="create-a-pod-declaratively-with-yaml">Create a <code>pod</code> declaratively with YAML<a class="headerlink" href="#create-a-pod-declaratively-with-yaml" title="Permanent link">&para;</a></h3>
+<p><code>kubectl</code> can be used to generate YAML manifests and help you build your own:</p>
+<ul>
+<li><code>kubectl create &lt;resource&gt;</code> to create a resource (<code>kubectl run</code> for pods)</li>
+<li><code>-–output yaml</code> (<code>-o yaml</code>) to dump the yaml</li>
+<li><code>-–dry-run=client</code> to simulate the resource and not create it in the cluster</li>
+<li><code>kubectl explain &lt;resource&gt;</code> to get more informations on a resource type</li>
+</ul>
+<p>Then run the deployment command:</p>
+<div class="highlight"><span class="filename">simple_pod</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="l l-Scalar l-Scalar-Plain">kubectl run \</span><span class="w"></span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">--image=alpine:latest \</span><span class="w"></span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">-o yaml \</span><span class="w"></span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">--dry-run=client \</span><span class="w"></span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">simple-pod \</span><span class="w"></span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">--command -- tail -f /dev/null &gt; simple-pod.yaml</span><span class="w"></span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f simple-pod.yaml</span><span class="w"></span>
+</code></pre></div>
+<p>Use <code>kubectl get po</code> to list the resulting pod:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>kubectl get pods
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>NAME                                 READY   STATUS      RESTARTS      AGE
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>simple-pod                           <span class="m">1</span>/1     Running     <span class="m">0</span>             23s
+</code></pre></div></p>
+<p>Using <code>kubectl describe</code> can give even more infos:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>kubectl describe pods simple-pod
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Name:             simple-pod
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>Namespace:        default
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>Priority:         <span class="m">0</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>Service Account:  default
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>Node:             dev-worker/10.89.0.3
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>Start Time:       Thu, <span class="m">20</span> Oct <span class="m">2022</span> <span class="m">17</span>:16:19 -0400
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>Labels:           <span class="nv">run</span><span class="o">=</span>simple-pod
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>Annotations:      &lt;none&gt;
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>Status:           Running
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>IP:               <span class="m">10</span>.244.1.5
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>IPs:
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>  IP:  <span class="m">10</span>.244.1.5
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>Containers:
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>  simple-pod:
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>    Container ID:  containerd://ef45ec5ea986965ef51da85b8d157c590f68b252114248f4339d0be35feeccfd
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>    Image:         alpine:latest
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>    Image ID:      docker.io/library/alpine@sha256:bc41182d7ef5ffc53a40b044e725193bc10142a1243f395ee852a8d9730fc2ad
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>    Port:          &lt;none&gt;
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>    Host Port:     &lt;none&gt;
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>    Command:
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>      tail
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>      -f
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>      /dev/null
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>    State:          Running
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>      Started:      Thu, <span class="m">20</span> Oct <span class="m">2022</span> <span class="m">17</span>:16:21 -0400
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>    Ready:          True
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>    Restart Count:  <span class="m">0</span>
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>    Environment:    &lt;none&gt;
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>    Mounts:
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-p2mpj <span class="o">(</span>ro<span class="o">)</span>
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>Conditions:
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>  Type              Status
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>  Initialized       True
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>  Ready             True
+<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>  ContainersReady   True
+<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>  PodScheduled      True
+<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>Volumes:
+<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>  kube-api-access-p2mpj:
+<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>    Type:                    Projected <span class="o">(</span>a volume that contains injected data from multiple sources<span class="o">)</span>
+<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>    TokenExpirationSeconds:  <span class="m">3607</span>
+<a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a>    ConfigMapName:           kube-root-ca.crt
+<a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a>    ConfigMapOptional:       &lt;nil&gt;
+<a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a>    DownwardAPI:             <span class="nb">true</span>
+<a id="__codelineno-22-44" name="__codelineno-22-44" href="#__codelineno-22-44"></a>QoS Class:                   BestEffort
+<a id="__codelineno-22-45" name="__codelineno-22-45" href="#__codelineno-22-45"></a>Node-Selectors:              &lt;none&gt;
+<a id="__codelineno-22-46" name="__codelineno-22-46" href="#__codelineno-22-46"></a>Tolerations:                 node.kubernetes.io/not-ready:NoExecute <span class="nv">op</span><span class="o">=</span>Exists <span class="k">for</span> 300s
+<a id="__codelineno-22-47" name="__codelineno-22-47" href="#__codelineno-22-47"></a>                             node.kubernetes.io/unreachable:NoExecute <span class="nv">op</span><span class="o">=</span>Exists <span class="k">for</span> 300s
+<a id="__codelineno-22-48" name="__codelineno-22-48" href="#__codelineno-22-48"></a>Events:
+<a id="__codelineno-22-49" name="__codelineno-22-49" href="#__codelineno-22-49"></a>  Type    Reason     Age    From               Message
+<a id="__codelineno-22-50" name="__codelineno-22-50" href="#__codelineno-22-50"></a>  ----    ------     ----   ----               -------
+<a id="__codelineno-22-51" name="__codelineno-22-51" href="#__codelineno-22-51"></a>  Normal  Scheduled  6m10s  default-scheduler  Successfully assigned default/simple-pod to dev-worker
+<a id="__codelineno-22-52" name="__codelineno-22-52" href="#__codelineno-22-52"></a>  Normal  Pulling    6m9s   kubelet            Pulling image <span class="s2">&quot;alpine:latest&quot;</span>
+<a id="__codelineno-22-53" name="__codelineno-22-53" href="#__codelineno-22-53"></a>  Normal  Pulled     6m8s   kubelet            Successfully pulled image <span class="s2">&quot;alpine:latest&quot;</span> <span class="k">in</span> <span class="m">422</span>.571559ms
+<a id="__codelineno-22-54" name="__codelineno-22-54" href="#__codelineno-22-54"></a>  Normal  Created    6m8s   kubelet            Created container simple-pod
+<a id="__codelineno-22-55" name="__codelineno-22-55" href="#__codelineno-22-55"></a>  Normal  Started    6m8s   kubelet            Started container simple-pod
+</code></pre></div></p>
+<h3 id="create-a-deployment-declaratively-with-yaml">Create a <code>deployment</code> declaratively with YAML<a class="headerlink" href="#create-a-deployment-declaratively-with-yaml" title="Permanent link">&para;</a></h3>
+<p><code>kubectl</code> can be used to create sample resources, like we just did with <code>pods</code>. Usually you can't deploy the generated resource directly to a cluster. It is needed to update the resource to configure some aspects that can't be configures in the CLI.</p>
+<p>For example, generate a basic deployment:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kubectl create deployment <span class="se">\</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>  --image<span class="o">=</span>alpine:latest <span class="se">\</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>  --replicas<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>  -o yaml <span class="se">\</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>  --dry-run<span class="o">=</span>client <span class="se">\</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>  simple-deployment 
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span><span class="w"></span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span><span class="w"></span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">  </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple-deployment</span><span class="w"></span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple-deployment</span><span class="w"></span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple-deployment</span><span class="w"></span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="w">  </span><span class="nt">strategy</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a><span class="w">      </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w"></span>
+<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">simple-deployment</span><span class="w"></span>
+<a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine:latest</span><span class="w"></span>
+<a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span><span class="w"></span>
+<a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+</code></pre></div></p>
+<p>Here the container is missing a real command to execute, like the <code>tail -f /dev/null</code> that we added in the <code>pod</code>.</p>
+<p>Now deploy this manifest:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>kubectl create deployment <span class="se">\</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>  --image<span class="o">=</span>alpine:latest <span class="se">\</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>  --replicas<span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>  -o yaml <span class="se">\</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>  --dry-run<span class="o">=</span>client <span class="se">\</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>  simple-deployment &gt; simple-deployment.yaml
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>kubectl apply -f simple-deployment.yaml
+</code></pre></div>
+<p>Use <code>kubectl get deployment</code> to see the result:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>kubectl get deployments
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>simple-deployment   <span class="m">0</span>/2     <span class="m">2</span>            <span class="m">0</span>           1m1s
+</code></pre></div></p>
+<p>In Kubernetes, Deployments creates ReplicaSets, which in turn creates Pods:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>kubectl get pods
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>NAME                                 READY   STATUS      RESTARTS      AGE
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>NAME                                 READY   STATUS             RESTARTS      AGE
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>simple-deployment-5cff76596f-clgl7   <span class="m">0</span>/1     CrashLoopBackOff   <span class="m">5</span> <span class="o">(</span>86s ago<span class="o">)</span>   1m35s
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>simple-deployment-5cff76596f-vhnvh   <span class="m">0</span>/1     CrashLoopBackOff   <span class="m">5</span> <span class="o">(</span>83s ago<span class="o">)</span>   1m35s
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>simple-pod                           <span class="m">1</span>/1     Running            <span class="m">0</span>             3m30s
+</code></pre></div></p>
+<p>Oops, something is not quite right with our deployment.</p>
+<p>Please, don't try to debug right now. Let's move on.</p>
+<h3 id="create-a-service-declaratively-with-yaml">Create a <code>service</code> declaratively with YAML<a class="headerlink" href="#create-a-service-declaratively-with-yaml" title="Permanent link">&para;</a></h3>
+<p>Services are the entry-point to your pods. they "load-balance" the requests between all the associated pods.</p>
+<p>Here is how to create one:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>kubectl create service clusterip simple-service <span class="se">\</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>  --tcp<span class="o">=</span><span class="m">5678</span>:8080 <span class="se">\</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>  -o yaml <span class="se">\</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>  --dry-run<span class="o">=</span>client &gt; simple-service.yaml
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>kubectl apply -f simple-service.yaml
+</code></pre></div>
+<p>Check that the service is OK:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>kubectl get services
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>NAME             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>    AGE
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>kubernetes       ClusterIP   <span class="m">10</span>.96.0.1     &lt;none&gt;        <span class="m">443</span>/TCP    10d
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>simple-service   ClusterIP   <span class="m">10</span>.96.94.15   &lt;none&gt;        <span class="m">5678</span>/TCP   4s
+</code></pre></div></p>
+<p>The <code>kubernetes</code> service is a default service pointing to the Kubernetes API of the cluster.</p>
+<p>Ok now we have some stuff in the <code>kind</code> cluster. </p>
+<h2 id="deploy-a-real-application">Deploy a real application<a class="headerlink" href="#deploy-a-real-application" title="Permanent link">&para;</a></h2>
+<p>The most common and recommended way to create resources in Kubernetes is with the <code>kubectl apply</code> command.
+This command takes in declarative <code>YAML</code> files.</p>
+<p>Now deploy a real application, composed of a Mysql database, a web application and associated services:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>cd ~/demo/base
+</code></pre></div>
+<div class="highlight"><span class="filename">mysql secret</span><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>cat &gt; mysql-secret.yaml <span class="s">&lt;&lt; EOF</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="s">kind: Secret</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="s">apiVersion: v1</span>
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="s">metadata:</span>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="s">  name: mysql</span>
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="s">type: Opaque</span>
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="s">data:</span>
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="s">  password: cm9vdHBhc3N3ZA==</span>
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="s">EOF</span>
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a>kubectl apply -f mysql-secret.yaml
+</code></pre></div>
+<div class="highlight"><span class="filename">mysql database</span><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>cat &gt; mysql-deployment.yaml <span class="s">&lt;&lt; EOF</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="s">apiVersion: apps/v1</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="s">kind: Deployment</span>
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="s">metadata:</span>
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="s">  name: gowebapp-mysql</span>
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="s">  labels:</span>
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="s">    run: gowebapp-mysql</span>
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="s">    tier: backend</span>
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="s">spec:</span>
+<a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="s">  replicas: 1</span>
+<a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="s">  selector:</span>
+<a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a><span class="s">    matchLabels:</span>
+<a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a><span class="s">      run: gowebapp-mysql</span>
+<a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a><span class="s">  strategy:</span>
+<a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a><span class="s">    type: Recreate</span>
+<a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a><span class="s">  template:</span>
+<a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a><span class="s">    metadata:</span>
+<a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a><span class="s">      labels:</span>
+<a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a><span class="s">        run: gowebapp-mysql</span>
+<a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a><span class="s">    spec:</span>
+<a id="__codelineno-35-21" name="__codelineno-35-21" href="#__codelineno-35-21"></a><span class="s">      containers:</span>
+<a id="__codelineno-35-22" name="__codelineno-35-22" href="#__codelineno-35-22"></a><span class="s">      - env:</span>
+<a id="__codelineno-35-23" name="__codelineno-35-23" href="#__codelineno-35-23"></a><span class="s">        - name: MYSQL_ROOT_PASSWORD</span>
+<a id="__codelineno-35-24" name="__codelineno-35-24" href="#__codelineno-35-24"></a><span class="s">          value: rootpasswd</span>
+<a id="__codelineno-35-25" name="__codelineno-35-25" href="#__codelineno-35-25"></a><span class="s">        image: ghcr.io/cloud-native-canada/k8s_setup_tools:mysql</span>
+<a id="__codelineno-35-26" name="__codelineno-35-26" href="#__codelineno-35-26"></a><span class="s">        name: gowebapp-mysql</span>
+<a id="__codelineno-35-27" name="__codelineno-35-27" href="#__codelineno-35-27"></a><span class="s">        ports:</span>
+<a id="__codelineno-35-28" name="__codelineno-35-28" href="#__codelineno-35-28"></a><span class="s">        - containerPort: 3306</span>
+<a id="__codelineno-35-29" name="__codelineno-35-29" href="#__codelineno-35-29"></a><span class="s">        livenessProbe:</span>
+<a id="__codelineno-35-30" name="__codelineno-35-30" href="#__codelineno-35-30"></a><span class="s">          tcpSocket: </span>
+<a id="__codelineno-35-31" name="__codelineno-35-31" href="#__codelineno-35-31"></a><span class="s">            port: 3306</span>
+<a id="__codelineno-35-32" name="__codelineno-35-32" href="#__codelineno-35-32"></a><span class="s">          initialDelaySeconds: 30</span>
+<a id="__codelineno-35-33" name="__codelineno-35-33" href="#__codelineno-35-33"></a><span class="s">          timeoutSeconds: 2</span>
+<a id="__codelineno-35-34" name="__codelineno-35-34" href="#__codelineno-35-34"></a><span class="s">        readinessProbe: </span>
+<a id="__codelineno-35-35" name="__codelineno-35-35" href="#__codelineno-35-35"></a><span class="s">          tcpSocket:</span>
+<a id="__codelineno-35-36" name="__codelineno-35-36" href="#__codelineno-35-36"></a><span class="s">            port: 3306</span>
+<a id="__codelineno-35-37" name="__codelineno-35-37" href="#__codelineno-35-37"></a><span class="s">          initialDelaySeconds: 25</span>
+<a id="__codelineno-35-38" name="__codelineno-35-38" href="#__codelineno-35-38"></a><span class="s">          timeoutSeconds: 2</span>
+<a id="__codelineno-35-39" name="__codelineno-35-39" href="#__codelineno-35-39"></a><span class="s">        resources:</span>
+<a id="__codelineno-35-40" name="__codelineno-35-40" href="#__codelineno-35-40"></a><span class="s">          requests:</span>
+<a id="__codelineno-35-41" name="__codelineno-35-41" href="#__codelineno-35-41"></a><span class="s">            cpu: 20m</span>
+<a id="__codelineno-35-42" name="__codelineno-35-42" href="#__codelineno-35-42"></a><span class="s">            memory: 252Mi</span>
+<a id="__codelineno-35-43" name="__codelineno-35-43" href="#__codelineno-35-43"></a><span class="s">          limits:</span>
+<a id="__codelineno-35-44" name="__codelineno-35-44" href="#__codelineno-35-44"></a><span class="s">            cpu: 500m</span>
+<a id="__codelineno-35-45" name="__codelineno-35-45" href="#__codelineno-35-45"></a><span class="s">            memory: 1G</span>
+<a id="__codelineno-35-46" name="__codelineno-35-46" href="#__codelineno-35-46"></a><span class="s">EOF</span>
+<a id="__codelineno-35-47" name="__codelineno-35-47" href="#__codelineno-35-47"></a>
+<a id="__codelineno-35-48" name="__codelineno-35-48" href="#__codelineno-35-48"></a>kubectl apply -f mysql-deployment.yaml
+</code></pre></div>
+<div class="highlight"><span class="filename">mysql service</span><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>cat &gt; mysql-service.yaml <span class="s">&lt;&lt; EOF</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="s">apiVersion: v1</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="s">kind: Service</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="s">metadata:</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="s">  name: gowebapp-mysql</span>
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="s">  labels:</span>
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="s">    run: gowebapp-mysql</span>
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="s">spec:</span>
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="s">  clusterIP: None</span>
+<a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="s">  ports:</span>
+<a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="s">  - port: 3306</span>
+<a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a><span class="s">    targetPort: 3306</span>
+<a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="s">  selector:</span>
+<a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="s">    run: gowebapp-mysql</span>
+<a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="s">EOF</span>
+<a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a>
+<a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a>kubectl apply -f mysql-service.yaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>cat &gt; app-deployment.yaml <span class="s">&lt;&lt; EOF</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="s">apiVersion: apps/v1</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="s">kind: Deployment</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="s">metadata:</span>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="s">  name: gowebapp</span>
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="s">  labels:</span>
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="s">    run: gowebapp</span>
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="s">spec:</span>
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="s">  replicas: 1</span>
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="s">  selector:</span>
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="s">    matchLabels:</span>
+<a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="s">      run: gowebapp</span>
+<a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="s">  template:</span>
+<a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a><span class="s">    metadata:</span>
+<a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a><span class="s">      labels:</span>
+<a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a><span class="s">        run: gowebapp</span>
+<a id="__codelineno-37-17" name="__codelineno-37-17" href="#__codelineno-37-17"></a><span class="s">    spec:</span>
+<a id="__codelineno-37-18" name="__codelineno-37-18" href="#__codelineno-37-18"></a><span class="s">      containers:</span>
+<a id="__codelineno-37-19" name="__codelineno-37-19" href="#__codelineno-37-19"></a><span class="s">      - env:</span>
+<a id="__codelineno-37-20" name="__codelineno-37-20" href="#__codelineno-37-20"></a><span class="s">        - name: DB_PASSWORD</span>
+<a id="__codelineno-37-21" name="__codelineno-37-21" href="#__codelineno-37-21"></a><span class="s">          value: rootpasswd</span>
+<a id="__codelineno-37-22" name="__codelineno-37-22" href="#__codelineno-37-22"></a><span class="s">        image: ghcr.io/cloud-native-canada/k8s_setup_tools:app</span>
+<a id="__codelineno-37-23" name="__codelineno-37-23" href="#__codelineno-37-23"></a><span class="s">        name: gowebapp</span>
+<a id="__codelineno-37-24" name="__codelineno-37-24" href="#__codelineno-37-24"></a><span class="s">        ports:</span>
+<a id="__codelineno-37-25" name="__codelineno-37-25" href="#__codelineno-37-25"></a><span class="s">          - containerPort: 9000</span>
+<a id="__codelineno-37-26" name="__codelineno-37-26" href="#__codelineno-37-26"></a><span class="s">        livenessProbe:</span>
+<a id="__codelineno-37-27" name="__codelineno-37-27" href="#__codelineno-37-27"></a><span class="s">          httpGet:</span>
+<a id="__codelineno-37-28" name="__codelineno-37-28" href="#__codelineno-37-28"></a><span class="s">            path: /register</span>
+<a id="__codelineno-37-29" name="__codelineno-37-29" href="#__codelineno-37-29"></a><span class="s">            port: 9000</span>
+<a id="__codelineno-37-30" name="__codelineno-37-30" href="#__codelineno-37-30"></a><span class="s">          initialDelaySeconds: 15</span>
+<a id="__codelineno-37-31" name="__codelineno-37-31" href="#__codelineno-37-31"></a><span class="s">          timeoutSeconds: 5</span>
+<a id="__codelineno-37-32" name="__codelineno-37-32" href="#__codelineno-37-32"></a><span class="s">        readinessProbe:</span>
+<a id="__codelineno-37-33" name="__codelineno-37-33" href="#__codelineno-37-33"></a><span class="s">          httpGet: </span>
+<a id="__codelineno-37-34" name="__codelineno-37-34" href="#__codelineno-37-34"></a><span class="s">            path: /register</span>
+<a id="__codelineno-37-35" name="__codelineno-37-35" href="#__codelineno-37-35"></a><span class="s">            port: 9000</span>
+<a id="__codelineno-37-36" name="__codelineno-37-36" href="#__codelineno-37-36"></a><span class="s">          initialDelaySeconds: 25</span>
+<a id="__codelineno-37-37" name="__codelineno-37-37" href="#__codelineno-37-37"></a><span class="s">          timeoutSeconds: 5</span>
+<a id="__codelineno-37-38" name="__codelineno-37-38" href="#__codelineno-37-38"></a><span class="s">        resources:</span>
+<a id="__codelineno-37-39" name="__codelineno-37-39" href="#__codelineno-37-39"></a><span class="s">          requests:</span>
+<a id="__codelineno-37-40" name="__codelineno-37-40" href="#__codelineno-37-40"></a><span class="s">            cpu: &quot;20m&quot;</span>
+<a id="__codelineno-37-41" name="__codelineno-37-41" href="#__codelineno-37-41"></a><span class="s">            memory: &quot;10Mi&quot;</span>
+<a id="__codelineno-37-42" name="__codelineno-37-42" href="#__codelineno-37-42"></a><span class="s">          limits: </span>
+<a id="__codelineno-37-43" name="__codelineno-37-43" href="#__codelineno-37-43"></a><span class="s">            cpu: &quot;50m&quot;</span>
+<a id="__codelineno-37-44" name="__codelineno-37-44" href="#__codelineno-37-44"></a><span class="s">            memory: &quot;100Mi&quot;</span>
+<a id="__codelineno-37-45" name="__codelineno-37-45" href="#__codelineno-37-45"></a><span class="s">EOF</span>
+<a id="__codelineno-37-46" name="__codelineno-37-46" href="#__codelineno-37-46"></a>
+<a id="__codelineno-37-47" name="__codelineno-37-47" href="#__codelineno-37-47"></a>kubectl apply -f app-deployment.yaml
+</code></pre></div>
+<p>Some spotted a problem already: the password is hardcoded. We'll get to it later.</p>
+<p>Check the application is running:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>kubectl get pods -n default
+</code></pre></div>
+<div class="highlight"><span class="filename">output</span><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>NAME                              READY   STATUS    RESTARTS   AGE
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>gowebapp-5994456fcb-ctt4x         <span class="m">1</span>/1     Running   <span class="m">0</span>          31m
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>gowebapp-mysql-684db8fdcd-nwfn4   <span class="m">1</span>/1     Running   <span class="m">0</span>          34m
+</code></pre></div></p>
+<h2 id="next">Next<a class="headerlink" href="#next" title="Permanent link">&para;</a></h2>
+<p>Now we have something to play with, <a href="../kubectl_tooling/kubectl/">let's start playing</a> !</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../local_cluster/options/minikube/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MiniKube" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              MiniKube
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../shell_setup/" class="md-footer__link md-footer__link--next" aria-label="Next: Shell Setup" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Shell Setup
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/cloudnativeca" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+    
+  </body>
+</html>
