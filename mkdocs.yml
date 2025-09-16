@@ -11,25 +11,6 @@ nav:
       - MiniKube: local_cluster/options/minikube.md
   - Deploying applications with kubectl: app_deployment.md
   - Shell Setup: shell_setup.md
-  - Kubectl Tooling:
-    - Kubectl: kubectl_tooling/kubectl.md
-    - Kubecolor: kubectl_tooling/kubecolor.md
-    - Stern: kubectl_tooling/stern.md
-    - Kubectl Plugins: kubectl_tooling/krew.md
-    - Kubie: kubectl_tooling/kubie.md
-  - Cloud Kubernetes: cloud_commands.md
-  - Advanced Manifests Creation: 
-      - kustomize: kustomize/kustomize.md
-      - helm: helm/helm.md
-  - Kubernetes Interface:
-    - K9s: interfaces/k9s.md
-    - Lens: interfaces/lens.md
-    - Octant: interfaces/octant.md
-    - KubeNav: interfaces/kubenav.md
-  - Development tooling:
-    - VsCode Extensions: dev_tooling/vscode.md
-    - Other apps: dev_tooling/apps.md
-  - Cleanup: cleanup/cleanup.md
   - Mkdocs help and examples: mkdocs.md
 theme:
   features:
