@@ -1,17 +1,7 @@
-site_name: KubeCon NA 2022 Tutorial - K8s Setup Tools
+site_name: Gemini Code Assist Workshop #2 - Gemini CLI
 nav:
   - Home: index.md
   - Kubectl: kubectl.md
-  - Local Clusters:
-    - Podman: local_cluster/podman.md
-    - Kind: local_cluster/kind.md
-    - Other Options:
-      - Rancher Desktop: local_cluster/options/rancher.md
-      - Colima: local_cluster/options/colima.md
-      - MiniKube: local_cluster/options/minikube.md
-  - Deploying applications with kubectl: app_deployment.md
-  - Shell Setup: shell_setup.md
-  - Mkdocs help and examples: mkdocs.md
 theme:
   features:
   #   - navigation.tabs
