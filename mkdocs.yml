@@ -12,14 +12,14 @@ theme:
   features:
   #   - navigation.tabs
     - content.tabs.link
-  favicon: images/kubecon_logo.jpeg
+  favicon: images/gemini.jpeg
   palette:
     - scheme: slate
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
   name: material
-  logo: 'images/kubecon_logo.jpeg'
+  logo: 'images/gemini_logo.jpeg'
 extra_css:
     - css/extra.css
 extra:
