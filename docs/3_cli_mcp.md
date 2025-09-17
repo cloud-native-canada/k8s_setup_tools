@@ -1,4 +1,4 @@
-# 9. Configuring Model Context Protocol (MCP) Servers
+# Configuring Model Context Protocol (MCP) Servers
 
 An MCP server is an application that exposes tools and resources to the Gemini CLI through the Model Context Protocol, allowing it to interact with external systems and data sources. MCP servers act as a bridge between the Gemini model and your local environment or other services like APIs.
 
@@ -38,43 +38,57 @@ Each server configuration supports the following properties ([Reference document
 *   `excludeTools` (string[]): List of tool names to exclude from this MCP server. Tools listed here will not be available to the model, even if they are exposed by the server.
     *Note: `excludeTools` takes precedence over `includeTools` - if a tool is in both lists, it will be excluded.*
 
-!!! warning
-    You should exercise caution when connecting to or integrating with third-party MCP Servers. To protect your information and system integrity, it is advised that you only integrate with MCP Servers from trusted and thoroughly vetted sources.
-
-Let us go ahead and configure one of the key MCP servers that you might need if you are working with Github. You would probably have a question: if you already have Git and other related tools set up on your system, would you still need the Github MCP Server?
+Let us go ahead and configure one of the key MCP servers that you might need if you are working with JIRA. You would probably have a question: if you already have JIRA and other related tools set up on your system, would you still need the JIRA MCP Server?
 
 Gemini CLI will invoke the git tools that you have on your system and you may also instruct the Gemini CLI to use that. So do keep in mind that Gemini CLI will help in translating your natural language queries to equivalent tools that you may have on your system and it may require that you explicitly state that in your prompt.
 
-You may not need the next section to setup a Github MCP Server if you have the following already setup on your system:
+## JIRA MCP Server
 
-*   **Git tools** (this means that you can execute commands like `git init`, `git add`, etc on your system)
-*   **gh**: This is GitHub on the command line. It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with git and your code. [Install it from here](https://cli.github.com/) and validate its setup via a few commands, especially around authentication to Github from your machine.
+The [JIRA official MCP Server](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/setting-up-ides/) provides sufficient documentation on the tools that it exposes along with how to configure the same. You can pick your choice in terms of running it locally or remotely, since Gemini CLI supports remote MCP Servers too.
 
-If you'd still like to try out the Github MCP Server, please see the next section or you can skip that.
-
-## Github MCP Server
-
-The [Github official MCP Server](https://github.com/google-gemini/github-mcp) provides sufficient documentation on the tools that it exposes along with how to configure the same. You can pick your choice in terms of running it locally or remotely, since Gemini CLI supports remote MCP Servers too.
-
-This tutorial demonstrates the Remote MCP Server option in Github. For this, you will need to have a Personal Access Token (PAT) from Github first.
+This tutorial demonstrates the Remote MCP Server option in JIRA. 
 
 Once you have that, you will need to add the MCP Server object in the `settings.json` file. The complete `settings.json` file on my system is shown below. You might have additional settings, but the `mcpServers` object should be as given below:
+
+```
+cd ~/gemini-cli-projects
+mkdir .gemini
+touch .gemini/settings.json
+```
+
 
 ```json
 {
   "theme": "Default",
   "selectedAuthType": "oauth-personal",
   "mcpServers": {
-    "github": {
-      "httpUrl": "https://api.githubcopilot.com/mcp/",
-      "headers": {
-        "Authorization": "GITHUB_PAT"
-      },
-      "timeout": 5000
-    }
+       "atlassian": {
+           "command": "npx",
+           "args": [
+               "-y",
+               "mcp-remote",
+               "https://mcp.atlassian.com/v1/sse"
+           ]
+       }
   }
 }
 ```
+
+```json
+{
+    "mcpServers": {
+       "atlassian": {
+           "command": "npx",
+           "args": [
+               "-y",
+               "mcp-remote",
+               "https://mcp.atlassian.com/v1/sse"
+           ]
+       }
+}
+```
+
+
 
 You can either start Gemini CLI again or do a `/mcp refresh` command, once you have updated the `settings.json` with the Github MCP Server configuration.
 
@@ -96,43 +110,6 @@ You should now work with one of your Github projects. Give your queries in natur
 
 You will find an exercise for working with the Github MCP Server in detail later in the lab.
 
-## Context7 MCP Server
-
-[Context7](https://context7.com/) provides up-to-date documentation for LLMs and AI code editors. If you are looking to provide the context to the LLM with the latest documentation for the framework of your choice, the Context7 MCP server is a good one to configure.
-
-Make sure that you do have your library listed at the Context7 home page.
-
-Here is the MCP Server that you need to add in the `settings.json` file.
-
-```json
-"context7": {
-  "httpUrl": "https://mcp.context7.com/mcp"
-}
-```
-
-Once the MCP Server is configured and Gemini CLI loaded successfully with it, you should be able to view the Context7 tools.
-
-You can now be specific in your prompt and ask Gemini CLI to use Context7 for the latest documentation, while generating your application or code snippet, using a specific XYZ framework.
-
-Here is an example prompt, where I want to write an Agent using the Agent Development Kit (ADK) from Google. I am specifying in my prompt to look up the documentation for the same via the Context7 MCP Server.
-
-```
-I am working on coding an Agent using the Agent Development Kit (ADK) from Google. I would like to know how to create the LLMAgent in Python. Use Context7 for the latest documentation on ADK and specifically use /google/adk-python, /google/adk-docs and adk.wiki
-```
-
-## Google Slides MCP Server
-
-The Github project at [https://github.com/matteoantoci/google-slides-mcp](https://github.com/matteoantoci/google-slides-mcp) provides a MCP server for interacting with the Google Slides API. It allows you to create, read, and modify Google Slides presentations programmatically.
-
-The steps to configure the MCP server are given in the project. You will need to have a Node.js environment where you build out the server, configure a Google Cloud Project and OAuth 2.0 tokens and then configure the MCP Server in the `settings.json` file.
-
-Once setup, you can run prompts like:
-
-```
-Extract the latest information from "web_url", summarize it into key points and create a presentation named "my_presentation".
-```
-
-Give it a try!
 
 ## More MCP Servers
 
