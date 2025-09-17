@@ -20,14 +20,24 @@ If you want to install Gemini CLI locally, follow the instructions given below.
 
 ### Install Node 20 +
 
-The first step is to install Node 20+ on your machine. Once this is complete, you can install and run Gemini CLI via any one of the following methods:
+The first step is to [install Node 20+](https://nodejs.org/en/download) on your machine. Once this is complete, you can install and run Gemini CLI via any one of the following methods:
 
 ### Install Gemini CLI
 
 You can install Gemini CLI globally on your system first. You may need Administrator access to perform this step.
 
+=== "Apple Mac OsX / Linux / Windows"
+
+#### Run instantly with npx
+
 ```bash
-# Install Gemini CLI
+# Using npx (no installation required)
+npx https://github.com/google-gemini/gemini-cli
+```
+
+#### Install globally with npm
+
+```bash
 npm install -g @google/gemini-cli
 ```
 
@@ -38,19 +48,49 @@ Login with Google (OAuth login using your Google Account)
 
 === "Apple Mac OsX / Linux"
 
+Option 1: Local variable
+
 ```bash
 # Set your Google Cloud Project
 export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_NAME"
 ```
 
+Option 2: LSet a persistent environment variable in your  `bash` or `zshrc` shell:
+
+```bash
+echo 'export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_NAME"' >> ~/.zshrc
+```
+
+```bash
+echo 'export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_NAME"' >> ~/.bashrc
+```
+
+**Note**: Make sure update "YOUR_PROJECT_NAME" wit project with Gemini Code Assist License.
+
+
 === "Windows"
+
+Option 1. local Environment variable
 
 ```bash
 # Set your Google Cloud Project
 set GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_NAME"
 ```
 
-**Note**: Make sure update "YOUR_PROJECT_NAME" wit project with Gemini Code Assist License
+Option 2. Set a persistent environment variable on Windows using the System Properties (sysdm.cpl) GUI
+
+```
+- Press Win + R to open the "Run" dialog box.
+- Type sysdm.cpl and press Enter. This will open the "System Properties" window.
+- Navigate to the "Advanced" tab.
+- Click on the "Environment Variables..." button.
+- In the "User variables" section at the top, click the "New..." button.
+- In the "New User Variable" dialog:
+  - For Variable name, enter: GOOGLE_CLOUD_PROJECT
+  - For Variable value, enter your actual Google Cloud project name (e.g., my-gcp-project).
+- Click "OK" to close the "New User Variable" dialog.
+```
+
 
 ```bash
 # .. and then run
