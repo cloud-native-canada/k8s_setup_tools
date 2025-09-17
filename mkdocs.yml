@@ -2,9 +2,11 @@ site_name: Gemini Code Assist Workshop 2 - Gemini CLI
 nav:
   - Home: index.md
   - Installation: 0_install_cli.md
-  - Gemini CLI - Command Parameters: 1_cli_params.md
-  - Gemini CLI - MCP Servers: 3_cli_mcp.md
-  - App Deployment: app_deployment.md
+  - Gemini CLI - Command Parameters: 1_cli_config.md
+  - Gemini CLI configuration via settings.json: 2_cli_params.md 
+  - Gemini CLI - In-built Tools: 3_cli_build_in.md
+  - Gemini CLI - MCP Servers: 4_cli_mcp.md
+  - Gemini CLI - Customize with Gemini.md: 5_cli_mcp.md
 theme:
   features:
   #   - navigation.tabs

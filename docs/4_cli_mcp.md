@@ -74,19 +74,6 @@ touch .gemini/settings.json
 }
 ```
 
-```json
-{
-    "mcpServers": {
-       "atlassian": {
-           "command": "npx",
-           "args": [
-               "-y",
-               "mcp-remote",
-               "https://mcp.atlassian.com/v1/sse"
-           ]
-       }
-}
-```
 
 
 
