@@ -55,7 +55,7 @@ Option 1: Local variable
 export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_NAME"
 ```
 
-Option 2: LSet a persistent environment variable in your  `bash` or `zshrc` shell:
+Option 2: Set a persistent environment variable in your  `bash` or `zshrc` shell:
 
 ```bash
 echo 'export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_NAME"' >> ~/.zshrc

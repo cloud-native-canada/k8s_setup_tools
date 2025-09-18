@@ -7,13 +7,14 @@ It's not about being lazy—it's about focusing your time and energy on the crea
 At its core, vibe coding is about communicating with AI in natural language to build apps. Instead of writing code, you describe what you want your app to do, and AI tools handle the technical implementation. 
 
 
-## Vibe coding task
+## Task 1 Create a new app
 
 Let's give Gemini CLI our first task and ask it to build a web application that displays the content of a current RSS feed. Say I follow Cricket with keen interest and for some reason, I am interested in viewing live scores of any match that is going on. Not sure why, but let's leave that here.
 
 Cricinfo.com provides a live feed of cricket scores over here: `https://static.cricinfo.com/rss/livescores.xml`. Let's put Gemini CLI to the test and see how well it does on a sample web application that I'd like to create. Let's go step by step.
 
-Paste following prompt example to Gemini CLI:
+**Step 1:** Execute the following prompt in Gemini CLI:
+
 
 ```
 I would like to create a Python Flask Application that shows me a list of live scores of cricket matches.
@@ -42,7 +43,7 @@ Once the changes were done, it was able to launch the server successfully.
 
 ![Gemini CLI server started successfully](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*NlNAJJ-PJm6fjsVtZNlNMQ.png)
 
-I visit the application locally at `http://127.0.0.1:7000`, a screenshot of which is shown below:
+**Step 2:**  Check the application locally at `http://127.0.0.1:7000`, a screenshot of which is shown below:
 
 ![Live Cricket Scores web application](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*fCp7LA_mPYCexsfiT5rrKg.png)
 
@@ -104,3 +105,14 @@ if __name__ == '__main__':
 We have hardly scratched the surface here but feel free to take it for a spin. Try out some tasks or an application or two that you would like to see getting generated. It's early days, so be ready for some surprises. I have found that I usually end up prompting again with more context or asking it to do better and more.
 
 As we progress through this lavs, we will see a lot more of configuration, context setting and then when we come to various use cases, we will look at developing applications from scratch, migrating current applications, adding a feature or two to an existing application and more. So stay tuned.
+
+
+## AI Coding Best Practices
+
+**Be precise:** Avoid open-ended prompts when guiding AI agents. Instead, provide clear and specific directions about what you want to achieve. This allows the AI to more accurately translate your vision into code and reduces unnecessary iterations or misunderstandings.
+
+**Give agents one task at a time:** Understand the limitations of AI models' context windows, meaning they can only handle a finite amount of information at once. Break down your requirements into small, focused tasks, ensuring the AI has only the relevant context it needs, and consider providing additional context incrementally to maintain clarity and efficiency.
+
+**Use checkpoints:** Implement checkpoints or version control regularly to capture stable states of your project. This practice allows you to quickly roll back to a functional version if introducing a new feature inadvertently disrupts your existing setup, significantly simplifying the debugging process.
+
+**Ask a lot of questions:** Engage actively with your AI tool by frequently asking clarifying questions, such as how best to solve a particular problem or what frameworks and technologies might be most suitable for your goals. Additionally, asking questions about how specific parts of your app function can be particularly valuable when debugging, helping you systematically trace and resolve errors.

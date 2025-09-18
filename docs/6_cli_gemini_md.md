@@ -1,1 +1,0 @@
-# Customizing Gemini CLI with GEMINI.md

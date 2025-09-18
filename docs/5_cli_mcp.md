@@ -60,15 +60,17 @@ The [JIRA official MCP Server](https://support.atlassian.com/atlassian-rovo-mcp-
 
 This Lab demonstrates the Remote MCP Server option in JIRA. 
 
-Once you have that, you will need to add the MCP Server object in the `settings.json` file. The complete `settings.json` file on my system is shown below. You might have additional settings, but the `mcpServers` object should be as given below:
+Once you have that, you will need to add the MCP Server object in the `settings.json` file. The complete `settings.json` file on system is shown below. You might have additional settings, but the `mcpServers` object should be as given below:
 
-```
+**Step 1:** Crete `.gemini` folder
+
+```bash
 cd ~/gemini-cli-projects
 mkdir .gemini
 cd .gemini
 ```
 
-Paste the `settings.json` in you project level `gemini` folder
+**Step 2:** Paste the `settings.json` in you project level `gemini` folder
  
 ```json
 cat <<EOF > settings.json
@@ -90,17 +92,20 @@ cat <<EOF > settings.json
 EOF
 ```
 
-
-You can either start Gemini CLI again or do a `/mcp refresh` command, once you have updated the `settings.json` with the Github MCP Server configuration.
+**Step 3:** You can either start Gemini CLI again or do a `/mcp refresh` command, once you have updated the `settings.json` with the Github MCP Server configuration.
 
 ```
 /mcp refresh
 ```
 
-Now you will need to Authenticate to JIRA
+**Step 4:** Authenticate to JIRA and Confluence with you user
 
+![Jira Authentication](images/jira.jpeg)
 
-List configured JIRA MCP server:
+!!! result
+    You've been granted access to use JIRA MCP servers and now gemini CLI will be able to communicate with JIRA.
+
+**Step 5:** List configured JIRA MCP servers:
 
 ```
 /mcp list
@@ -113,11 +118,11 @@ List configured JIRA MCP server:
 ![JIRA MCP List](images/jira_mcp_tools.jpeg)
 
 
-Now you can interact with JIRA from you CLI!
+**Step 6:** Interact with JIRA from you CLI!
 
 ```
-- "Create a new issue SCRUM-2 in the boutique project titled 'UI update' and describe it as 'Implement the new feature as for UI .'"
 - "List all the issues in the boutique project."
+- "Create a new issue SCRUM-2 in the boutique project titled 'UI update' and describe it as 'Implement the new feature as for UI .'"
 - "Add a comment to SCRUM-2 saying 'This is a comment'"
 - "Show me the details for issue SCRUM-2."
 - "Assign issue SCRUM-2 to Archy k."
@@ -130,10 +135,12 @@ Here is an additional list of MCP servers that you might be interested in:
 
 *   Firebase MCP Server
 *   Google Gen AI Media Services (Imagen, Veo, Lyria)
-*   MCP Toolbox for Databases (work with Firestore, BigQuery, Google Cloud databases)
+*   See [Appendix A](8_cli_mcp_bq.md):   MCP Toolbox for Databases (work with Firestore, BigQuery, Google Cloud databases)
 *   Google Workspace MCP Server (work with Docs, Sheets, Calendar, Gmail)
 
 The instructions for setting up the above MCP servers are published in [this blog post](https://medium.com/google-cloud/supercharge-gemini-cli-with-custom-tools-and-mcp-servers-b599a35a379c).
+
+
 
 
 ## JIRA Prompts Cheatsheet

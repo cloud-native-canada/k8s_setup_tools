@@ -248,8 +248,4 @@ if __name__ == '__main__':
 
 We have hardly scratched the surface here but feel free to take it for a spin. Try out some tasks or an application or two that you would like to see getting generated. It's early days, so be ready for some surprises. I have found that I usually end up prompting again with more context or asking it to do better and more.
 
-As we progress through this series, we will see a lot more of configuration, context setting and then when we come to various use cases, we will look at developing applications from scratch, migrating current applications, adding a feature or two to an existing application and more. So stay tuned.
-
----
-
-Please consider leaving feedback.
+As we progress through this lavs, we will see a lot more of configuration, context setting and then when we come to various use cases, we will look at developing applications from scratch, migrating current applications, adding a feature or two to an existing application and more. So stay tuned.

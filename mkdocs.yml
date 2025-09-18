@@ -5,9 +5,11 @@ nav:
   - Gemini CLI - Vibecoding: 2_cli_vibecoding.md
   - Gemini CLI - Command Parameters: 1_cli_params.md
   - Gemini CLI - Configuration via settings.json: 3_cli_config.md 
-  - Gemini CLI - In-built Tools: 4_cli_build_in.md
+#  - Gemini CLI - In-built Tools: 4_cli_build_in.md
   - Gemini CLI - MCP Servers: 5_cli_mcp.md
-  - Gemini CLI - Customize with Gemini.md: 6_cli_gemini_md.md
+  - Gemini CLI - Custom slash commands: 6_cli_custom_commands.md
+  - (EXTRA) Gemini CLI - Coding styles with Gemini.md: 7_cli_coding_style.md
+  - Appendix A. MCP server for BQ: 8_cli_mcp_bq.md
 theme:
   features:
   #   - navigation.tabs
