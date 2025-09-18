@@ -1,10 +1,22 @@
 # Configuring Model Context Protocol (MCP) Servers
 
+## What is MCP ?
+
+MCP is an open standard that solves a fundamental challenge in AI system integration: the fragmentation problem. 
+Without MCP, every AI application needs custom integrations with every tool it wants to access. MCP replaces this chaos with a single, standardized protocol built on JSON-RPC 2.0. 
+
+![MCP Architecture](images/mcp_architecture.jpeg)
+
 An MCP server is an application that exposes tools and resources to the Gemini CLI through the Model Context Protocol, allowing it to interact with external systems and data sources. MCP servers act as a bridge between the Gemini model and your local environment or other services like APIs.
+
+![How Gemini CLI works with MCP](images/mcp_gemini.jpeg)
+
 
 An MCP server enables the Gemini CLI to discover and execute tools thereby extending Gemini CLI's capabilities to perform actions beyond its built-in features, such as interacting with databases, APIs, custom scripts, or specialized workflows.
 
 Gemini CLI supports configuring MCP Servers for discovering and using custom tools. If you have Gemini CLI launched, you can check up on the MCP servers configured via the `/mcp` command.
+
+## Gemini CLI MCP config
 
 If you have not configured any MCP servers, it will launch Gemini CLI's MCP Server documentation.
 
@@ -42,24 +54,27 @@ Let us go ahead and configure one of the key MCP servers that you might need if 
 
 Gemini CLI will invoke the git tools that you have on your system and you may also instruct the Gemini CLI to use that. So do keep in mind that Gemini CLI will help in translating your natural language queries to equivalent tools that you may have on your system and it may require that you explicitly state that in your prompt.
 
-## JIRA MCP Server
+## Task 1 Configure JIRA MCP Server
 
 The [JIRA official MCP Server](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/setting-up-ides/) provides sufficient documentation on the tools that it exposes along with how to configure the same. You can pick your choice in terms of running it locally or remotely, since Gemini CLI supports remote MCP Servers too.
 
-This tutorial demonstrates the Remote MCP Server option in JIRA. 
+This Lab demonstrates the Remote MCP Server option in JIRA. 
 
 Once you have that, you will need to add the MCP Server object in the `settings.json` file. The complete `settings.json` file on my system is shown below. You might have additional settings, but the `mcpServers` object should be as given below:
 
 ```
 cd ~/gemini-cli-projects
 mkdir .gemini
-touch .gemini/settings.json
+cd .gemini
 ```
 
-
+Paste the `settings.json` in you project level `gemini` folder
+ 
 ```json
+cat <<EOF > settings.json
 {
   "theme": "Default",
+  "ideMode": true,
   "selectedAuthType": "oauth-personal",
   "mcpServers": {
        "atlassian": {
@@ -72,31 +87,42 @@ touch .gemini/settings.json
        }
   }
 }
+EOF
 ```
-
-
 
 
 You can either start Gemini CLI again or do a `/mcp refresh` command, once you have updated the `settings.json` with the Github MCP Server configuration.
 
-Let's start with a prompt that will invoke one of the tools from the Github MCP Server. Give the following prompt:
-
 ```
-List all the repositories in my Github account
+/mcp refresh
 ```
 
-Notice that it will pick the correct tool from the Github MCP Server but as with other in-built Tools, this will also require that you provide explicit permission to invoke the tool. Go ahead and see what output you get.
+Now you will need to Authenticate to JIRA
 
-You should now work with one of your Github projects. Give your queries in natural language like:
 
-*   `Describe the <repo-name> to me?`
-*   `Clone the <repo-name> on my local machine.`
-*   `Describe @<file-name> or @<directory-name>/`
-*   `What are the different components of this repository?`
-*   `I have made necessary changes. Can you push the changes to Github and use the Github MCP Server tools to do that.`
+List configured JIRA MCP server:
 
-You will find an exercise for working with the Github MCP Server in detail later in the lab.
+```
+/mcp list
+```
 
+!!! Discuss
+    Review what tools JIRA MCP server has (e.g create issue, fetch issue, Add comments to JIRA)
+
+
+![JIRA MCP List](images/jira_mcp_tools.jpeg)
+
+
+Now you can interact with JIRA from you CLI!
+
+```
+- "Create a new issue SCRUM-2 in the boutique project titled 'UI update' and describe it as 'Implement the new feature as for UI .'"
+- "List all the issues in the boutique project."
+- "Add a comment to SCRUM-2 saying 'This is a comment'"
+- "Show me the details for issue SCRUM-2."
+- "Assign issue SCRUM-2 to Archy k."
+- "Move SCRUM-2 to 'In Progress'."
+```
 
 ## More MCP Servers
 
@@ -108,3 +134,33 @@ Here is an additional list of MCP servers that you might be interested in:
 *   Google Workspace MCP Server (work with Docs, Sheets, Calendar, Gmail)
 
 The instructions for setting up the above MCP servers are published in [this blog post](https://medium.com/google-cloud/supercharge-gemini-cli-with-custom-tools-and-mcp-servers-b599a35a379c).
+
+
+## JIRA Prompts Cheatsheet
+
+Once the JIRA MCP Server is configured, you can interact with JIRA using natural language prompts. Here are some examples of what you can ask Gemini CLI to do:
+
+### General
+- "Show me what I can do with JIRA"
+- "How do I work with issues in JIRA?"
+- "Tell me about JIRA projects"
+
+### Issue Management
+- "Create a new issue SCRUM-2 in the boutique project titled 'UI update' and describe it as 'Implement the new feature as for UI .'"
+- "List all the issues in the boutique project."
+- "Add a comment to SCRUM-2 saying 'This is a comment'"
+- "Show me the details for issue SCRUM-2."
+- "Assign issue SCRUM-2 to Archy k."
+- "Move SCRUM-2 to 'In Progress'."
+
+### Advanced Workflows
+- "Create a sub-task for boutique-123 with the title 'Sub-task for feature'."
+- "Find all 'In Progress' issues in the boutique project, ordered by creation date."
+- "Log 2 hours and 30 minutes of work on issue boutique-123."
+- "Link issue boutique-123 as 'blocks' issue boutique-456."
+
+### Sprint Manaboutiqueent
+- "Create a new sprint named 'New Sprint' on board 1."
+- "Add issue boutique-123 to the current sprint."
+- "Start sprint 42 and set its duration to two weeks."
+- "Show me all the issues in the active sprint."
