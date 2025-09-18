@@ -1,0 +1,903 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../images/gemini.jpeg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Shell Setup - Gemini Code Assist Workshop 2 - Gemini CLI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#shell-setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gemini Code Assist Workshop 2 - Gemini CLI" class="md-header__button md-logo" aria-label="Gemini Code Assist Workshop 2 - Gemini CLI" data-md-component="logo">
+      
+  <img src="../images/gemini_logo.jpeg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gemini Code Assist Workshop 2 - Gemini CLI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Shell Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gemini Code Assist Workshop 2 - Gemini CLI" class="md-nav__button md-logo" aria-label="Gemini Code Assist Workshop 2 - Gemini CLI" data-md-component="logo">
+      
+  <img src="../images/gemini_logo.jpeg" alt="logo">
+
+    </a>
+    Gemini Code Assist Workshop 2 - Gemini CLI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_install_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_cli_vibecoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Vibecoding
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_cli_params/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Command Parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_cli_config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Configuration via settings.json
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_cli_mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - MCP Servers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_cli_custom_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Custom slash commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_cli_coding_style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    (EXTRA) Gemini CLI - Coding styles with Gemini.md
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_cli_mcp_bq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Appendix A. MCP server for BQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#im-typing-too-much-kubectl-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      I'm typing too much kubectl commands
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="I&#39;m typing too much kubectl commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bonus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bonus
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubectl-arguments-are-too-long" class="md-nav__link">
+    <span class="md-ellipsis">
+      kubectl arguments are too long
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-kubectl-commands-are-failing" class="md-nav__link">
+    <span class="md-ellipsis">
+      My kubectl commands are failing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zsh-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      ZSH shell
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ZSH shell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oh-my-zsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      Oh My ZSH !
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oh My ZSH !">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      Theme
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Theme">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#powerlevel10k" class="md-nav__link">
+    <span class="md-ellipsis">
+      PowerLevel10k
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agnoster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agnoster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plugins
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#im-still-typing-too-much-kubectl" class="md-nav__link">
+    <span class="md-ellipsis">
+      I'm still typing too much kubectl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zsh-autosuggestions-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      zsh-autosuggestions plugin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Prompt
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="shell-setup">Shell Setup<a class="headerlink" href="#shell-setup" title="Permanent link">&para;</a></h1>
+<p>As of now, <code>kubectl</code> is installed and can reach two working local clusters. Still, we are required to type the <code>kubectl</code> command (7 letters) quite often. Too often.</p>
+<p>We also have no knowledge of <em>which cluster am I connected to ?</em> or <em>what is my default namespace ?</em>.</p>
+<p>Let's now configure the <code>shell</code> to solve all of those problems.</p>
+<h2 id="im-typing-too-much-kubectl-commands">I'm typing too much <code>kubectl</code> commands<a class="headerlink" href="#im-typing-too-much-kubectl-commands" title="Permanent link">&para;</a></h2>
+<p>First trick is to use <code>k</code> as an alias to <code>kubectl</code>.</p>
+<p>This is 6 less caracteres to type for every command !</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">zsh</label><label for="__tabbed_1_2">bash</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.zshrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">k</span><span class="o">=</span>kubectl
+</code></pre></div></td></tr></table></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.bashrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">k</span><span class="o">=</span>kubectl
+</code></pre></div></td></tr></table></div>
+</div>
+</div>
+</div>
+<p>Open a new Shell and start using <code>k</code> command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>k<span class="w"> </span>get<span class="w"> </span>namespaces
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>k<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>k<span class="w"> </span>get<span class="w"> </span>services<span class="w"> </span>-A
+</code></pre></div>
+<h3 id="bonus">Bonus<a class="headerlink" href="#bonus" title="Permanent link">&para;</a></h3>
+<p>Most Kubernetes resources have a short-name. You can save few keystrokes here again. </p>
+<p>Resources are also defined as <code>plural</code> by default (with an <code>s</code> at the end, like <code>services</code>), 
+but using the <code>singular</code> works the same ! It's one less keystroke again:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>k<span class="w"> </span>api-resources
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>NAME<span class="w">                              </span>SHORTNAMES<span class="w">   </span>APIVERSION<span class="w">                             </span>NAMESPACED<span class="w">   </span>KIND
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>pods<span class="w">                              </span>po<span class="w">           </span>v1<span class="w">                                     </span><span class="nb">true</span><span class="w">         </span>Pod
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>deployments<span class="w">                       </span>deploy<span class="w">       </span>apps/v1<span class="w">                                </span><span class="nb">true</span><span class="w">         </span>Deployment
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>ingresses<span class="w">                         </span>ing<span class="w">          </span>networking.k8s.io/v1<span class="w">                   </span><span class="nb">true</span><span class="w">         </span>Ingress
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>services<span class="w">                          </span>svc<span class="w">          </span>v1<span class="w">                                     </span><span class="nb">true</span><span class="w">         </span>Service
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>namespaces<span class="w">                        </span>ns<span class="w">           </span>v1<span class="w">                                     </span><span class="nb">false</span><span class="w">        </span>Namespace
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>...
+</code></pre></div></p>
+<p>Let's try it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>k<span class="w"> </span>get<span class="w"> </span>ns
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>k<span class="w"> </span>get<span class="w"> </span>po<span class="w"> </span>-A
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>k<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-A
+</code></pre></div>
+<h2 id="kubectl-arguments-are-too-long"><code>kubectl</code> arguments are too long<a class="headerlink" href="#kubectl-arguments-are-too-long" title="Permanent link">&para;</a></h2>
+<p><code>kubectl port-forward</code> is one example of a long argument. So is <code>kubectl get deployment --context=my-cluster</code>. </p>
+<p><code>completion</code> is the term used in UNIX™ shells when it comes to empowering the shell with better knowledge of the commands we use.</p>
+<p>With Completion setup, you can type <code>kubectl &lt;tab&gt;</code> or <code>k &lt;tab&gt;</code> to get help. <code>k po&lt;tab&gt;</code> will get completed to <code>k port-forward</code></p>
+<p>Let's add those commands to the shell config file. A restart of the shell is needed for it to take effect:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">zsh</label><label for="__tabbed_2_2">bash</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.zshrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>autoload<span class="w"> </span>-Uz<span class="w"> </span>compinit
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>compinit
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="nb">source</span><span class="w"> </span>&lt;<span class="o">(</span>kubectl<span class="w"> </span>completion<span class="w"> </span>zsh<span class="o">)</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.bashrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nb">source</span><span class="w"> </span>&lt;<span class="o">(</span>kubectl<span class="w"> </span>completion<span class="w"> </span>bash<span class="o">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nb">complete</span><span class="w"> </span>-o<span class="w"> </span>default<span class="w"> </span>-F<span class="w"> </span>__start_kubectl<span class="w"> </span>k
+</code></pre></div></td></tr></table></div>
+</div>
+</div>
+</div>
+<p><code>bash</code> requires the use of the <code>complete</code> command to make <code>k</code> also use completion.</p>
+<p>Let's try it, type <code>k &lt;tab&gt;</code> then <code>k port&lt;tab&gt;</code> then <code>k get po -n &lt;tab&gt;</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>k<span class="w"> </span>&lt;tab&gt;
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>alpha<span class="w">          </span>--<span class="w"> </span>Commands<span class="w"> </span><span class="k">for</span><span class="w"> </span>features<span class="w"> </span><span class="k">in</span><span class="w"> </span>alpha
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>annotate<span class="w">       </span>--<span class="w"> </span>Update<span class="w"> </span>the<span class="w"> </span>annotations<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>resource
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>api-resources<span class="w">  </span>--<span class="w"> </span>Print<span class="w"> </span>the<span class="w"> </span>supported<span class="w"> </span>API<span class="w"> </span>resources<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>server
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>api-versions<span class="w">   </span>--<span class="w"> </span>Print<span class="w"> </span>the<span class="w"> </span>supported<span class="w"> </span>API<span class="w"> </span>versions<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>server,<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>form<span class="w"> </span>of<span class="w"> </span><span class="s2">&quot;group/version&quot;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>apply<span class="w">          </span>--<span class="w"> </span>Apply<span class="w"> </span>a<span class="w"> </span>configuration<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>resource<span class="w"> </span>by<span class="w"> </span>file<span class="w"> </span>name<span class="w"> </span>or<span class="w"> </span>stdin
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>attach<span class="w">         </span>--<span class="w"> </span>Attach<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>running<span class="w"> </span>container
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>auth<span class="w">           </span>--<span class="w"> </span>Inspect<span class="w"> </span>authorization
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>autoscale<span class="w">      </span>--<span class="w"> </span>Auto-scale<span class="w"> </span>a<span class="w"> </span>deployment,<span class="w"> </span>replica<span class="w"> </span>set,<span class="w"> </span>stateful<span class="w"> </span>set,<span class="w"> </span>or<span class="w"> </span>replication<span class="w"> </span>controller
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>certificate<span class="w">    </span>--<span class="w"> </span>Modify<span class="w"> </span>certificate<span class="w"> </span>resources.
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>cluster-info<span class="w">   </span>--<span class="w"> </span>Display<span class="w"> </span>cluster<span class="w"> </span>information
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>...
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>k<span class="w"> </span>port&lt;tab&gt;
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>k<span class="w"> </span>port-forward
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>k<span class="w"> </span>get<span class="w"> </span>po<span class="w"> </span>-n<span class="w"> </span>&lt;tab&gt;
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>default<span class="w">             </span>kube-node-lease<span class="w">     </span>kube-public<span class="w">         </span>kube-system<span class="w">         </span>local-path-storage
+</code></pre></div>
+<h2 id="my-kubectl-commands-are-failing">My <code>kubectl</code> commands are failing<a class="headerlink" href="#my-kubectl-commands-are-failing" title="Permanent link">&para;</a></h2>
+<p>Some OS, including MacOsX, comes with a really low value for the number of concurrent Open File Descriptors.</p>
+<p>This low limit may break some <code>kubectl</code> commands or some other tools using the Kubernetes Go client like <code>helm</code>. </p>
+<p>To solve that, increase your File Descriptors to at lease 2048:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">zsh</label><label for="__tabbed_3_2">bash</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.zshrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nb">ulimit</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2048</span><span class="w">          </span><span class="c1"># kubectl opens one cnx (file) per resource</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.bashrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nb">ulimit</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2048</span><span class="w">          </span><span class="c1"># kubectl opens one cnx (file) per resource</span>
+</code></pre></div></td></tr></table></div>
+</div>
+</div>
+</div>
+<h2 id="zsh-shell">ZSH shell<a class="headerlink" href="#zsh-shell" title="Permanent link">&para;</a></h2>
+<p>Mac OSX default shell is now <code>zsh</code> so we'll focus on ZSH now on. ZSH is also widely available in Linux and may somtimes be the default too.</p>
+<div class="admonition note">
+<p class="admonition-title">ZSH deprecation warning</p>
+<p>To get rid of the deprecation warning in OSX, export this variable in your shell. Add it to your <code>.zshrc</code> file for persistance:</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">~/.zshrc</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">BASH_SILENCE_DEPRECATION_WARNING</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div></td></tr></table></div>
+</div>
+<h3 id="oh-my-zsh">Oh My ZSH !<a class="headerlink" href="#oh-my-zsh" title="Permanent link">&para;</a></h3>
+<p>A lot of tools exist to configure and enhence any Shell to make it more productive, add colors, change the prompt.</p>
+<p>Oh My ZSH! is a delightful, open source, community-driven framework for managing your Zsh configuration. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout... <code>"Oh My ZSH!"</code></p>
+<p>There is so much in Oh My ZSH! that nobody use it all. But even if using only 10% of it, that is already a giant benefit for productivity.
+As everything comes bundles in one package with good documentation and community support, it is faster to use it than manage each aspect of the configuration by hand or with different tools.</p>
+<p>When you start using Oh My ZSH! you can't go back.</p>
+<h4 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">updates</p>
+<p>Oh My ZSH! checks for the latest version and will warn if the version is outdated every time a new shell is started</p>
+</div>
+<h4 id="theme">Theme<a class="headerlink" href="#theme" title="Permanent link">&para;</a></h4>
+<h5 id="powerlevel10k">PowerLevel10k<a class="headerlink" href="#powerlevel10k" title="Permanent link">&para;</a></h5>
+<p>There are many great themes out there to help developers to become more productive and make the Terminal look cool.
+On such theme is <code>PowerLevel10k</code>. It's easy to install and provides a ton of tooling in your shell. It's available in a git repo that you have to clone in your <code>.oh-my-zsh</code>  custom folder.</p>
+<div class="admonition note">
+<p class="admonition-title">Fonts</p>
+<p>When using iTerm2 or Termux, p10k configure can install the recommended font automatically. Simply answer Yes when asked whether to install Meslo Nerd Font.</p>
+<p>Else, <a href="https://github.com/romkatv/powerlevel10k#manual-font-installation">read the docs</a> to learn how to install the needed fonts.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">OSX</label><label for="__tabbed_4_2">Linux</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="o">=</span><span class="m">1</span><span class="w"> </span>https://github.com/romkatv/powerlevel10k.git<span class="w"> </span><span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39; &#39;</span><span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;s/^ZSH_THEME=&quot;.*&quot;/ZSH_THEME=&quot;powerlevel10k\/powerlevel10k&quot;/g&#39;</span><span class="w">  </span>~/.zshrc
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>zsh
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="o">=</span><span class="m">1</span><span class="w"> </span>https://github.com/romkatv/powerlevel10k.git<span class="w"> </span><span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sed<span class="w"> </span><span class="s1">&#39;s/^ZSH_THEME=&quot;.*&quot;/ZSH_THEME=&quot;powerlevel10k\/powerlevel10k&quot;/g&#39;</span><span class="w"> </span>-i<span class="w"> </span>~/.zshrc
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>zsh
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>When opening a ZSH shell for the first time (done by calling <code>zsh</code> above), a menu will appear and ask some questions to setup the shell to your convenience.</p>
+<p>This setup phase can be restarted anytime with the command <code>p10k configure</code></p>
+<p>Here are the answers to get a cool but productive shell:</p>
+<ul>
+<li><code>prompt style</code>: <code>rainbow</code> is generally the best look(3)</li>
+<li><code>Character Set</code>: <code>Unicode</code> (1)</li>
+<li><code>Show current time</code>: use 24h (2)</li>
+<li><code>Prompt Separators</code>: Angled (1)</li>
+<li><code>Prompt Heads</code>: Sharp (1)</li>
+<li><code>Prompt Tails</code>: Flat (1)</li>
+<li><code>Prompt Height</code>: using only one line is better when copy/pasting (1)</li>
+<li><code>Prompt Connection</code>: (if <code>Prompt Height</code> is set to 2): Disconnected (1)</li>
+<li><code>Prompt Frame</code>: (if <code>Prompt Height</code> is set to 2): No Frame (1)</li>
+<li><code>Prompt Spacing</code>: Compact (1)</li>
+<li><code>Icons</code>: Many (2)</li>
+<li><code>Prompt Flow</code>: Concise (1)</li>
+<li><code>Enable Transient Prompt?</code>: Yes (y)</li>
+<li><code>Instant Prompt Mode</code>: speed up slow scripts... set to Verbose as recommended (1)</li>
+<li><code>Apply changes to ~/.zshrc</code>: Damn YES (y)</li>
+</ul>
+<h5 id="agnoster">Agnoster<a class="headerlink" href="#agnoster" title="Permanent link">&para;</a></h5>
+<p><a href="https://github.com/agnoster/agnoster-zsh-theme">Agnoster</a> is another cool theme, but less powerful than PowerLevel10k.</p>
+<p>Agnoster is a lighter theme, less intrusive by default, but lack some of the cool stuff.</p>
+<h4 id="plugins">Plugins<a class="headerlink" href="#plugins" title="Permanent link">&para;</a></h4>
+<p>ZSH uses plugins that extend the shortcuts and other behaviours for default apps. Here's some that are worth using:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="l l-Scalar l-Scalar-Plain">plugins=(brew git python tmux vault terraform)</span>
+</code></pre></div>
+<p>Once those plugins are installed and the shell is reloaded, a ton of new Aliases are created. Use <code>alias</code> command to list them all. Here are a few:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">alias</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>git
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nv">g</span><span class="o">=</span>git
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nv">ga</span><span class="o">=</span><span class="s1">&#39;git add&#39;</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nv">gaa</span><span class="o">=</span><span class="s1">&#39;git add --all&#39;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="nv">gam</span><span class="o">=</span><span class="s1">&#39;git am&#39;</span>
+</code></pre></div>
+<h2 id="im-still-typing-too-much-kubectl">I'm still typing too much <code>kubectl</code><a class="headerlink" href="#im-still-typing-too-much-kubectl" title="Permanent link">&para;</a></h2>
+<p>When working with Kubernetes, some commands are regularily used, like <code>k get po</code>. Even if it is faster to type than <code>kubectl get pods</code>, it's still 8 characters long (including spaces).</p>
+<p>Oh My ZSH! includes a plugin for <code>kubectl</code> that ads a ton of aliases specific to <code>kubectl</code></p>
+<p>Those alias are usually based on the first letters of each components of the command to execute, like <code>kgp</code> for <code>Kubectl Get Pods</code>.</p>
+<p>Simply add <code>kubectl</code> to the list of plugins in <code>.zshrc</code> file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="l l-Scalar l-Scalar-Plain">plugins=(brew git python terraform kubectl zsh-autosuggestions)</span>
+</code></pre></div>
+<p>Check that all the new aliases are created after starting a new shell:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nb">alias</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>kubectl
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nv">k</span><span class="o">=</span>kubectl
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nv">kaf</span><span class="o">=</span><span class="s1">&#39;kubectl apply -f&#39;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="nv">kca</span><span class="o">=</span><span class="s1">&#39;_kca(){ kubectl &quot;$@&quot; --all-namespaces;  unset -f _kca; }; _kca&#39;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="nv">kccc</span><span class="o">=</span><span class="s1">&#39;kubectl config current-context&#39;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>...
+</code></pre></div></p>
+<p>Because the plugin <code>kubectl</code> already create the alias <code>k=kubectl</code>, we don't need it explicitely in our <code>.zshrc</code> file. </p>
+<p>Oh My ZSH! also initialize the completion system, so you can also remove it. Comment those lines in the <code>.zshrc</code> file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># k=kubectl</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># autoload -Uz compinit</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="c1"># compinit</span>
+</code></pre></div>
+<p>Note that the aliases are all calling <code>kubectl</code> explicitelly.</p>
+<h2 id="zsh-autosuggestions-plugin">zsh-autosuggestions plugin<a class="headerlink" href="#zsh-autosuggestions-plugin" title="Permanent link">&para;</a></h2>
+<h2 id="dynamic-prompt">Dynamic Prompt<a class="headerlink" href="#dynamic-prompt" title="Permanent link">&para;</a></h2>
+<p>Oh My ZSH! now includes a neat feature called the <code>dynamic prompt</code>. Instead of having a prompt line which actually takes 3 lines and display your Git repo, Kubernetes Context, AWS or GCP account all the time, the needed information can be displayed only when needed.</p>
+<p>In the case of Kubernetes, it means only when using the <code>kubectl</code> command, or any associated or similar commands like <code>k</code>.</p>
+<p>It is possible to add more commands that will trigger the display of the prompt section by editing the <code>~/.p10k.zsh</code> file. Search for the variable <code>POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND</code> and edit the line.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="w">  </span><span class="nb">typeset</span><span class="w"> </span>-g<span class="w"> </span><span class="nv">POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND</span><span class="o">=</span><span class="s1">&#39;kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern|kubeseal|kubecolor|skaffold&#39;</span>
+</code></pre></div>
+<h2 id="reference">Reference<a class="headerlink" href="#reference" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://ohmyz.sh/">Oh My ZSH !</a></li>
+<li><a href="https://github.com/romkatv/powerlevel10k">PowerLevel10k</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/cloudnativeca" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link", "content.code.copy"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

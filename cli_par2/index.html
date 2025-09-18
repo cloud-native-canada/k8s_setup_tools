@@ -1,0 +1,797 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../images/gemini.jpeg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Gemini CLI Tutorial Series — Part 2: Gemini CLI Command line parameters - Gemini Code Assist Workshop 2 - Gemini CLI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gemini-cli-tutorial-series-part-2-gemini-cli-command-line-parameters" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gemini Code Assist Workshop 2 - Gemini CLI" class="md-header__button md-logo" aria-label="Gemini Code Assist Workshop 2 - Gemini CLI" data-md-component="logo">
+      
+  <img src="../images/gemini_logo.jpeg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gemini Code Assist Workshop 2 - Gemini CLI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gemini CLI Tutorial Series — Part 2: Gemini CLI Command line parameters
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gemini Code Assist Workshop 2 - Gemini CLI" class="md-nav__button md-logo" aria-label="Gemini Code Assist Workshop 2 - Gemini CLI" data-md-component="logo">
+      
+  <img src="../images/gemini_logo.jpeg" alt="logo">
+
+    </a>
+    Gemini Code Assist Workshop 2 - Gemini CLI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_install_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_cli_vibecoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Vibecoding
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_cli_params/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Command Parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_cli_config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Configuration via settings.json
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_cli_mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - MCP Servers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_cli_custom_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Custom slash commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_cli_coding_style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    (EXTRA) Gemini CLI - Coding styles with Gemini.md
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_cli_mcp_bq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Appendix A. MCP server for BQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gemini-cli-tutorial-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gemini CLI Tutorial Series:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gemini CLI Tutorial Series:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blog-post-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blog post updates:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#which-version-of-gemini-cli-are-you-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Which version of Gemini CLI are you running?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-a-gemini-model-for-the-gemini-cli-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying a Gemini model for the Gemini CLI to use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-prompt-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      One prompt at a time
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positional-prompt-instead-of-prompt-parameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Positional Prompt instead of prompt parameter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-stands-for-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      d stands for debug
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-geminimd-and-why-do-i-need-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is GEMINI.md and why do I need it?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-should-my-geminimd-files-reside" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where should my GEMINI.md files reside?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lets-have-a-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Let's have a checkpoint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gemini-cli-tutorial-series-part-2-gemini-cli-command-line-parameters">Gemini CLI Tutorial Series — Part 2: Gemini CLI Command line parameters<a class="headerlink" href="#gemini-cli-tutorial-series-part-2-gemini-cli-command-line-parameters" title="Permanent link">&para;</a></h1>
+<p><em>By Romin Irani on Jun 30, 2025</em></p>
+<p>Welcome to Part 2 of the Gemini CLI Tutorial series. In this part, we are going to look at a few configuration options while launching Gemini CLI at the command line. This tutorial will also help us understand various other features of Gemini CLI like checkpointing, getting debug information, a look at how Gemini CLI sets up the context and more.</p>
+<p>This is by no means an exhaustive exploration of each and every flag or command, but it gets our foundation in place to understand what goes on behind the tool and to use a few configuration options as we need.</p>
+<h2 id="gemini-cli-tutorial-series">Gemini CLI Tutorial Series:<a class="headerlink" href="#gemini-cli-tutorial-series" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Part 1 : Installation and Getting Started</li>
+<li>Part 2 : Gemini CLI Command line options (this post)</li>
+<li>Part 3 : Configuration settings via settings.json and .env files</li>
+<li>Part 4 : Built-in Tools</li>
+<li>Part 5: Using Github MCP Server</li>
+<li>Part 6: More MCP Servers : Firebase, Google Workspace, Google Gen AI Media Services and MCP Toolbox for Databases</li>
+<li>Part 7: Custom slash commands</li>
+<li>Part 8: Building your own MCP Server</li>
+<li>Part 9: Understanding Context, Memory and Conversational Branching</li>
+<li>Part 10: Gemini CLI and VS Code Integration</li>
+<li>Part 11: Gemini CLI Extensions</li>
+<li>Part 12: Gemini CLI GitHub Actions</li>
+<li>➡️ Codelab : Hands-on Gemini CLI</li>
+</ul>
+<h3 id="blog-post-updates">Blog post updates:<a class="headerlink" href="#blog-post-updates" title="Permanent link">&para;</a></h3>
+<p><strong>September 10, 2025</strong>
+*   Validated the commands, updated screenshots for Gemini CLI v0.4.0.
+*   Removed the section of Telemetry from this part. It will be republished as a separate article.
+*   Expanded the Checkpointing coverage to include the files where checkpointing data is stored.</p>
+<p>A gentle reminder that Gemini CLI with its open-source nature, releases versions frequently. So if you already have Gemini CLI setup, do remember to upgrade it. Here's the command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>npm upgrade -g @google/gemini-cli
+</code></pre></div>
+<p>In the first part, we simply launched Gemini CLI via the <code>gemini</code> command at the terminal, but there are several options that we can tweak. To understand the range of options, simply give the following command <code>gemini --help</code> to see the list of options:</p>
+<p>Ready for some fun?</p>
+<p>Let's have a bit of fun first. Check out the <code>-y</code> option, which is the YOLO mode. Ideally you may not want to run Gemini CLI in this fashion, since it will automatically accept all actions. Actions like we saw in the first part, could be things like writing to files, etc — which you might want to acknowledge and permit. But this is not the fun part. The fun part is how the Gemini CLI Engineers have provided a super useful link in the above help instructions for <code>--yolo</code> mode. It has a URL, a Youtube video in fact, for you to see the details on this wonderful feature. Please go to that URL and come back with your responses to that :-)</p>
+<p>I hope this useful URL continues to be there in future releases too!</p>
+<h3 id="which-version-of-gemini-cli-are-you-running">Which version of Gemini CLI are you running?<a class="headerlink" href="#which-version-of-gemini-cli-are-you-running" title="Permanent link">&para;</a></h3>
+<p>Let's get back to the options. The <code>-v</code> or <code>--version</code> is straightforward and we did check that out in the first part. Currently, at the time of writing, here is my Gemini CLI version.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>gemini -v
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>0.4.0
+</code></pre></div>
+<p>So, if you are an older version, go ahead and do that upgrade, the instruction is repeated below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>npm upgrade -g @google/gemini-cli
+</code></pre></div>
+<h3 id="specifying-a-gemini-model-for-the-gemini-cli-to-use">Specifying a Gemini model for the Gemini CLI to use<a class="headerlink" href="#specifying-a-gemini-model-for-the-gemini-cli-to-use" title="Permanent link">&para;</a></h3>
+<p>Currently, I know of 2 models that one can specify to the Gemini CLI while starting up: <code>gemini-pro-2.5</code> and <code>gemini-flash-2.5</code> . This is specified via the <code>-m</code> or <code>--model</code> parameter as shown below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gemini -m &quot;gemini-flash-2.5&quot;
+</code></pre></div>
+<p>The above command starts up the Gemini CLI and if all goes well you will notice the specific model listed in the status bar at the bottom.</p>
+<p>While this is good, here is what I have seen happen and its understandable in the free tier. If you are using the free tier of Gemini CLI with your personal Google account, you will find that even if you choose the <code>gemini-2.5-pro</code> model, the CLI adjusts to the <code>gemini-2.5-flash</code> model due to quota issues. So be prepared for that. This can be addressed to the best of my knowledge by switching over to using your own Gemini API Key.</p>
+<h3 id="one-prompt-at-a-time">One prompt at a time<a class="headerlink" href="#one-prompt-at-a-time" title="Permanent link">&para;</a></h3>
+<p>How about executing Gemini CLI in a way that it does not bring up the terminal interface. Instead, it just takes your prompt, executes it and gives back the result. This is known as the non-interactive mode.</p>
+<p>This can be very useful in scenarios where you want to integrate Gemini CLI in automated pipelines or schedule something at a specific time, without the need for any human interface. This is flexibility of the Gemini CLI interface where its not just about running something inside of a terminal but can be integrated in various other scenarios and execution modes too.</p>
+<p>So coming back to what we wanted to try? In case you have a need to simply prompt the Gemini CLI and do not require the terminal interface to come up, try the <code>-p</code> or the <code>--prompt</code> option, as shown below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gemini -p &quot;What is the gcloud command to deploy an application to Google Cloud Run&quot;
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>gemini -p &quot;What is the command line syntax for doing a GET call to myhost.com via curl&quot;
+</code></pre></div>
+<p>This might be a good way to get some quick answers but do keep in mind that there is be no scope to continue the conversation with follow up questions.</p>
+<h3 id="positional-prompt-instead-of-prompt-parameter">Positional Prompt instead of prompt parameter<a class="headerlink" href="#positional-prompt-instead-of-prompt-parameter" title="Permanent link">&para;</a></h3>
+<p>From what I understand at the time of writing (v0.4.0), this is being deprecated in favour of positional prompt. This means that we can simply give the prompt words after <code>gemini</code>.</p>
+<p>For example, just try this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>gemini &quot;What is the gcloud command to deploy an application to Google Cloud Run&quot;
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>gemini &quot;What is the command line syntax for doing a GET call to myhost.com via curl&quot;
+</code></pre></div>
+<h3 id="d-stands-for-debug">d stands for debug<a class="headerlink" href="#d-stands-for-debug" title="Permanent link">&para;</a></h3>
+<p>You might not need this option ideally but in case you are reporting an issue or even to understand a bit about what is going on, its helpful to see what happens when we use the debug flag i.e. <code>-d</code> or <code>--debug</code></p>
+<p>First, let me show you the <code>-d</code> option while a single prompt (using <code>-p</code> ) at the command line. Before I go into launching the Gemini CLI and its output, let me describe the current folder that I am in and its contents. This is important for you too.</p>
+<p>I am launching Gemini CLI from <code>/Users/romin/gemini-cli-projects</code> folder. This folders has several folders, which contain apps that I have generated using Gemini CLI itself.</p>
+<p>So, I go ahead and give the following command below.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>gemini -d -p &quot;What is the Linux command to move files recursively from one folder to another. Give me an example or two&quot;
+</code></pre></div>
+<p>This results in the following output. I have truncated some of the file listings, so that we keep the focus on what is going on. A better understanding of this output is critical so that you can understand the hierarchy in which Gemini CLI looks at certain files to load in order to setup the context (hint : <code>GEMINI.md</code> )</p>
+<p>You will notice that the Gemini CLI starts building up a context and tries to find the <code>GEMINI.md</code> file. It keeps looking recursively till it has reached the root. At the moment, I do not have any <code>GEMINI.md</code> file and hence it could not find that. But if it did, it would have found all the <code>GEMINI.md</code> files and concatenated them to create, as the documentation states “instructional context (also referred to as “memory”) provided to the Gemini model. This powerful feature allows you to give project-specific instructions, coding style guides, or any relevant background information to the AI, making its responses more tailored and accurate to your needs”.</p>
+<p>We will get to the <code>GEMINI.md</code> file a bit later, but here are a couple of things that I believe you should understand if using the Gemini CLI tool.</p>
+<h3 id="what-is-geminimd-and-why-do-i-need-it">What is GEMINI.md and why do I need it?<a class="headerlink" href="#what-is-geminimd-and-why-do-i-need-it" title="Permanent link">&para;</a></h3>
+<p>Let's relook at the high level information around <code>GEMINI.md</code> as mentioned in the documentation over here. Its actually quite well written and hence I do not wish to recreate it in some other way. I have highlighted key things in bold.</p>
+<p>While not strictly configuration for the CLI's behavior, context files (defaulting to <code>GEMINI.md</code> but configurable via the <code>context.fileName</code> setting) are crucial for configuring the instructional context (also referred to as "memory") provided to the Gemini model. This powerful feature allows you to give project-specific instructions, coding style guides, or any relevant background information to the AI, making its responses more tailored and accurate to your needs. The CLI includes UI elements, such as an indicator in the footer showing the number of loaded context files, to keep you informed about the active context.</p>
+<p><strong>Purpose</strong>: These Markdown files contain instructions, guidelines, or context that you want the Gemini model to be aware of during your interactions. The system is designed to manage this instructional context hierarchically.</p>
+<p>There are a lot of articles that cover how best to write <code>GEMINI.md</code> files and it will continue to be something that keeps getting covered. For the moment, it is sufficient to understand that this is one of the key mechanisms by which we can instruct the Gemini CLI to follow our rules/recommendations in how code is generated, any versions, how dependencies should be managed, coding guidelines, etc. You get the gist of where this is going.</p>
+<p>I reproduce again, a part of the documentation, that shows a sample <code>GEMINI.md</code> file for a Typescript project. Even if you are not a Typescript person, this is a good template to take, customize it for your preferences, language, frameworks and more.</p>
+<p>If you have been working with LLMs for a while, you will know by now that these instructions are provided in good faith to the model and the exact results might not be what you want. It may require significant tuning of <code>GEMINI.md</code> , some additional parameters and more. Hence we should ideally be looking out for articles where Gemini CLI users will share what's worked best for them and learn together.</p>
+<p>Having said that, you can use Gemini CLI without a <code>GEMINI.md</code> file too. But you will quickly notice that eventually it would be good to have these files, which may provide overall global instructions for anything you do with Gemini CLI and then have project or task specific <code>GEMINI.md</code> files too. That's just a pattern that I believe will emerge. But don't fret too much on that at the moment. I just mentioned multiple <code>GEMINI.md</code> files and that brings us to the next question.</p>
+<h3 id="where-should-my-geminimd-files-reside">Where should my GEMINI.md files reside?<a class="headerlink" href="#where-should-my-geminimd-files-reside" title="Permanent link">&para;</a></h3>
+<p>We have quickly established the fact that we may want multiple <code>GEMINI.md</code> files and earlier, we have highlighted that Gemini CLI will find all of them and concatenate them together into a single instructional set that it will use. Content from files lower in this list (more specific) typically overrides or supplements content from files higher up (more general).</p>
+<p>So whats, the order in which the <code>GEMINI.md</code> will be searched? I summarize it precisely for you, from the documentation:</p>
+<p>Context is loaded from three main levels, moving from broadest to most specific:</p>
+<ol>
+<li><strong>Global Context File</strong>: A <code>GEMINI.md</code> file in your home directory for rules across all projects. This is a special directory named <code>~/.gemini</code>.</li>
+<li><strong>Project and Ancestors Context Files</strong>: Files in the project's root directory for project-wide rules.</li>
+<li><strong>Local Context Files</strong>: Files in sub-directories for highly specific instructions about a particular module or component.</li>
+</ol>
+<p>That brings us back to the output that we got from the <code>-d</code> (debug) command and do note that while I did not have any <code>GEMINI.md</code> , you can see how it went about searching for it.</p>
+<p>Let's see what happens when we launch the Gemini CLI without the <code>-p</code> option but with just the <code>-d</code> option. We launch it as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>gemini -d
+</code></pre></div>
+<p>This brings up the CLI as shown below:</p>
+<p>Notice a few additional things in the debug mode. It displayed what the authentication method was ( <code>vertex-ai</code> ), which is what I have used on my system but in your case, if you are using your Google personal account, it would be <code>oauth-personal</code> . There is the <code>--debug</code> flag shown below. Additionally you also see now the memory usage (for e.g. 198 MB).</p>
+<p>At this point, if I do a <code>/memory show</code> command, I can see the current context, what files were loaded, etc. This is very useful to understand if the context was loaded correctly. While I do not have a <code>GEMINI.md</code> file at the moment, due to which there is nothing available as per the output below.</p>
+<p>If you happen to have a <code>GEMINI.md</code> file, modify it outside, you can always refresh it via the <code>/memory refresh</code> command. Try that command right now and see the similar debug statements that come up.</p>
+<p>Whew ! That was a lot of discussion just for <code>debug</code> . But do keep this option handy. In case you are reporting any specific issues that you find, it might be handy to turn on the debug mode and see what is going on.</p>
+<h3 id="lets-have-a-checkpoint">Let's have a checkpoint<a class="headerlink" href="#lets-have-a-checkpoint" title="Permanent link">&para;</a></h3>
+<p>This is an interesting but an essential feature. Imagine you are going on with the Gemini CLI and it has used tools to write to file, etc. But something goes wrong and you would like to get back to the previous good state. That's the checkpointing feature, which as the documentation states “automatically saves a snapshot of your project's state before any file modifications are made by AI-powered tools. This allows you to safely experiment with and apply code changes, knowing you can instantly revert back to the state before the tool was run. ”</p>
+<p>By default, when you launch the Gemini CLI, checkpointing is not enabled and you will need to enable it via the <code>-c</code> or <code>--checkpointing</code> flag, when you launch it.</p>
+<p>Let's see this feature in action. First up, I have a small Go project. It is a command line utility that takes a sample text file and it provides the number of characters, words and lines in the text file. So I am in that current folder that has a <code>main.go</code> file and a sample file to test <code>test.txt</code> . This is also a Git enabled folder and I have committed <code>main.go</code> , <code>test.txt</code> and <code>go.mod</code> .</p>
+<p>I launch Gemini CLI with the checkpointing and debugging enabled as given below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>gemini -c -d
+</code></pre></div>
+<p>This brings up the Gemini CLI as shown below:</p>
+<p>The status bar clearly shows that I am in <code>--debug</code> mode and the folder along with the Git branch are shown.</p>
+<p>Let's run a shell command via the <code>!</code> to just validate a few things.</p>
+<p>So I have run two commands, the <code>pwd</code> and the <code>ls</code> command:</p>
+<p>Hit <code>ESC</code> key to come out of the Shell mode.</p>
+<p>So we are going to start here.</p>
+<p>At this point, there is nothing to restore or go back to. If you need to restore back to some point, you do that via the <code>/restore</code> command. If you just use the command as is, it says that there are no restorable tool calls found. And this is fair since we have not asked Gemini to do any task, that resulted in things like creating folders, writing files, etc.</p>
+<p>Everything looks good. Let's use the Gemini CLI to now generate a <code>README.md</code> file for this project. I give the following command:</p>
+<p>This results in a generation of the file and its not yet written. It is asking me for permission to use the <code>WriteFile</code> tool.</p>
+<p>I go ahead and give it permission. Everything goes fine and it tells me that the file has been created.</p>
+<p>At this point, if I run a shell command or even use <code>@</code> to display the contents, I can get that:</p>
+<p>If you now run the command <code>/restore</code> , you can see that there is a checkpoint that it is generated. As per the documentation “these file names are typically composed of a timestamp, the name of the file being modified, and the name of the tool that was about to be run (e.g., <code>2025–09–10T06–56–49_549Z-README.md-write_file</code> ).</p>
+<p>So, when we run this, we see the following:</p>
+<p>You can see that it has the <code>timestamp-&lt;filename&gt;-&lt;toolname&gt;</code>.</p>
+<p>Before we make another change to the <code>README.md</code> file, let us see where the checkpoint data is being stored? Go to the home directory (e.g. <code>~</code> on my Mac). This will have a <code>.gemini/tmp</code> folder. Expand that to see a folder that will contain your logs, shell history and checkpoints. A sample for the above operations that we have done is shown below:</p>
+<p>If you click on the checkpoints file ( <code>2025–09–10T06–56–49_549Z-README.md-write_file.json</code> ) you will see the details for the interaction that has happened so far.</p>
+<p>Cool ! Let's make another change in the <code>README.md</code> file that we have. At the top, the title reads <code>Go Word Counter</code> . I would like this to be changed to <code>File Stats utility</code> .</p>
+<p>The prompt is: <code>In the @README.md file, change the title to “File Stats Utility”</code></p>
+<p>We run the above prompt as shown below:</p>
+<p>It does a good job and it's asking me to apply the change, which I am ok with. It says that it has completed the task and at this point, if I go to shell mode and ask it to print out <code>README.md</code> , I can see that it has done that:</p>
+<p>Let's use the <code>/restore</code> command now to see if another checkpoint has been created and indeed there is one:</p>
+<p>So we can see that we have two checkpoints, one for the <code>README.md</code> file creation and the other for the task that replaced the title.</p>
+<p>At this point, if you observe the <code>.gemini/tmp/&lt;CHECKPOINT&gt;</code> specific folder as explained above, you will see that there are two checkpoints now:</p>
+<p>Use the <code>/restore</code> command and you can now scroll through any of the checkpoints and go back to that state. So I can just go to say the second one , which only replaced the title and get it back to the original title i.e. <code>Go Word Counter</code> .</p>
+<p>I do that and this is important, it shows me the changes that were done at this step, which I want to revert. So when it asks me for permission, I select <code>4. No, suggest changes</code> option and I am back to my previous state.</p>
+<p>It will display a message that should include:</p>
+<p>If I view the contents of the <code>README.md</code> file, I see the following:</p>
+<p>Remember that Checkpointing is not available by default, so you need to provide the checkpointing flag when you start the Gemini CLI or better still, if this is a feature that you absolutely want running all the time, then you can put that in the <code>settings.json</code> file, which we shall see in the next part of this series.</p>
+<p>Check out the documentation for more details on Checkpointing.</p>
+<p><a href="https://github.com/gemini-cli/docs/checkpointing.md">gemini-cli/docs/checkpointing.md at 770f862832dfef477705bee69bd2a84397d105a8 ·…</a></p>
+<h3 id="session-summary">Session summary<a class="headerlink" href="#session-summary" title="Permanent link">&para;</a></h3>
+<p>If you are looking for your session summary to be persisted, which you can then look into, you can try the <code>--session-summary</code> parameter.</p>
+<p>Launch it as follows: <code>gemini --session-summary "session.txt"</code></p>
+<p>This will launch Gemini CLI and keep a track of the. A sample run for my project folder and a couple of interactions to get the list of files and to get an explanation for a file is shown below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;sessionMetrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">&quot;models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="nt">&quot;gemini-2.5-pro&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">        </span><span class="nt">&quot;api&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">          </span><span class="nt">&quot;totalRequests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">          </span><span class="nt">&quot;totalErrors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">          </span><span class="nt">&quot;totalLatencyMs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">9119</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">        </span><span class="nt">&quot;tokens&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">          </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7068</span><span class="p">,</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">          </span><span class="nt">&quot;candidates&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">131</span><span class="p">,</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">          </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7816</span><span class="p">,</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">          </span><span class="nt">&quot;cached&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">          </span><span class="nt">&quot;thoughts&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">617</span><span class="p">,</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">          </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">      </span><span class="nt">&quot;gemini-2.5-flash&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">        </span><span class="nt">&quot;api&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">          </span><span class="nt">&quot;totalRequests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">          </span><span class="nt">&quot;totalErrors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="err">.</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="err">.</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="err">.</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/cloudnativeca" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link", "content.code.copy"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

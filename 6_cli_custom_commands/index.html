@@ -1,0 +1,834 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../5_cli_mcp/">
+      
+      
+        <link rel="next" href="../7_cli_coding_style/">
+      
+      
+      <link rel="icon" href="../images/gemini.jpeg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Gemini CLI - Custom slash commands - Gemini Code Assist Workshop 2 - Gemini CLI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#custom-commands" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gemini Code Assist Workshop 2 - Gemini CLI" class="md-header__button md-logo" aria-label="Gemini Code Assist Workshop 2 - Gemini CLI" data-md-component="logo">
+      
+  <img src="../images/gemini_logo.jpeg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gemini Code Assist Workshop 2 - Gemini CLI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gemini CLI - Custom slash commands
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gemini Code Assist Workshop 2 - Gemini CLI" class="md-nav__button md-logo" aria-label="Gemini Code Assist Workshop 2 - Gemini CLI" data-md-component="logo">
+      
+  <img src="../images/gemini_logo.jpeg" alt="logo">
+
+    </a>
+    Gemini Code Assist Workshop 2 - Gemini CLI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_install_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_cli_vibecoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Vibecoding
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_cli_params/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Command Parameters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_cli_config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Configuration via settings.json
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_cli_mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - MCP Servers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Custom slash commands
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gemini CLI - Custom slash commands
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-custom-slash-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why custom / slash commands?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-slash-commands-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How / slash commands work?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-configure-plan-custom-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 1 Configure /plan custom command
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-create-plan-and-implement-plan-for-new-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 2 Create /plan and implement plan for new application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-create-a-plan-and-implement-new-features-in-your-existing-codebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 3 Create a plan and implement new features in your existing codebase.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion-your-workflow-your-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion: Your Workflow, Your Rules
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_cli_coding_style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    (EXTRA) Gemini CLI - Coding styles with Gemini.md
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_cli_mcp_bq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Appendix A. MCP server for BQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-custom-slash-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why custom / slash commands?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-slash-commands-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How / slash commands work?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-configure-plan-custom-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 1 Configure /plan custom command
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-create-plan-and-implement-plan-for-new-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 2 Create /plan and implement plan for new application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-create-a-plan-and-implement-new-features-in-your-existing-codebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 3 Create a plan and implement new features in your existing codebase.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion-your-workflow-your-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion: Your Workflow, Your Rules
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="custom-commands">🛠️ Custom / Commands<a class="headerlink" href="#custom-commands" title="Permanent link">&para;</a></h1>
+<h2 id="why-custom-slash-commands">Why custom / slash commands?<a class="headerlink" href="#why-custom-slash-commands" title="Permanent link">&para;</a></h2>
+<p>If you noticed your usage of Gemini CLI so far, you would have noticed that either we were just giving the prompt and expecting Gemini CLI to execute it, sometimes with results that are not as per our expectations. In some prompts, you were a bit specific in terms of what to do and have included those instructions in the prompt.</p>
+<p>This may work fine as per what you are instructing Gemini CLI to do and the results that you get. But in many cases, you want to ensure that it follows rules. These rules could be specific programming languages or frameworks to use. It could also be specific tools. It could be coding styles. It's not just about generation but you might also want Gemini CLI to strictly be in what is called a "planning" mode and would like it to just present a plan and not generate any code or modify files on the system.</p>
+<p>Enter <code>Custom slash commands</code> in Gemini CLI which allow you to save and reuse your most frequently used prompts as personal shortcuts. You can create commands that are specific to a single project or available globally across all your projects.</p>
+<h2 id="how-slash-commands-work">How / slash commands work?<a class="headerlink" href="#how-slash-commands-work" title="Permanent link">&para;</a></h2>
+<p>Custom commands allow you to create powerful, reusable prompts. They are defined in TOML files and stored in a <code>commands</code> directory.</p>
+<ul>
+<li><strong>Global commands:</strong> <code>~/.gemini/commands/</code></li>
+<li><strong>Project-specific commands:</strong> <code>&lt;project&gt;/.gemini/commands/</code></li>
+</ul>
+<p>To create a custom command, you need to create a <code>.toml</code> file in one of these directories.</p>
+<p>For example, to create a <code>/plan</code> command, you would create a <code>plan.toml</code> file. Each TOML file must have a <code>description</code> and a <code>prompt</code>.</p>
+<p>Here is an example of a <code>plan.toml</code> file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Investigates and creates a strategic plan to accomplish a task.&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s2">Your primary role is that of a strategist, not an implementer.</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s2">Your task is to stop, think deeply, and devise a comprehensive strategic plan to accomplish the following goal: {{args}}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s2">You MUST NOT write, modify, or execute any code. Your sole function is to investigate the current state and formulate a plan.</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s2">Use your available &quot;read&quot; and &quot;search&quot; tools to research and analyze the codebase. Gather all necessary context before presenting your strategy.</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s2">Present your strategic plan in markdown. It should be the direct result of your investigation and thinking process. Structure your response with the following sections:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s2">1. **Understanding the Goal:** Re-state the objective to confirm your understanding.</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s2">2. **Investigation &amp; Analysis:** Describe the investigative steps you would take. What files would you need to read? What would you search for? What critical questions need to be answered before any work begins?</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="s2">3. **Proposed Strategic Approach:** Outline the high-level strategy. Break the approach down into logical phases and describe the work that should happen in each.</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s2">4. **Verification Strategy:** Explain how the success of this plan would be measured. What should be tested to ensure the goal is met without introducing regressions?</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s2">5. **Anticipated Challenges &amp; Considerations:** Based on your analysis, what potential risks, dependencies, or trade-offs do you foresee?</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s2">Your final output should be ONLY this strategic plan.</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>{{args}}</code> placeholder in the prompt will be replaced with any text the user types after the command name.
+After creating the <code>.toml</code> file and restarting Gemini CLI, the new slash command will be available.</p>
+</div>
+<h2 id="task-1-configure-plan-custom-command">Task 1 Configure /plan custom command<a class="headerlink" href="#task-1-configure-plan-custom-command" title="Permanent link">&para;</a></h2>
+<p>We've prepared set of custom / commands for you usage <a href="https://github.com/cloud-native-canada/gem_cli_custom_commands/tree/main/commands">here:</a></p>
+<p>Review the github repo and explore how <code>.toml</code> files are looking like. Below is the summary table how to use those commands.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Command</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">explain</td>
+<td style="text-align: left;">Explain mode. Analyzes the codebase to answer questions and provide insights</td>
+</tr>
+<tr>
+<td style="text-align: left;">explain:interactive</td>
+<td style="text-align: left;">Interactive Explore mode. Interactively explains the codebase through guided discovery.</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">plan:new</td>
+<td style="text-align: left;">Plan mode. Generates a plan for a feature based on a description</td>
+</tr>
+<tr>
+<td style="text-align: left;">plan:refine</td>
+<td style="text-align: left;">Refinement mode. Refines an existing plan based on user feedback.</td>
+</tr>
+<tr>
+<td style="text-align: left;">plan:impl</td>
+<td style="text-align: left;">Implementation mode. Implements a plan for a feature based on a description</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">deploy:project</td>
+<td style="text-align: left;">Deploys the project to a target environment</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 1:</strong> Install Custom Commands on Laptop</p>
+<p>You can install these configurations globally for all projects or locally for a single project.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Choose only one of the methods below. Global or Project-Specific</p>
+</div>
+<p><strong>Global Installation:</strong></p>
+<p>Copy the <code>commands</code> folder from the <a href="https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/tree/main/genai/gemini-cli-extensions/commands">repo</a> to the root folder of your machine under <code>~/.gemini/commands/</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp.git<span class="w"> </span>~/.gemini-tmp<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>rsync<span class="w"> </span>-av<span class="w"> </span>~/.gemini-tmp/genai/gemini-cli-extensions/commands/<span class="w"> </span>~/.gemini/commands<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>~/.gemini-tmp
+</code></pre></div>
+<p><strong>Project-Specific Installation:</strong></p>
+<p>Copy the <code>commands</code> folder from the <a href="https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp/tree/main/genai/gemini-cli-extensions/commands">repo</a> to the <code>.gemini/commands/</code> folder of your project.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://github.com/GoogleCloudPlatform/serverless-production-readiness-java-gcp.git<span class="w"> </span>.gemini-tmp<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>rsync<span class="w"> </span>-av<span class="w"> </span>.gemini-tmp/genai/gemini-cli-extensions/commands/<span class="w"> </span>./.gemini/commands<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>.gemini-tmp
+</code></pre></div>
+<p><strong>Step 2:</strong> Check if new commands has been installed</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>/help
+</code></pre></div>
+<p><strong>Output:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Commands:                                                                                                                                                │
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>│  /about - show version info
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>....                                                        
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>│  /explain - Explain mode. Analyzes the codebase to answer questions and provide insights.                                                                │
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>│  /plan:refine - Refinement mode. Refines an existing plan based on user feedback.                                                                        │
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>│  /plan:new - Plan mode. Generates a plan for a feature based on a description                                                                            │
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>│  /plan:impl - Implementation mode. Implements a plan for a feature based on a description                                                                │
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>│  /generate:gemini_md - Analyzes the current project directory recursively and generate a comprehensive GEMINI.md file                                    │
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>│  /explain:interactive - Interactive Explore mode. Interactively explains the codebase through guided discovery.                                          │
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>│  /deploy:project - Deploys the project to a target environment.                                                                                          │
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>│  ! - shell command                                           
+</code></pre></div></p>
+<div class="admonition result">
+<p class="admonition-title">Result</p>
+<p>New Custom /plan, /explain, and /deploy commands has been installed</p>
+</div>
+<h2 id="task-2-create-plan-and-implement-plan-for-new-application">Task 2 Create /plan and implement plan for new application<a class="headerlink" href="#task-2-create-plan-and-implement-plan-for-new-application" title="Permanent link">&para;</a></h2>
+<p><strong>Step 1</strong> Prompt to plan a new app</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>/plan:new<span class="w"> </span>I<span class="w"> </span>would<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>Python<span class="w"> </span>Flask<span class="w"> </span>Application<span class="w"> </span>that<span class="w"> </span>shows<span class="w"> </span>me<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>live<span class="w"> </span>scores<span class="w"> </span>of<span class="w"> </span>cricket<span class="w"> </span>matches.<span class="w"> </span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>There<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>RSS<span class="w"> </span>Feed<span class="w"> </span><span class="k">for</span><span class="w"> </span>this<span class="w"> </span>that<span class="w"> </span>is<span class="w"> </span>available<span class="w"> </span>over<span class="w"> </span>here:<span class="w"> </span><span class="sb">`</span>https://static.cricinfo.com/rss/livescores.xml<span class="sb">`</span>.<span class="w">  </span>
+</code></pre></div>
+<div class="admonition alternatively">
+<p class="admonition-title">Alternatively</p>
+<p>You can create a JIRA task with above information and use JIRA MCP integration to fetch a task description</p>
+</div>
+<p><strong>Step 2</strong> Review a generated plan</p>
+<p><img alt="/plan task" src="../images/plan.jpeg" /></p>
+<p>** Result**: Generated plan stored in <code>plans</code> forlder  in <code>md</code> format.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Review and modify plan until it is required</p>
+</div>
+<p><strong>Step 3</strong> Implement code for new app according to plan and deploy it</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>/plan:impl<span class="w"> </span>I<span class="w"> </span>would<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>implement<span class="w"> </span>a<span class="w"> </span>plan<span class="w"> </span>and<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>the<span class="w"> </span>app<span class="w"> </span>created<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>folder<span class="w"> </span>
+</code></pre></div>
+<p><img alt="/plan task" src="../images/implement.jpeg" /></p>
+<div class="admonition result">
+<p class="admonition-title">Result</p>
+<p>The cricket scores app is created and has been launched for local testing.</p>
+</div>
+<p><img alt="/plan task" src="../images/newapp.jpeg" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The app looks more advanced then we created one during vibecoding test.</p>
+</div>
+<h2 id="task-3-create-a-plan-and-implement-new-features-in-your-existing-codebase">Task 3 Create a plan and implement new features in your existing codebase.<a class="headerlink" href="#task-3-create-a-plan-and-implement-new-features-in-your-existing-codebase" title="Permanent link">&para;</a></h2>
+<div class="admonition congratulations">
+<p class="admonition-title">Congratulations</p>
+<p>It is now time to put things in practice.
+Will let you work with you day to day applications using JIRA MCP and Custom / commands to build you apps!</p>
+</div>
+<h2 id="conclusion-your-workflow-your-rules">Conclusion: Your Workflow, Your Rules<a class="headerlink" href="#conclusion-your-workflow-your-rules" title="Permanent link">&para;</a></h2>
+<p>In this Lab, we have learnt about Custom Commands in Gemini CLI, which are simple shortcuts, organized into namespaces and which can run powerful and personalized tasks for us.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/cloudnativeca" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link", "content.code.copy"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
