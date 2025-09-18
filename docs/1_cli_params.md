@@ -11,7 +11,13 @@ This should show the full range of options available. You are encouraged to go t
 Let us take a look at a few of them. The first one is to configure Gemini CLI to use either the Pro or the Flash model. Currently, at the time of writing this lab, these are the only two models supported. By default the Gemini 2.5 Pro model is used, but if you would like to use the Flash Model, you can do that at the time of starting Gemini CLI via the `-m` parameter as shown below:
 
 ```bash
-gemini -m "gemini-2.5-flash"
+# gemini -m "gemini-2.5-flash"
+```
+
+For this Labs we will be using gemini-2.5-pro. So make sure to set it back:
+
+```
+gemini -m "gemini-2.5-pro"
 ```
 
 You will notice that if you start in the above manner, you can check the model at the bottom right of the Gemini CLI terminal as shown below:
